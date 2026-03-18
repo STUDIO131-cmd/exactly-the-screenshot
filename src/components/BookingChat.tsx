@@ -1,28 +1,32 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Calendar, MessageCircle, Loader2 } from "lucide-react";
-import { useGoogleCalendar, type AvailableSlot } from "@/hooks/useGoogleCalendar";
+import { X, Send, Calendar, MessageCircle } from "lucide-react";
 
-type ChatStep = "welcome" | "session_type" | "has_date" | "select_date" | "select_time" | "confirm" | "done";
+type ChatStep = "welcome" | "session_type" | "has_date" | "select_date" | "confirm" | "done";
 
 interface Message {
   id: number;
   type: "bot" | "user";
   text: string;
   options?: string[];
-  isDateSelector?: boolean;
 }
 
 const sessionTypes = [
-  "Gestação",
-  "Ensaio Pessoal",
-  "Eventos Intimistas",
-  "Batizados",
-  "Confraternizações",
-  "Família",
-  "Retratos",
+  "Retratos Profissionais",
+  "Gestantes",
   "15 Anos",
   "Casais",
+  "Ensaio Pessoal",
+  "Eventos",
+];
+
+// Datas disponíveis (simulação - futuramente conectar com Google Calendar)
+const availableDates = [
+  "Sábado, 22 de Março",
+  "Domingo, 23 de Março",
+  "Sábado, 29 de Março",
+  "Domingo, 30 de Março",
+  "Sábado, 05 de Abril",
 ];
 
 interface BookingChatProps {
@@ -35,12 +39,8 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [selectedSession, setSelectedSession] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string>("");
-  const [selectedTime, setSelectedTime] = useState<string>("");
-  const [selectedDisplayDate, setSelectedDisplayDate] = useState<string>("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const { availableSlots, loading: calendarLoading, error: calendarError } = useGoogleCalendar(30);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -50,18 +50,19 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
     scrollToBottom();
   }, [messages]);
 
+  // Inicializa o chat quando abre
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       startChat();
     }
   }, [isOpen]);
 
-  const addBotMessage = (text: string, options?: string[], isDateSelector?: boolean) => {
+  const addBotMessage = (text: string, options?: string[]) => {
     setIsTyping(true);
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        { id: Date.now(), type: "bot", text, options, isDateSelector },
+        { id: Date.now(), type: "bot", text, options },
       ]);
       setIsTyping(false);
     }, 800);
@@ -78,10 +79,12 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
     setMessages([]);
     setStep("welcome");
     setTimeout(() => {
-      addBotMessage("Olá! 👋 Que bom ter você aqui na 131 Fotos!");
+      addBotMessage(
+        "Olá! 👋 Que bom ter você aqui. Vou te ajudar a agendar sua sessão de fotos."
+      );
       setTimeout(() => {
         addBotMessage(
-          "Vou te ajudar a agendar sua sessão com Igor Gagliardi. Qual tipo de ensaio você tem interesse?",
+          "Qual tipo de sessão você tem interesse?",
           sessionTypes
         );
         setStep("session_type");
@@ -94,11 +97,13 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
       addUserMessage(option);
       setSelectedSession(option);
       setTimeout(() => {
-        addBotMessage(`${option}! Adoramos fotografar esse momento. 📸`);
+        addBotMessage(
+          `Ótima escolha! ${option} é uma das nossas especialidades. 📸`
+        );
         setTimeout(() => {
           addBotMessage(
-            "Você já tem uma data em mente ou quer ver nossa disponibilidade?",
-            ["Tenho uma data em mente", "Quero ver datas disponíveis"]
+            "Você já tem uma data em mente para a sessão?",
+            ["Sim, tenho uma data", "Não, quero ver disponibilidade"]
           );
           setStep("has_date");
         }, 1000);
@@ -106,69 +111,41 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
     } else if (step === "has_date") {
       addUserMessage(option);
       setTimeout(() => {
-        if (calendarLoading) {
-          addBotMessage("Verificando a agenda de Igor Gagliardi... ⏳");
-        } else if (calendarError) {
-          addBotMessage(
-            "Não consegui acessar a agenda no momento. Escolha uma das datas sugeridas:",
-            availableSlots.map(s => `${s.dayOfWeek}, ${s.displayDate}`)
-          );
-        } else {
-          addBotMessage(
-            "Aqui estão as datas disponíveis na agenda de Igor Gagliardi:",
-            undefined,
-            true
-          );
-        }
+        addBotMessage(
+          "Perfeito! Aqui estão as datas disponíveis para os próximos dias:",
+          availableDates
+        );
         setStep("select_date");
       }, 500);
+    } else if (step === "select_date") {
+      addUserMessage(option);
+      setSelectedDate(option);
+      setTimeout(() => {
+        addBotMessage(
+          `Excelente! Vou reservar ${option} para você.`
+        );
+        setTimeout(() => {
+          addBotMessage(
+            `Para confirmar sua sessão de ${selectedSession} no dia ${option}, vou te direcionar para o WhatsApp para finalizar os detalhes. 💬`,
+            ["Continuar no WhatsApp"]
+          );
+          setStep("confirm");
+        }, 1000);
+      }, 500);
     } else if (step === "confirm") {
+      // Redireciona para WhatsApp
       const message = encodeURIComponent(
-        `Olá! Gostaria de agendar uma sessão de ${selectedSession} para ${selectedDisplayDate} às ${selectedTime}. Vim pelo site 131 Fotos.`
+        `Olá! Gostaria de agendar uma sessão de ${selectedSession} para o dia ${selectedDate}. Vim pelo site 131 Fotos.`
       );
       window.open(`https://wa.me/5517992595117?text=${message}`, "_blank");
       onClose();
     }
   };
 
-  const handleDateSelect = (slot: AvailableSlot) => {
-    setSelectedDate(slot.date);
-    setSelectedDisplayDate(`${slot.dayOfWeek}, ${slot.displayDate}`);
-    addUserMessage(`${slot.dayOfWeek}, ${slot.displayDate}`);
-
-    setTimeout(() => {
-      addBotMessage(
-        "Ótimo! Qual horário funciona melhor para você?",
-        slot.slots
-      );
-      setStep("select_time");
-    }, 500);
-  };
-
-  const handleTimeSelect = (time: string) => {
-    setSelectedTime(time);
-    addUserMessage(time);
-
-    setTimeout(() => {
-      addBotMessage(
-        `Perfeito! Vou reservar ${selectedDisplayDate} às ${time} para sua sessão de ${selectedSession}.`
-      );
-      setTimeout(() => {
-        addBotMessage(
-          "Para confirmar, vou te direcionar para o WhatsApp onde finalizamos os detalhes e enviamos o contrato. 💬",
-          ["Continuar no WhatsApp"]
-        );
-        setStep("confirm");
-      }, 1000);
-    }, 500);
-  };
-
   const resetChat = () => {
     setMessages([]);
     setSelectedSession("");
     setSelectedDate("");
-    setSelectedTime("");
-    setSelectedDisplayDate("");
     setStep("welcome");
     startChat();
   };
@@ -184,7 +161,7 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
           onClick={onClose}
         >
           <motion.div
-            className="w-full max-w-md bg-background rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]"
+            className="w-full max-w-md bg-background rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]"
             initial={{ scale: 0.9, opacity: 0, y: 50 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 50 }}
@@ -194,11 +171,11 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
             <div className="bg-primary text-primary-foreground px-6 py-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center">
-                  <Calendar size={20} />
+                  <MessageCircle size={20} />
                 </div>
                 <div>
                   <h3 className="font-tiktok font-semibold">131 Fotos</h3>
-                  <p className="text-xs text-primary-foreground/70">Agenda de Igor Gagliardi</p>
+                  <p className="text-xs text-primary-foreground/70">Agendamento</p>
                 </div>
               </div>
               <button
@@ -219,55 +196,21 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
                   className={`flex ${msg.type === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-3 ${
+                    className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                       msg.type === "user"
                         ? "bg-primary text-primary-foreground rounded-br-md"
                         : "bg-background text-foreground shadow-sm rounded-bl-md"
                     }`}
                   >
                     <p className="font-tiktok text-sm">{msg.text}</p>
-
-                    {/* Date Selector (Google Calendar) */}
-                    {msg.isDateSelector && msg.type === "bot" && (
-                      <div className="mt-3 space-y-2 max-h-48 overflow-y-auto">
-                        {calendarLoading ? (
-                          <div className="flex items-center justify-center py-4">
-                            <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
-                            <span className="ml-2 text-sm text-muted-foreground">Carregando agenda...</span>
-                          </div>
-                        ) : (
-                          availableSlots.map((slot, i) => (
-                            <button
-                              key={i}
-                              onClick={() => handleDateSelect(slot)}
-                              className="w-full text-left px-4 py-3 bg-muted hover:bg-muted/80 rounded-lg font-tiktok text-sm transition-colors flex justify-between items-center"
-                            >
-                              <div>
-                                <span className="font-semibold capitalize">{slot.dayOfWeek}</span>
-                                <span className="text-muted-foreground ml-2">{slot.displayDate}</span>
-                              </div>
-                              <span className="text-xs text-muted-foreground">
-                                {slot.slots.length} horários
-                              </span>
-                            </button>
-                          ))
-                        )}
-                      </div>
-                    )}
-
-                    {/* Regular Options */}
-                    {msg.options && msg.type === "bot" && !msg.isDateSelector && (
+                    
+                    {/* Options */}
+                    {msg.options && msg.type === "bot" && (
                       <div className="mt-3 space-y-2">
                         {msg.options.map((option, i) => (
                           <button
                             key={i}
-                            onClick={() => {
-                              if (step === "select_time") {
-                                handleTimeSelect(option);
-                              } else {
-                                handleOptionSelect(option);
-                              }
-                            }}
+                            onClick={() => handleOptionSelect(option)}
                             className="w-full text-left px-4 py-2 bg-muted hover:bg-muted/80 rounded-lg font-tiktok text-sm transition-colors"
                           >
                             {option}
@@ -302,7 +245,7 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
             {/* Footer */}
             <div className="bg-background border-t border-border px-4 py-3">
               <p className="text-center text-xs text-muted-foreground font-tiktok">
-                🗓️ Conectado ao Google Calendar • 131 Fotos
+                Powered by 131 Fotos • Studio 131
               </p>
             </div>
           </motion.div>
