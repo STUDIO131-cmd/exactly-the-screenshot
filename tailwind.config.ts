@@ -12,6 +12,12 @@ export default {
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+      sans: ['"TikTok Sans"', 'system-ui', 'sans-serif'],
+      tiktok: ['"TikTok Sans"', 'system-ui', 'sans-serif'],
+      moneta: ['Moneta', 'serif'],
+      epika: ['"NT Epika"', 'serif'],
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
