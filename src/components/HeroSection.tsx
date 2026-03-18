@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import logoWhite from "@/assets/logo-white.svg";
 
 const HeroSection = () => {
   return (
@@ -7,14 +8,24 @@ const HeroSection = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-center"
+        className="text-center flex flex-col items-center gap-8"
       >
-        <h1 className="font-display text-primary-foreground text-5xl md:text-7xl font-bold tracking-tight mb-6">
-          131 Fotos
-        </h1>
-        <p className="font-ui text-primary-foreground/70 text-sm md:text-base tracking-[0.3em] uppercase">
-          Fotografia Lifestyle
-        </p>
+        <img
+          src={logoWhite}
+          alt="131 Fotos"
+          className="w-48 md:w-64 h-auto"
+        />
+
+        <div className="text-primary-foreground/80 text-base md:text-lg leading-relaxed tracking-wide">
+          <p>Poesia, sensibilidade e eternidade.</p>
+          <p>Esse é o nosso olhar para a sua história.</p>
+        </div>
+
+        <div className="px-6 py-3 rounded-full border border-primary-foreground/20 bg-primary-foreground/5 backdrop-blur-sm">
+          <span className="text-primary-foreground/70 text-sm md:text-base tracking-[0.2em] uppercase">
+            Fotografia documental
+          </span>
+        </div>
       </motion.div>
     </section>
   );
