@@ -1,16 +1,27 @@
-import { MessageCircle } from "lucide-react";
+import { Calendar } from "lucide-react";
 
-const WhatsAppFloat = () => {
+interface WhatsAppFloatProps {
+  onClick?: () => void;
+}
+
+const WhatsAppFloat = ({ onClick }: WhatsAppFloatProps) => {
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    } else {
+      // Fallback: dispara evento customizado
+      window.dispatchEvent(new CustomEvent('openBookingChat'));
+    }
+  };
+
   return (
-    <a
-      href="https://wa.me/5517992595117?text=Olá! Gostaria de mais informações sobre as sessões de fotos."
-      target="_blank"
-      rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3 bg-primary text-primary-foreground rounded-full shadow-lg hover:bg-primary/90 hover:scale-105 transition-all duration-300"
+    <button
+      onClick={handleClick}
+      className="fixed bottom-6 right-6 z-50 flex items-center gap-3 px-8 py-5 bg-primary text-primary-foreground rounded-full shadow-2xl hover:bg-primary/90 hover:scale-105 transition-all duration-300 group"
     >
-      <MessageCircle size={20} fill="currentColor" />
-      <span className="font-ui text-sm hidden sm:block">Agende sua sessão</span>
-    </a>
+      <Calendar size={24} className="group-hover:scale-110 transition-transform" />
+      <span className="font-tiktok text-base font-semibold">Agende sua sessão</span>
+    </button>
   );
 };
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, Calendar } from "lucide-react";
 
 const galleries = [
   { id: "retratos", title: "Retratos Profissionais", cover: "/placeholders/retratos-cover.jpg" },
@@ -11,15 +11,33 @@ const galleries = [
   { id: "eventos", title: "Eventos", cover: "/placeholders/eventos-cover.jpg" },
 ];
 
-const GalleriesSection = () => {
+// Fotos por fotógrafo (placeholders)
+const igorPhotos = Array(6).fill(null).map((_, i) => `/placeholders/igor-${i + 1}.jpg`);
+const equipePhotos = Array(6).fill(null).map((_, i) => `/placeholders/equipe-${i + 1}.jpg`);
+
+interface GalleriesSectionProps {
+  onOpenBookingChat?: () => void;
+}
+
+const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
   const [openGallery, setOpenGallery] = useState<string | null>(null);
 
   const currentGallery = galleries.find((g) => g.id === openGallery);
 
+  const handleAgendarClick = () => {
+    setOpenGallery(null);
+    if (onOpenBookingChat) {
+      onOpenBookingChat();
+    } else {
+      // Fallback: dispara evento customizado
+      window.dispatchEvent(new CustomEvent('openBookingChat'));
+    }
+  };
+
   return (
     <section className="py-16 px-6 bg-background">
       <div className="max-w-6xl mx-auto">
-        <h2 className="font-display text-3xl md:text-4xl text-center mb-12 text-foreground">
+        <h2 className="font-epika text-3xl md:text-4xl text-center mb-12 text-foreground">
           Galerias
         </h2>
 
@@ -38,12 +56,12 @@ const GalleriesSection = () => {
                 decoding="async"
               />
               <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-primary/80 to-transparent">
-                <h3 className="font-display text-primary-foreground text-xl md:text-2xl">
+                <h3 className="font-epika text-primary-foreground text-xl md:text-2xl">
                   {gallery.title}
                 </h3>
               </div>
               <div className="absolute inset-0 bg-primary/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="px-6 py-3 bg-background text-foreground font-ui text-sm tracking-wider uppercase rounded-full">
+                <span className="px-6 py-3 bg-background text-foreground font-tiktok text-sm tracking-wider uppercase rounded-full">
                   Ver Galeria
                 </span>
               </div>
@@ -52,6 +70,7 @@ const GalleriesSection = () => {
         </div>
       </div>
 
+      {/* Modal da Galeria */}
       <AnimatePresence>
         {openGallery && currentGallery && (
           <motion.div
@@ -62,34 +81,87 @@ const GalleriesSection = () => {
             onClick={() => setOpenGallery(null)}
           >
             <motion.div
-              className="relative max-w-5xl w-full max-h-[90vh] overflow-y-auto bg-background rounded-2xl p-6"
+              className="relative max-w-5xl w-full max-h-[90vh] overflow-y-auto bg-background rounded-2xl"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Botão Fechar */}
               <button
                 onClick={() => setOpenGallery(null)}
-                className="absolute top-4 right-4 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors z-10"
+                className="absolute top-4 right-4 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors z-20"
               >
                 <X size={24} className="text-foreground" />
               </button>
-              <h3 className="font-display text-2xl text-foreground text-center mb-6">
-                {currentGallery.title}
-              </h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                {Array(12)
-                  .fill(null)
-                  .map((_, i) => (
-                    <div key={i} className="aspect-[4/5] rounded-lg overflow-hidden bg-muted">
-                      <img
-                        src={currentGallery.cover}
-                        alt={`${currentGallery.title} ${i + 1}`}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
-                      />
-                    </div>
-                  ))}
+
+              {/* Conteúdo com padding para a barra fixa */}
+              <div className="p-6 pb-24">
+                {/* Título */}
+                <h3 className="font-epika text-2xl text-foreground text-center mb-8">
+                  {currentGallery.title}
+                </h3>
+
+                {/* Seção 1: Fotos assinadas por Igor Gagliardi */}
+                <div className="mb-10">
+                  <h4 className="font-moneta text-lg text-foreground/70 mb-4 text-center">
+                    Fotos assinadas por <span className="text-foreground font-semibold">Igor Gagliardi</span>
+                  </h4>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {igorPhotos.map((photo, i) => (
+                      <div key={`igor-${i}`} className="aspect-[4/5] rounded-lg overflow-hidden bg-muted">
+                        <img
+                          src={currentGallery.cover}
+                          alt={`Igor Gagliardi - ${currentGallery.title} ${i + 1}`}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Divider */}
+                <div className="flex items-center gap-4 my-10">
+                  <div className="flex-1 h-px bg-border"></div>
+                  <span className="font-tiktok text-xs text-muted-foreground tracking-widest uppercase">
+                    •••
+                  </span>
+                  <div className="flex-1 h-px bg-border"></div>
+                </div>
+
+                {/* Seção 2: Fotos assinadas por Equipe Studio 131 */}
+                <div>
+                  <h4 className="font-moneta text-lg text-foreground/70 mb-4 text-center">
+                    Fotos assinadas por <span className="text-foreground font-semibold">Equipe Studio 131</span>
+                  </h4>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {equipePhotos.map((photo, i) => (
+                      <div key={`equipe-${i}`} className="aspect-[4/5] rounded-lg overflow-hidden bg-muted">
+                        <img
+                          src={currentGallery.cover}
+                          alt={`Equipe Studio 131 - ${currentGallery.title} ${i + 1}`}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Barra Fixa de Preço (overlay com baixa opacidade) */}
+              <div className="sticky bottom-0 left-0 right-0 bg-primary/90 backdrop-blur-sm px-6 py-4 flex items-center justify-between gap-4 rounded-b-2xl">
+                <p className="font-moneta text-primary-foreground text-sm md:text-base">
+                  Sessões a partir de <span className="font-semibold">R$797,00</span> a <span className="font-semibold">R$2.250,00</span>
+                </p>
+                <button
+                  onClick={handleAgendarClick}
+                  className="flex items-center gap-2 px-6 py-3 bg-background text-foreground font-tiktok text-sm tracking-wider uppercase rounded-full hover:bg-background/90 transition-colors whitespace-nowrap"
+                >
+                  <Calendar size={18} />
+                  Agendar agora
+                </button>
               </div>
             </motion.div>
           </motion.div>
