@@ -2,6 +2,10 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Calendar } from "lucide-react";
 
+import retratosIgor1 from "@/assets/gallery/retratos-igor-1.jpg";
+import retratosIgor2 from "@/assets/gallery/retratos-igor-2.jpg";
+import retratosIgor3 from "@/assets/gallery/retratos-igor-3.jpg";
+
 const galleries = [
   { id: "retratos", title: "Retratos Profissionais", cover: "/placeholders/retratos-cover.jpg" },
   { id: "gestantes", title: "Gestantes", cover: "/placeholders/gestantes-cover.jpg" },
@@ -11,8 +15,12 @@ const galleries = [
   { id: "eventos", title: "Eventos", cover: "/placeholders/eventos-cover.jpg" },
 ];
 
-// Fotos por fotógrafo (placeholders)
-const igorPhotos = Array(6).fill(null).map((_, i) => `/placeholders/igor-${i + 1}.jpg`);
+// Fotos reais por galeria (Igor)
+const igorPhotosByGallery: Record<string, string[]> = {
+  retratos: [retratosIgor1, retratosIgor2, retratosIgor3],
+};
+
+const defaultIgorPhotos = Array(6).fill(null).map((_, i) => `/placeholders/igor-${i + 1}.jpg`);
 const equipePhotos = Array(6).fill(null).map((_, i) => `/placeholders/equipe-${i + 1}.jpg`);
 
 interface GalleriesSectionProps {
@@ -108,10 +116,10 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                     Fotos assinadas por <span className="text-foreground font-semibold">Igor Gagliardi</span>
                   </h4>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    {igorPhotos.map((photo, i) => (
+                    {(igorPhotosByGallery[openGallery] || defaultIgorPhotos).map((photo, i) => (
                       <div key={`igor-${i}`} className="aspect-[4/5] rounded-lg overflow-hidden bg-muted">
                         <img
-                          src={currentGallery.cover}
+                          src={photo}
                           alt={`Igor Gagliardi - ${currentGallery.title} ${i + 1}`}
                           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                           loading="lazy"
