@@ -10,11 +10,11 @@ const AboutSection = () => {
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
       >
-        <h2 className="font-display text-3xl md:text-4xl mb-8 text-foreground">
+        <h2 className="font-tiktok text-3xl md:text-4xl mb-8 text-foreground">
           O que fotografamos
         </h2>
 
-        <div className="font-body text-lg md:text-xl leading-relaxed text-foreground/80 space-y-6">
+        <div className="font-tiktok text-lg md:text-xl leading-relaxed text-foreground/80 space-y-6">
           <p>Fotografamos pessoas em momentos reais da vida.</p>
           <p>Não personagens. Não poses vazias. Não há cenas fabricadas.</p>
           <p>
@@ -30,7 +30,7 @@ const AboutSection = () => {
             <br />
             <strong>É o momento vivido.</strong>
           </p>
-          <p className="font-display text-2xl md:text-3xl text-foreground mt-8">
+          <p className="font-tiktok text-2xl md:text-3xl text-foreground mt-8">
             Poesia, sensibilidade e eternidade.
           </p>
           <p className="text-muted-foreground text-base">
