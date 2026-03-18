@@ -32,10 +32,10 @@ const PricingSection = () => {
   return (
     <section className="py-16 px-6 bg-surface-subtle">
       <div className="max-w-5xl mx-auto">
-        <h2 className="font-display text-3xl md:text-4xl text-center mb-4 text-foreground">
+        <h2 className="font-tiktok text-3xl md:text-4xl text-center mb-4 text-foreground">
           Investimento
         </h2>
-        <p className="font-body text-center text-muted-foreground mb-12">
+        <p className="font-tiktok text-center text-muted-foreground mb-12">
           Pacotes a partir de R$ 797
         </p>
 
@@ -49,7 +49,7 @@ const PricingSection = () => {
                   : "bg-background border border-border"
               }`}
             >
-              <h3 className="font-display text-xl mb-2">{pkg.name}</h3>
+              <h3 className="font-tiktok text-xl mb-2">{pkg.name}</h3>
               <p
                 className={`text-sm mb-4 ${
                   pkg.highlighted ? "text-primary-foreground/70" : "text-muted-foreground"
@@ -57,12 +57,12 @@ const PricingSection = () => {
               >
                 {pkg.description}
               </p>
-              <p className="font-display text-3xl mb-6">{pkg.price}</p>
+              <p className="font-tiktok text-3xl mb-6">{pkg.price}</p>
               <ul className="space-y-2">
                 {pkg.features.map((feature, i) => (
                   <li
                     key={i}
-                    className={`text-sm flex items-center gap-2 font-body ${
+                    className={`text-sm flex items-center gap-2 font-tiktok ${
                       pkg.highlighted ? "text-primary-foreground/80" : "text-foreground/70"
                     }`}
                   >
