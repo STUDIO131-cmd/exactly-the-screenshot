@@ -15,10 +15,10 @@ const BookingSection = () => {
   };
 
   return (
-    <section className="py-16 px-6 bg-primary text-primary-foreground">
+    <section className="py-16 px-6">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="font-display text-3xl md:text-4xl mb-4">Agende sua sessão</h2>
-        <p className="font-body text-primary-foreground/70 mb-12">
+        <h2 className="font-display text-3xl md:text-4xl mb-4 text-foreground">Agende sua sessão</h2>
+        <p className="font-body text-muted-foreground mb-12">
           Selecione uma data e entre em contato pelo WhatsApp
         </p>
 
@@ -46,8 +46,8 @@ const BookingSection = () => {
               disabled={!selectedDate}
               className={`flex items-center gap-3 px-8 py-4 rounded-full font-ui text-sm tracking-wider uppercase transition-all ${
                 selectedDate
-                  ? "bg-background text-foreground hover:bg-background/90"
-                  : "bg-primary-foreground/20 text-primary-foreground/50 cursor-not-allowed"
+                  ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                  : "bg-muted text-muted-foreground cursor-not-allowed"
               }`}
             >
               <MessageCircle size={20} />
