@@ -9,11 +9,18 @@ interface Album {
   photos: string[];
 }
 
+interface PhotographerSection {
+  photographer: string;
+  subtitle: string;
+  albums: Album[];
+}
+
 interface Gallery {
   id: string;
   title: string;
   cover: string;
-  albums: Album[];
+  description: string;
+  sections: PhotographerSection[];
 }
 
 const galleries: Gallery[] = [
@@ -21,54 +28,154 @@ const galleries: Gallery[] = [
     id: "retratos",
     title: "Retratos Profissionais",
     cover: "/placeholders/retratos-cover.jpg",
-    albums: [
-      { id: "retratos-igor", title: "Por Igor Gagliardi", cover: "/placeholders/retratos-cover.jpg", photos: Array(6).fill(null).map((_, i) => `/placeholders/igor-${i + 1}.jpg`) },
-      { id: "retratos-equipe", title: "Por Equipe Studio 131", cover: "/placeholders/retratos-cover.jpg", photos: Array(6).fill(null).map((_, i) => `/placeholders/equipe-${i + 1}.jpg`) },
+    description: "Retratos que traduzem personalidade e presença. Cada clique é pensado para revelar o melhor de você — seja para uso corporativo, redes sociais ou portfólio pessoal.",
+    sections: [
+      {
+        photographer: "Igor Gagliardi",
+        subtitle: "10 anos de repertório e olhar cirúrgico",
+        albums: [
+          { id: "ret-igor-1", title: "Sessão Ana Paula", cover: "/placeholders/retratos-cover.jpg", photos: Array(6).fill("/placeholders/retratos-cover.jpg") },
+          { id: "ret-igor-2", title: "Sessão Carlos Mendes", cover: "/placeholders/retratos-cover.jpg", photos: Array(6).fill("/placeholders/retratos-cover.jpg") },
+          { id: "ret-igor-3", title: "Sessão Juliana Costa", cover: "/placeholders/retratos-cover.jpg", photos: Array(6).fill("/placeholders/retratos-cover.jpg") },
+          { id: "ret-igor-4", title: "Sessão Roberto Lima", cover: "/placeholders/retratos-cover.jpg", photos: Array(6).fill("/placeholders/retratos-cover.jpg") },
+          { id: "ret-igor-5", title: "Sessão Mariana Souza", cover: "/placeholders/retratos-cover.jpg", photos: Array(6).fill("/placeholders/retratos-cover.jpg") },
+          { id: "ret-igor-6", title: "Sessão Pedro Alves", cover: "/placeholders/retratos-cover.jpg", photos: Array(6).fill("/placeholders/retratos-cover.jpg") },
+        ],
+      },
+      {
+        photographer: "Equipe Studio 131",
+        subtitle: "Sensibilidade e técnica em cada registro",
+        albums: [
+          { id: "ret-eq-1", title: "Sessão Fernanda Rocha", cover: "/placeholders/retratos-cover.jpg", photos: Array(6).fill("/placeholders/retratos-cover.jpg") },
+          { id: "ret-eq-2", title: "Sessão Lucas Martins", cover: "/placeholders/retratos-cover.jpg", photos: Array(6).fill("/placeholders/retratos-cover.jpg") },
+          { id: "ret-eq-3", title: "Sessão Beatriz Nunes", cover: "/placeholders/retratos-cover.jpg", photos: Array(6).fill("/placeholders/retratos-cover.jpg") },
+          { id: "ret-eq-4", title: "Sessão Thiago Reis", cover: "/placeholders/retratos-cover.jpg", photos: Array(6).fill("/placeholders/retratos-cover.jpg") },
+          { id: "ret-eq-5", title: "Sessão Camila Dias", cover: "/placeholders/retratos-cover.jpg", photos: Array(6).fill("/placeholders/retratos-cover.jpg") },
+          { id: "ret-eq-6", title: "Sessão André Oliveira", cover: "/placeholders/retratos-cover.jpg", photos: Array(6).fill("/placeholders/retratos-cover.jpg") },
+        ],
+      },
     ],
   },
   {
     id: "gestantes",
     title: "Gestantes",
     cover: "/placeholders/gestantes-cover.jpg",
-    albums: [
-      { id: "gestantes-igor", title: "Por Igor Gagliardi", cover: "/placeholders/gestantes-cover.jpg", photos: Array(6).fill(null).map((_, i) => `/placeholders/igor-${i + 1}.jpg`) },
-      { id: "gestantes-equipe", title: "Por Equipe Studio 131", cover: "/placeholders/gestantes-cover.jpg", photos: Array(6).fill(null).map((_, i) => `/placeholders/equipe-${i + 1}.jpg`) },
+    description: "A espera de uma nova vida merece ser eternizada com delicadeza. Fotografamos a beleza da gestação com luz natural e ambientes que acolhem.",
+    sections: [
+      {
+        photographer: "Igor Gagliardi",
+        subtitle: "10 anos de repertório e olhar cirúrgico",
+        albums: [
+          { id: "gest-igor-1", title: "Sessão Larissa & Pedro", cover: "/placeholders/gestantes-cover.jpg", photos: Array(6).fill("/placeholders/gestantes-cover.jpg") },
+          { id: "gest-igor-2", title: "Sessão Rafaela", cover: "/placeholders/gestantes-cover.jpg", photos: Array(6).fill("/placeholders/gestantes-cover.jpg") },
+          { id: "gest-igor-3", title: "Sessão Patrícia & Marcos", cover: "/placeholders/gestantes-cover.jpg", photos: Array(6).fill("/placeholders/gestantes-cover.jpg") },
+        ],
+      },
+      {
+        photographer: "Equipe Studio 131",
+        subtitle: "Sensibilidade e técnica em cada registro",
+        albums: [
+          { id: "gest-eq-1", title: "Sessão Daniela", cover: "/placeholders/gestantes-cover.jpg", photos: Array(6).fill("/placeholders/gestantes-cover.jpg") },
+          { id: "gest-eq-2", title: "Sessão Carla & Bruno", cover: "/placeholders/gestantes-cover.jpg", photos: Array(6).fill("/placeholders/gestantes-cover.jpg") },
+          { id: "gest-eq-3", title: "Sessão Amanda", cover: "/placeholders/gestantes-cover.jpg", photos: Array(6).fill("/placeholders/gestantes-cover.jpg") },
+        ],
+      },
     ],
   },
   {
     id: "15anos",
     title: "15 Anos",
     cover: "/placeholders/15anos-cover.jpg",
-    albums: [
-      { id: "15anos-igor", title: "Por Igor Gagliardi", cover: "/placeholders/15anos-cover.jpg", photos: Array(6).fill(null).map((_, i) => `/placeholders/igor-${i + 1}.jpg`) },
-      { id: "15anos-equipe", title: "Por Equipe Studio 131", cover: "/placeholders/15anos-cover.jpg", photos: Array(6).fill(null).map((_, i) => `/placeholders/equipe-${i + 1}.jpg`) },
+    description: "Uma celebração única que marca a transição para a vida adulta. Capturamos a essência e a alegria desse momento com autenticidade.",
+    sections: [
+      {
+        photographer: "Igor Gagliardi",
+        subtitle: "10 anos de repertório e olhar cirúrgico",
+        albums: [
+          { id: "15-igor-1", title: "Sessão Isabella", cover: "/placeholders/15anos-cover.jpg", photos: Array(6).fill("/placeholders/15anos-cover.jpg") },
+          { id: "15-igor-2", title: "Sessão Valentina", cover: "/placeholders/15anos-cover.jpg", photos: Array(6).fill("/placeholders/15anos-cover.jpg") },
+        ],
+      },
+      {
+        photographer: "Equipe Studio 131",
+        subtitle: "Sensibilidade e técnica em cada registro",
+        albums: [
+          { id: "15-eq-1", title: "Sessão Giovanna", cover: "/placeholders/15anos-cover.jpg", photos: Array(6).fill("/placeholders/15anos-cover.jpg") },
+          { id: "15-eq-2", title: "Sessão Laura", cover: "/placeholders/15anos-cover.jpg", photos: Array(6).fill("/placeholders/15anos-cover.jpg") },
+        ],
+      },
     ],
   },
   {
     id: "casais",
     title: "Casais",
     cover: "/placeholders/casais-cover.jpg",
-    albums: [
-      { id: "casais-igor", title: "Por Igor Gagliardi", cover: "/placeholders/casais-cover.jpg", photos: Array(6).fill(null).map((_, i) => `/placeholders/igor-${i + 1}.jpg`) },
-      { id: "casais-equipe", title: "Por Equipe Studio 131", cover: "/placeholders/casais-cover.jpg", photos: Array(6).fill(null).map((_, i) => `/placeholders/equipe-${i + 1}.jpg`) },
+    description: "O amor em sua forma mais genuína. Registramos a cumplicidade e a conexão de casais com um olhar sensível e poético.",
+    sections: [
+      {
+        photographer: "Igor Gagliardi",
+        subtitle: "10 anos de repertório e olhar cirúrgico",
+        albums: [
+          { id: "cas-igor-1", title: "Sessão Marina & Gustavo", cover: "/placeholders/casais-cover.jpg", photos: Array(6).fill("/placeholders/casais-cover.jpg") },
+          { id: "cas-igor-2", title: "Sessão Priscila & Diego", cover: "/placeholders/casais-cover.jpg", photos: Array(6).fill("/placeholders/casais-cover.jpg") },
+        ],
+      },
+      {
+        photographer: "Equipe Studio 131",
+        subtitle: "Sensibilidade e técnica em cada registro",
+        albums: [
+          { id: "cas-eq-1", title: "Sessão Letícia & Felipe", cover: "/placeholders/casais-cover.jpg", photos: Array(6).fill("/placeholders/casais-cover.jpg") },
+          { id: "cas-eq-2", title: "Sessão Renata & Vinícius", cover: "/placeholders/casais-cover.jpg", photos: Array(6).fill("/placeholders/casais-cover.jpg") },
+        ],
+      },
     ],
   },
   {
     id: "pessoal",
     title: "Pessoal",
     cover: "/placeholders/pessoal-cover.jpg",
-    albums: [
-      { id: "pessoal-igor", title: "Por Igor Gagliardi", cover: "/placeholders/pessoal-cover.jpg", photos: Array(6).fill(null).map((_, i) => `/placeholders/igor-${i + 1}.jpg`) },
-      { id: "pessoal-equipe", title: "Por Equipe Studio 131", cover: "/placeholders/pessoal-cover.jpg", photos: Array(6).fill(null).map((_, i) => `/placeholders/equipe-${i + 1}.jpg`) },
+    description: "Sessões descontraídas que capturam quem você realmente é. Fotos autênticas para guardar momentos que importam.",
+    sections: [
+      {
+        photographer: "Igor Gagliardi",
+        subtitle: "10 anos de repertório e olhar cirúrgico",
+        albums: [
+          { id: "pes-igor-1", title: "Sessão Gabriel Santos", cover: "/placeholders/pessoal-cover.jpg", photos: Array(6).fill("/placeholders/pessoal-cover.jpg") },
+          { id: "pes-igor-2", title: "Sessão Natália Ferreira", cover: "/placeholders/pessoal-cover.jpg", photos: Array(6).fill("/placeholders/pessoal-cover.jpg") },
+        ],
+      },
+      {
+        photographer: "Equipe Studio 131",
+        subtitle: "Sensibilidade e técnica em cada registro",
+        albums: [
+          { id: "pes-eq-1", title: "Sessão Ricardo Lopes", cover: "/placeholders/pessoal-cover.jpg", photos: Array(6).fill("/placeholders/pessoal-cover.jpg") },
+          { id: "pes-eq-2", title: "Sessão Aline Moreira", cover: "/placeholders/pessoal-cover.jpg", photos: Array(6).fill("/placeholders/pessoal-cover.jpg") },
+        ],
+      },
     ],
   },
   {
     id: "eventos",
     title: "Eventos",
     cover: "/placeholders/eventos-cover.jpg",
-    albums: [
-      { id: "eventos-igor", title: "Por Igor Gagliardi", cover: "/placeholders/eventos-cover.jpg", photos: Array(6).fill(null).map((_, i) => `/placeholders/igor-${i + 1}.jpg`) },
-      { id: "eventos-equipe", title: "Por Equipe Studio 131", cover: "/placeholders/eventos-cover.jpg", photos: Array(6).fill(null).map((_, i) => `/placeholders/equipe-${i + 1}.jpg`) },
+    description: "Cobertura completa de eventos sociais e corporativos. Cada momento é registrado com atenção aos detalhes e à emoção do instante.",
+    sections: [
+      {
+        photographer: "Igor Gagliardi",
+        subtitle: "10 anos de repertório e olhar cirúrgico",
+        albums: [
+          { id: "ev-igor-1", title: "Formatura Medicina USP", cover: "/placeholders/eventos-cover.jpg", photos: Array(6).fill("/placeholders/eventos-cover.jpg") },
+          { id: "ev-igor-2", title: "Evento Corporativo ACME", cover: "/placeholders/eventos-cover.jpg", photos: Array(6).fill("/placeholders/eventos-cover.jpg") },
+        ],
+      },
+      {
+        photographer: "Equipe Studio 131",
+        subtitle: "Sensibilidade e técnica em cada registro",
+        albums: [
+          { id: "ev-eq-1", title: "Aniversário 50 anos Sr. João", cover: "/placeholders/eventos-cover.jpg", photos: Array(6).fill("/placeholders/eventos-cover.jpg") },
+          { id: "ev-eq-2", title: "Workshop Criativo 2024", cover: "/placeholders/eventos-cover.jpg", photos: Array(6).fill("/placeholders/eventos-cover.jpg") },
+        ],
+      },
     ],
   },
 ];
@@ -76,6 +183,21 @@ const galleries: Gallery[] = [
 interface GalleriesSectionProps {
   onOpenBookingChat?: () => void;
 }
+
+const PriceBar = ({ onAgendar }: { onAgendar: () => void }) => (
+  <div className="sticky bottom-0 left-0 right-0 bg-primary/90 backdrop-blur-sm px-6 py-4 flex items-center justify-between gap-4 rounded-b-2xl">
+    <p className="text-primary-foreground text-sm md:text-base">
+      Sessões a partir de <span className="font-semibold">R$797,00</span> a <span className="font-semibold">R$2.250,00</span>
+    </p>
+    <button
+      onClick={onAgendar}
+      className="flex items-center gap-2 px-6 py-3 bg-background text-foreground text-sm tracking-wider uppercase rounded-full hover:bg-background/90 transition-colors whitespace-nowrap"
+    >
+      <Calendar size={18} />
+      Agendar agora
+    </button>
+  </div>
+);
 
 const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
   const [openGalleryId, setOpenGalleryId] = useState<string | null>(null);
@@ -91,10 +213,6 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
     } else {
       window.dispatchEvent(new CustomEvent("openBookingChat"));
     }
-  };
-
-  const handleBackToGallery = () => {
-    setOpenAlbum(null);
   };
 
   return (
@@ -118,7 +236,6 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                 loading="lazy"
                 decoding="async"
               />
-              {/* Centered title + subtitle */}
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
                 <h3 className="font-epika text-primary-foreground text-xl md:text-2xl drop-shadow-lg">
                   {gallery.title}
@@ -132,7 +249,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
         </div>
       </div>
 
-      {/* Modal: Albums dentro da galeria */}
+      {/* Modal: Galeria com seções de fotógrafo e álbuns */}
       <AnimatePresence>
         {openGalleryId && currentGallery && !openAlbum && (
           <motion.div
@@ -143,7 +260,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
             onClick={() => setOpenGalleryId(null)}
           >
             <motion.div
-              className="relative max-w-5xl w-full max-h-[90vh] overflow-y-auto bg-background rounded-2xl p-6"
+              className="relative max-w-5xl w-full max-h-[90vh] overflow-y-auto bg-background rounded-2xl"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -156,32 +273,64 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                 <X size={24} className="text-foreground" />
               </button>
 
-              <h3 className="font-epika text-2xl text-foreground text-center mb-8">
-                {currentGallery.title}
-              </h3>
+              <div className="p-6 md:p-10 pb-24">
+                {/* Título e descrição */}
+                <h3 className="font-epika text-2xl md:text-3xl text-foreground text-center mb-3">
+                  {currentGallery.title}
+                </h3>
+                <p className="text-muted-foreground text-center text-sm md:text-base max-w-2xl mx-auto mb-10">
+                  {currentGallery.description}
+                </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {currentGallery.albums.map((album) => (
-                  <div
-                    key={album.id}
-                    className="relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer group"
-                    onClick={() => setOpenAlbum(album)}
-                  >
-                    <img
-                      src={album.cover}
-                      alt={album.title}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/50 transition-colors" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <h4 className="font-epika text-primary-foreground text-lg md:text-xl text-center px-4">
-                        {album.title}
+                {/* Seções por fotógrafo */}
+                {currentGallery.sections.map((section, sIdx) => (
+                  <div key={section.photographer}>
+                    {/* Divisor entre seções */}
+                    {sIdx > 0 && (
+                      <div className="flex items-center gap-4 my-10">
+                        <div className="flex-1 h-px bg-border" />
+                        <span className="text-xs text-muted-foreground tracking-widest">•••</span>
+                        <div className="flex-1 h-px bg-border" />
+                      </div>
+                    )}
+
+                    {/* Título do fotógrafo */}
+                    <div className="mb-6 text-center">
+                      <h4 className="text-foreground/70 text-base md:text-lg">
+                        Fotografia assinada por{" "}
+                        <span className="text-foreground font-semibold">{section.photographer}</span>
                       </h4>
+                      <p className="text-muted-foreground text-xs mt-1">{section.subtitle}</p>
+                    </div>
+
+                    {/* Grid de álbuns */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                      {section.albums.map((album) => (
+                        <div
+                          key={album.id}
+                          className="relative aspect-[4/5] rounded-xl overflow-hidden cursor-pointer group"
+                          onClick={() => setOpenAlbum(album)}
+                        >
+                          <img
+                            src={album.cover}
+                            alt={album.title}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-primary/30 group-hover:bg-primary/50 transition-colors" />
+                          <div className="absolute inset-0 flex items-end p-3">
+                            <span className="text-primary-foreground text-xs md:text-sm font-semibold drop-shadow-lg leading-tight">
+                              {album.title}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ))}
               </div>
+
+              <PriceBar onAgendar={handleAgendarClick} />
             </motion.div>
           </motion.div>
         )}
@@ -204,9 +353,10 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Header com voltar */}
               <div className="sticky top-0 bg-background/95 backdrop-blur-sm z-10 px-6 py-4 flex items-center gap-4 border-b border-border rounded-t-2xl">
                 <button
-                  onClick={handleBackToGallery}
+                  onClick={() => setOpenAlbum(null)}
                   className="p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
                 >
                   <ArrowLeft size={20} className="text-foreground" />
@@ -238,19 +388,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                 </div>
               </div>
 
-              {/* Barra fixa de preço */}
-              <div className="sticky bottom-0 left-0 right-0 bg-primary/90 backdrop-blur-sm px-6 py-4 flex items-center justify-between gap-4 rounded-b-2xl">
-                <p className="text-primary-foreground text-sm md:text-base">
-                  Sessões a partir de <span className="font-semibold">R$797,00</span> a <span className="font-semibold">R$2.250,00</span>
-                </p>
-                <button
-                  onClick={handleAgendarClick}
-                  className="flex items-center gap-2 px-6 py-3 bg-background text-foreground text-sm tracking-wider uppercase rounded-full hover:bg-background/90 transition-colors whitespace-nowrap"
-                >
-                  <Calendar size={18} />
-                  Agendar agora
-                </button>
-              </div>
+              <PriceBar onAgendar={handleAgendarClick} />
             </motion.div>
           </motion.div>
         )}
