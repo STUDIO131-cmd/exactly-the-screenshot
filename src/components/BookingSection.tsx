@@ -17,8 +17,8 @@ const BookingSection = () => {
   return (
     <section className="py-16 px-6">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="font-display text-3xl md:text-4xl mb-4">Agende sua sessão</h2>
-        <p className="font-body text-primary-foreground/70 mb-12">
+        <h2 className="font-display text-3xl md:text-4xl mb-4 text-foreground">Agende sua sessão</h2>
+        <p className="font-body text-muted-foreground mb-12">
           Selecione uma data e entre em contato pelo WhatsApp
         </p>
 
