@@ -27,7 +27,7 @@ const galleries: Gallery[] = [
 {
   id: "retratos",
   title: "Retratos Profissionais",
-  cover: "/placeholders/retratos-cover.jpg",
+  cover: "/placeholders/retratos-cover.png",
   description: "Retratos que traduzem personalidade e presença. Cada clique é pensado para revelar o melhor de você — seja para uso corporativo, redes sociais ou portfólio pessoal.",
   sections: [
   {
@@ -59,7 +59,7 @@ const galleries: Gallery[] = [
 {
   id: "gestantes",
   title: "Gestantes",
-  cover: "/placeholders/gestantes-cover.jpg",
+  cover: "/placeholders/gestantes-cover.png",
   description: "A espera de uma nova vida merece ser eternizada com delicadeza. Fotografamos a beleza da gestação com luz natural e ambientes que acolhem.",
   sections: [
   {
@@ -85,7 +85,7 @@ const galleries: Gallery[] = [
 {
   id: "15anos",
   title: "15 Anos",
-  cover: "/placeholders/15anos-cover.jpg",
+  cover: "/placeholders/15anos-cover.png",
   description: "Uma celebração única que marca a transição para a vida adulta. Capturamos a essência e a alegria desse momento com autenticidade.",
   sections: [
   {
@@ -109,7 +109,7 @@ const galleries: Gallery[] = [
 {
   id: "casais",
   title: "Casais",
-  cover: "/placeholders/casais-cover.jpg",
+  cover: "/placeholders/casais-cover.png",
   description: "O amor em sua forma mais genuína. Registramos a cumplicidade e a conexão de casais com um olhar sensível e poético.",
   sections: [
   {
@@ -133,7 +133,7 @@ const galleries: Gallery[] = [
 {
   id: "pessoal",
   title: "Pessoal",
-  cover: "/placeholders/pessoal-cover.jpg",
+  cover: "/placeholders/pessoal-cover.png",
   description: "Sessões descontraídas que capturam quem você realmente é. Fotos autênticas para guardar momentos que importam.",
   sections: [
   {
@@ -157,7 +157,7 @@ const galleries: Gallery[] = [
 {
   id: "eventos",
   title: "Eventos",
-  cover: "/placeholders/eventos-cover.jpg",
+  cover: "/placeholders/eventos-cover.png",
   description: "Cobertura completa de eventos sociais e corporativos. Cada momento é registrado com atenção aos detalhes e à emoção do instante.",
   sections: [
   {
@@ -236,13 +236,15 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
               loading="lazy"
               decoding="async" />
             
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <h3 className="text-primary-foreground text-xl md:text-2xl drop-shadow-lg font-sans">
-                  {gallery.title}
-                </h3>
-                <p className="text-primary-foreground/70 text-xs tracking-wider uppercase mt-1 drop-shadow-md font-sans">
-                  Confira álbuns
-                </p>
+              <div className="absolute inset-0 flex flex-col items-end justify-end text-center p-4">
+                <div className="bg-neutral-200/15 backdrop-blur-md rounded-xl px-5 py-3 w-full">
+                  <h3 className="text-neutral-100 text-xl md:text-2xl drop-shadow-lg">
+                    {gallery.title}
+                  </h3>
+                  <p className="text-neutral-300/80 text-xs tracking-wider uppercase mt-1 drop-shadow-md">
+                    Confira álbuns
+                  </p>
+                </div>
               </div>
             </div>
           )}
