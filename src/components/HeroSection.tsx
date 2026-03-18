@@ -10,11 +10,18 @@ const HeroSection = () => {
         transition={{ duration: 0.8 }}
         className="text-center flex flex-col items-center gap-8"
       >
-        <img
-          src={logoWhite}
-          alt="131 Fotos"
-          className="w-48 md:w-64 h-auto"
-        />
+        <motion.div
+          className="px-10 py-5 rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 backdrop-blur-md shadow-lg"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+        >
+          <img
+            src={logoWhite}
+            alt="131 Fotos"
+            className="w-28 md:w-36 h-auto"
+          />
+        </motion.div>
 
         <div className="text-primary-foreground/80 text-base md:text-lg leading-relaxed tracking-wide">
           <p>Poesia, sensibilidade e eternidade.</p>
