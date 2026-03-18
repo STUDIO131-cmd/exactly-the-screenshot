@@ -277,10 +277,10 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
 
               <div className="p-6 md:p-10 pb-24">
                 {/* Título e descrição */}
-                <h3 className="text-2xl md:text-3xl text-neutral-200 text-center mb-3">
+                <h3 className="text-2xl text-neutral-200 text-center mb-3 md:text-4xl font-sans">
                   {currentGallery.title}
                 </h3>
-                <p className="text-muted-foreground text-center text-sm md:text-base max-w-2xl mx-auto mb-10">
+                <p className="text-muted-foreground text-center text-sm md:text-base max-w-2xl mx-auto mb-10 font-sans">
                   {currentGallery.description}
                 </p>
 
@@ -298,11 +298,11 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
 
                     {/* Título do fotógrafo */}
                     <div className="mb-6 text-center">
-                      <h4 className="text-foreground/70 text-base md:text-lg">
+                      <h4 className="text-foreground/70 text-base md:text-lg font-sans">
                         Fotografia assinada por{" "}
-                        <span className="text-foreground font-semibold">{section.photographer}</span>
+                        <span className="text-foreground font-sans font-thin">{section.photographer}</span>
                       </h4>
-                      <p className="text-muted-foreground text-xs mt-1">{section.subtitle}</p>
+                      <p className="text-muted-foreground text-xs mt-1 font-sans">{section.subtitle}</p>
                     </div>
 
                     {/* Grid de álbuns */}
