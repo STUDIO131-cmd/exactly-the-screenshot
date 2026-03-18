@@ -3,7 +3,7 @@ import logoWhite from "@/assets/logo-white.svg";
 
 const HeroSection = () => {
   return (
-    <section className="min-h-[60vh] bg-primary flex flex-col items-center justify-center px-6 py-16">
+    <section className="min-h-[60vh] flex flex-col items-center justify-center px-6 py-16">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

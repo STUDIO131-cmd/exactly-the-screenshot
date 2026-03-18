@@ -30,7 +30,7 @@ const packages = [
 
 const PricingSection = () => {
   return (
-    <section className="py-16 px-6 bg-surface-subtle">
+    <section className="py-16 px-6">
       <div className="max-w-5xl mx-auto">
         <h2 className="font-display text-3xl md:text-4xl text-center mb-4 text-foreground">
           Investimento
