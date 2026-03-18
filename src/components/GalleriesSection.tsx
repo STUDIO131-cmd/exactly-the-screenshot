@@ -176,6 +176,34 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightboxPhoto && (
+          <motion.div
+            className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4 cursor-pointer"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setLightboxPhoto(null)}
+          >
+            <button
+              onClick={() => setLightboxPhoto(null)}
+              className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors z-20"
+            >
+              <X size={24} className="text-white" />
+            </button>
+            <motion.img
+              src={lightboxPhoto}
+              alt="Foto ampliada"
+              className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
