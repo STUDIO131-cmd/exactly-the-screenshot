@@ -16,10 +16,10 @@ const TestimonialsSection = () => {
   return (
     <section className="py-16 px-6 bg-surface-subtle">
       <div className="max-w-6xl mx-auto">
-        <h2 className="font-tiktok text-3xl md:text-4xl text-center mb-4 text-foreground">
+        <h2 className="font-display text-3xl md:text-4xl text-center mb-4 text-foreground">
           O que se vive através da fotografia
         </h2>
-        <p className="font-tiktok text-center text-muted-foreground mb-12">
+        <p className="font-body text-center text-muted-foreground mb-12">
           Bastidores e depoimentos
         </p>
 
@@ -42,10 +42,10 @@ const TestimonialsSection = () => {
                   className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 aspect-[9/16] rounded-2xl overflow-hidden bg-primary flex items-center justify-center"
                 >
                   <div className="text-center p-6">
-                    <p className="font-tiktok text-primary-foreground text-xl mb-4">
+                    <p className="font-display text-primary-foreground text-xl mb-4">
                       "{item.name}"
                     </p>
-                    <p className="font-tiktok text-primary-foreground/60 text-sm">
+                    <p className="font-body text-primary-foreground/60 text-sm">
                       Vídeo de depoimento em breve
                     </p>
                   </div>

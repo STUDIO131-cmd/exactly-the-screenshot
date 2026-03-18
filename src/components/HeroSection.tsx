@@ -9,10 +9,10 @@ const HeroSection = () => {
         transition={{ duration: 0.8 }}
         className="text-center"
       >
-        <h1 className="font-tiktok text-primary-foreground text-5xl md:text-7xl font-bold tracking-tight mb-6">
+        <h1 className="font-display text-primary-foreground text-5xl md:text-7xl font-bold tracking-tight mb-6">
           131 Fotos
         </h1>
-        <p className="font-tiktok text-primary-foreground/70 text-sm md:text-base tracking-[0.3em] uppercase">
+        <p className="font-ui text-primary-foreground/70 text-sm md:text-base tracking-[0.3em] uppercase">
           Fotografia Lifestyle
         </p>
       </motion.div>

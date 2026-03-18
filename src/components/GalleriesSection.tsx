@@ -37,7 +37,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
   return (
     <section className="py-16 px-6 bg-background">
       <div className="max-w-6xl mx-auto">
-        <h2 className="font-tiktok text-3xl md:text-4xl text-center mb-12 text-foreground">
+        <h2 className="font-epika text-3xl md:text-4xl text-center mb-12 text-foreground">
           Galerias
         </h2>
 
@@ -56,7 +56,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                 decoding="async"
               />
               <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-primary/80 to-transparent">
-                <h3 className="font-tiktok text-primary-foreground text-xl md:text-2xl">
+                <h3 className="font-epika text-primary-foreground text-xl md:text-2xl">
                   {gallery.title}
                 </h3>
               </div>
@@ -98,13 +98,13 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
               {/* Conteúdo com padding para a barra fixa */}
               <div className="p-6 pb-24">
                 {/* Título */}
-                <h3 className="font-tiktok text-2xl text-foreground text-center mb-8">
+                <h3 className="font-epika text-2xl text-foreground text-center mb-8">
                   {currentGallery.title}
                 </h3>
 
                 {/* Seção 1: Fotos assinadas por Igor Gagliardi */}
                 <div className="mb-10">
-                  <h4 className="font-tiktok text-lg text-foreground/70 mb-4 text-center">
+                  <h4 className="font-moneta text-lg text-foreground/70 mb-4 text-center">
                     Fotos assinadas por <span className="text-foreground font-semibold">Igor Gagliardi</span>
                   </h4>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -132,7 +132,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
 
                 {/* Seção 2: Fotos assinadas por Equipe Studio 131 */}
                 <div>
-                  <h4 className="font-tiktok text-lg text-foreground/70 mb-4 text-center">
+                  <h4 className="font-moneta text-lg text-foreground/70 mb-4 text-center">
                     Fotos assinadas por <span className="text-foreground font-semibold">Equipe Studio 131</span>
                   </h4>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -152,7 +152,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
 
               {/* Barra Fixa de Preço (overlay com baixa opacidade) */}
               <div className="sticky bottom-0 left-0 right-0 bg-primary/90 backdrop-blur-sm px-6 py-4 flex items-center justify-between gap-4 rounded-b-2xl">
-                <p className="font-tiktok text-primary-foreground text-sm md:text-base">
+                <p className="font-moneta text-primary-foreground text-sm md:text-base">
                   Sessões a partir de <span className="font-semibold">R$797,00</span> a <span className="font-semibold">R$2.250,00</span>
                 </p>
                 <button
