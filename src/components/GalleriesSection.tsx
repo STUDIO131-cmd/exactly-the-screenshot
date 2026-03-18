@@ -116,7 +116,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                     Fotos assinadas por <span className="text-foreground font-semibold">Igor Gagliardi</span>
                   </h4>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    {igorPhotos.map((photo, i) => (
+                    {(igorPhotosByGallery[openGallery] || defaultIgorPhotos).map((photo, i) => (
                       <div key={`igor-${i}`} className="aspect-[4/5] rounded-lg overflow-hidden bg-muted">
                         <img
                           src={currentGallery.cover}
