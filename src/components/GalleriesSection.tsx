@@ -59,7 +59,7 @@ const galleries: Gallery[] = [
 {
   id: "gestantes",
   title: "Gestantes",
-  cover: "/placeholders/gestantes-cover.jpg",
+  cover: "/placeholders/gestantes-cover.png",
   description: "A espera de uma nova vida merece ser eternizada com delicadeza. Fotografamos a beleza da gestação com luz natural e ambientes que acolhem.",
   sections: [
   {
