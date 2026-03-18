@@ -133,7 +133,7 @@ const galleries: Gallery[] = [
 {
   id: "pessoal",
   title: "Pessoal",
-  cover: "/placeholders/pessoal-cover.jpg",
+  cover: "/placeholders/pessoal-cover.png",
   description: "Sessões descontraídas que capturam quem você realmente é. Fotos autênticas para guardar momentos que importam.",
   sections: [
   {
