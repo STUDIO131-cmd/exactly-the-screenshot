@@ -10,15 +10,15 @@ const categories = [
 
 const CategoriesTicker = () => {
   return (
-    <section className="py-6 border-y border-border overflow-hidden">
+    <section className="py-6 border-y border-neutral-700/30 overflow-hidden">
       <div className="flex animate-scroll-left whitespace-nowrap">
         {[...categories, ...categories, ...categories].map((cat, i) => (
           <span
             key={i}
-            className="font-display text-lg md:text-xl text-foreground/80 mx-8"
+            className="text-lg md:text-xl text-neutral-300 mx-8"
           >
             {cat}
-            <span className="mx-8 text-foreground/30">•</span>
+            <span className="mx-8 text-neutral-500">•</span>
           </span>
         ))}
       </div>

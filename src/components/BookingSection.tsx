@@ -17,25 +17,25 @@ const BookingSection = () => {
   return (
     <section className="py-16 px-6">
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="font-display text-3xl md:text-4xl mb-4 text-foreground">Agende sua sessão</h2>
-        <p className="font-body text-muted-foreground mb-12">
+        <h2 className="text-3xl md:text-4xl mb-4 text-neutral-200">Agende sua sessão</h2>
+        <p className="text-neutral-400 mb-12">
           Selecione uma data e entre em contato pelo WhatsApp
         </p>
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-          <div className="bg-background rounded-2xl p-4">
+          <div className="bg-neutral-800/40 backdrop-blur-sm border border-neutral-700/30 rounded-2xl p-4">
             <Calendar
               mode="single"
               selected={selectedDate}
               onSelect={setSelectedDate}
               disabled={(date) => date < new Date()}
-              className="text-foreground"
+              className="text-neutral-200"
             />
           </div>
 
           <div className="text-left space-y-4">
             {selectedDate && (
-              <p className="font-body text-lg">
+              <p className="text-lg text-neutral-300">
                 Data selecionada:{" "}
                 <strong>{selectedDate.toLocaleDateString("pt-BR")}</strong>
               </p>
@@ -44,17 +44,17 @@ const BookingSection = () => {
             <button
               onClick={handleBooking}
               disabled={!selectedDate}
-              className={`flex items-center gap-3 px-8 py-4 rounded-full font-ui text-sm tracking-wider uppercase transition-all ${
+              className={`flex items-center gap-3 px-8 py-4 rounded-full text-sm tracking-wider uppercase transition-all ${
                 selectedDate
-                  ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                  : "bg-muted text-muted-foreground cursor-not-allowed"
+                  ? "bg-neutral-200 text-neutral-900 hover:bg-neutral-300"
+                  : "bg-neutral-700/50 text-neutral-500 cursor-not-allowed"
               }`}
             >
               <MessageCircle size={20} />
               Continuar no WhatsApp
             </button>
 
-            <p className="text-primary-foreground/50 text-sm">
+            <p className="text-neutral-500 text-sm">
               Responderemos em até 24 horas
             </p>
           </div>
