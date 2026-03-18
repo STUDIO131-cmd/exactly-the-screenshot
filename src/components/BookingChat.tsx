@@ -202,7 +202,7 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
                         : "bg-background text-foreground shadow-sm rounded-bl-md"
                     }`}
                   >
-                    <p className="font-moneta text-sm">{msg.text}</p>
+                    <p className="font-tiktok text-sm">{msg.text}</p>
                     
                     {/* Options */}
                     {msg.options && msg.type === "bot" && (
