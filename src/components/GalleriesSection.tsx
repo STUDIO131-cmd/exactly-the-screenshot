@@ -109,7 +109,7 @@ const galleries: Gallery[] = [
 {
   id: "casais",
   title: "Casais",
-  cover: "/placeholders/casais-cover.jpg",
+  cover: "/placeholders/casais-cover.png",
   description: "O amor em sua forma mais genuína. Registramos a cumplicidade e a conexão de casais com um olhar sensível e poético.",
   sections: [
   {
