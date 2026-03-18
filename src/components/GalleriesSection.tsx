@@ -157,7 +157,7 @@ const galleries: Gallery[] = [
 {
   id: "eventos",
   title: "Eventos",
-  cover: "/placeholders/eventos-cover.jpg",
+  cover: "/placeholders/eventos-cover.png",
   description: "Cobertura completa de eventos sociais e corporativos. Cada momento é registrado com atenção aos detalhes e à emoção do instante.",
   sections: [
   {
