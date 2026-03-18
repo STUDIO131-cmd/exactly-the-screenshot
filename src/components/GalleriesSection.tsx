@@ -363,7 +363,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                 </button>
                 <div>
                   <p className="text-sm text-muted-foreground">{currentGallery.title}</p>
-                  <h3 className="font-epika text-xl text-foreground">{openAlbum.title}</h3>
+                  <h3 className="text-xl text-neutral-200">{openAlbum.title}</h3>
                 </div>
                 <button
                   onClick={() => { setOpenAlbum(null); setOpenGalleryId(null); }}
