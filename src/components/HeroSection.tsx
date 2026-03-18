@@ -44,9 +44,9 @@ const HeroSection = () => {
           {/* CTA Button */}
           <motion.button
             onClick={handleCTA}
-            whileHover={{ scale: 1.03 }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
-            className="font-tiktok font-semibold text-sm md:text-base bg-accent text-accent-foreground px-8 py-4 rounded-full tracking-wide uppercase hover:brightness-110 transition-all shadow-lg shadow-accent/20"
+            className="font-tiktok font-semibold text-sm md:text-base bg-accent text-accent-foreground px-8 py-4 rounded-full tracking-wide uppercase transition-all animate-neon-pulse"
           >
             Agendar Sessão
           </motion.button>
