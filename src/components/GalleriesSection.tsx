@@ -236,13 +236,15 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
               loading="lazy"
               decoding="async" />
             
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <h3 className="text-primary-foreground text-xl md:text-2xl drop-shadow-lg font-sans">
-                  {gallery.title}
-                </h3>
-                <p className="text-primary-foreground/70 text-xs tracking-wider uppercase mt-1 drop-shadow-md font-sans">
-                  Confira álbuns
-                </p>
+              <div className="absolute inset-0 flex flex-col items-end justify-end text-center p-4">
+                <div className="bg-neutral-200/15 backdrop-blur-md rounded-xl px-5 py-3 w-full">
+                  <h3 className="text-neutral-100 text-xl md:text-2xl drop-shadow-lg">
+                    {gallery.title}
+                  </h3>
+                  <p className="text-neutral-300/80 text-xs tracking-wider uppercase mt-1 drop-shadow-md">
+                    Confira álbuns
+                  </p>
+                </div>
               </div>
             </div>
           )}
