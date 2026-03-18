@@ -10,11 +10,11 @@ const AboutSection = () => {
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
       >
-        <h2 className="font-display text-3xl md:text-4xl mb-8 text-foreground">
+        <h2 className="text-3xl md:text-4xl mb-8 text-neutral-200">
           O que fotografamos
         </h2>
 
-        <div className="font-body text-lg md:text-xl leading-relaxed text-foreground/80 space-y-6">
+        <div className="text-lg md:text-xl leading-relaxed text-neutral-300 space-y-6">
           <p>Fotografamos pessoas em momentos reais da vida.</p>
           <p>Não personagens. Não poses vazias. Não há cenas fabricadas.</p>
           <p>
@@ -22,7 +22,7 @@ const AboutSection = () => {
             acontece entre um gesto e outro. No silêncio, no riso espontâneo, no olhar que
             não precisa ser ensaiado.
           </p>
-          <p className="text-muted-foreground">
+          <p className="text-neutral-400">
             Ensaios pessoais. Casais. Gestantes. Retratos. 15 anos. Pequenos eventos.
           </p>
           <p>
@@ -30,10 +30,10 @@ const AboutSection = () => {
             <br />
             <strong>É o momento vivido.</strong>
           </p>
-          <p className="font-display text-2xl md:text-3xl text-foreground mt-8">
+          <p className="text-2xl md:text-3xl text-neutral-200 mt-8">
             Poesia, sensibilidade e eternidade.
           </p>
-          <p className="text-muted-foreground text-base">
+          <p className="text-neutral-400 text-base">
             Esse é o nosso olhar para a sua história.
             <br />
             <em>Fotografia documental.</em>

@@ -23,13 +23,13 @@ const HeroSection = () => {
           />
         </motion.div>
 
-        <div className="text-primary-foreground/80 text-base md:text-lg leading-relaxed tracking-wide">
+        <div className="text-neutral-300 text-base md:text-lg leading-relaxed tracking-wide">
           <p>Poesia, sensibilidade e eternidade.</p>
           <p>Esse é o nosso olhar para a sua história.</p>
         </div>
 
-        <div className="px-6 py-3 rounded-full border border-primary-foreground/20 bg-primary-foreground/5 backdrop-blur-sm">
-          <span className="text-primary-foreground/70 text-sm md:text-base tracking-[0.2em] uppercase">
+        <div className="px-6 py-3 rounded-full border border-neutral-400/20 bg-neutral-400/5 backdrop-blur-sm">
+          <span className="text-neutral-400 text-sm md:text-base tracking-[0.2em] uppercase">
             Fotografia documental
           </span>
         </div>

@@ -32,10 +32,10 @@ const PricingSection = () => {
   return (
     <section className="py-16 px-6">
       <div className="max-w-5xl mx-auto">
-        <h2 className="font-display text-3xl md:text-4xl text-center mb-4 text-foreground">
+        <h2 className="text-3xl md:text-4xl text-center mb-4 text-neutral-200">
           Investimento
         </h2>
-        <p className="font-body text-center text-muted-foreground mb-12">
+        <p className="text-center text-neutral-400 mb-12">
           Pacotes a partir de R$ 797
         </p>
 
@@ -45,25 +45,25 @@ const PricingSection = () => {
               key={pkg.name}
               className={`p-8 rounded-2xl transition-transform hover:-translate-y-1 duration-300 ${
                 pkg.highlighted
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-background border border-border"
+                  ? "bg-neutral-200 text-neutral-900"
+                  : "bg-neutral-800/40 backdrop-blur-sm border border-neutral-700/30 text-neutral-200"
               }`}
             >
-              <h3 className="font-display text-xl mb-2">{pkg.name}</h3>
+              <h3 className="text-xl mb-2">{pkg.name}</h3>
               <p
                 className={`text-sm mb-4 ${
-                  pkg.highlighted ? "text-primary-foreground/70" : "text-muted-foreground"
+                  pkg.highlighted ? "text-neutral-600" : "text-neutral-400"
                 }`}
               >
                 {pkg.description}
               </p>
-              <p className="font-display text-3xl mb-6">{pkg.price}</p>
+              <p className="text-3xl mb-6">{pkg.price}</p>
               <ul className="space-y-2">
                 {pkg.features.map((feature, i) => (
                   <li
                     key={i}
-                    className={`text-sm flex items-center gap-2 font-body ${
-                      pkg.highlighted ? "text-primary-foreground/80" : "text-foreground/70"
+                    className={`text-sm flex items-center gap-2 ${
+                      pkg.highlighted ? "text-neutral-700" : "text-neutral-400"
                     }`}
                   >
                     <Check size={16} />
@@ -75,7 +75,7 @@ const PricingSection = () => {
           ))}
         </div>
 
-        <p className="text-center text-muted-foreground text-sm mt-8">
+        <p className="text-center text-neutral-500 text-sm mt-8">
           * Valores sujeitos a alteração. Consulte disponibilidade.
         </p>
       </div>
