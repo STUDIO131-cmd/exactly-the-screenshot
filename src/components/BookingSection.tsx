@@ -46,8 +46,8 @@ const BookingSection = () => {
               disabled={!selectedDate}
               className={`flex items-center gap-3 px-8 py-4 rounded-full font-ui text-sm tracking-wider uppercase transition-all ${
                 selectedDate
-                  ? "bg-background text-foreground hover:bg-background/90"
-                  : "bg-primary-foreground/20 text-primary-foreground/50 cursor-not-allowed"
+                  ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                  : "bg-muted text-muted-foreground cursor-not-allowed"
               }`}
             >
               <MessageCircle size={20} />
