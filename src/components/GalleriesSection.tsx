@@ -237,7 +237,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                 decoding="async"
               />
               <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <h3 className="font-epika text-primary-foreground text-xl md:text-2xl drop-shadow-lg">
+                <h3 className="text-primary-foreground text-xl md:text-2xl drop-shadow-lg">
                   {gallery.title}
                 </h3>
                 <p className="text-primary-foreground/70 text-xs tracking-wider uppercase mt-1 drop-shadow-md">
@@ -275,7 +275,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
 
               <div className="p-6 md:p-10 pb-24">
                 {/* Título e descrição */}
-                <h3 className="font-epika text-2xl md:text-3xl text-foreground text-center mb-3">
+                <h3 className="text-2xl md:text-3xl text-neutral-200 text-center mb-3">
                   {currentGallery.title}
                 </h3>
                 <p className="text-muted-foreground text-center text-sm md:text-base max-w-2xl mx-auto mb-10">
@@ -363,7 +363,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                 </button>
                 <div>
                   <p className="text-sm text-muted-foreground">{currentGallery.title}</p>
-                  <h3 className="font-epika text-xl text-foreground">{openAlbum.title}</h3>
+                  <h3 className="text-xl text-neutral-200">{openAlbum.title}</h3>
                 </div>
                 <button
                   onClick={() => { setOpenAlbum(null); setOpenGalleryId(null); }}
