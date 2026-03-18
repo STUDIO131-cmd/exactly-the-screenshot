@@ -29,6 +29,7 @@ interface GalleriesSectionProps {
 
 const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
   const [openGallery, setOpenGallery] = useState<string | null>(null);
+  const [lightboxPhoto, setLightboxPhoto] = useState<string | null>(null);
 
   const currentGallery = galleries.find((g) => g.id === openGallery);
 
