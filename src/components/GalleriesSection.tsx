@@ -119,7 +119,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                     {(igorPhotosByGallery[openGallery] || defaultIgorPhotos).map((photo, i) => (
                       <div key={`igor-${i}`} className="aspect-[4/5] rounded-lg overflow-hidden bg-muted">
                         <img
-                          src={currentGallery.cover}
+                          src={photo}
                           alt={`Igor Gagliardi - ${currentGallery.title} ${i + 1}`}
                           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                           loading="lazy"
