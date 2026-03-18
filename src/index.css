@@ -5,15 +5,15 @@
 /* ========== FONTES STUDIO 131 ========== */
 @font-face {
   font-family: 'TikTok Sans';
-  src: url('/fonts/TikTokSans-Regular.woff2') format('woff2');
-  font-weight: 400;
+  src: url('/fonts/TikTokSans-Light.ttf') format('truetype');
+  font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'TikTok Sans';
-  src: url('/fonts/TikTokSans-Bold.woff2') format('woff2');
-  font-weight: 700;
+  src: url('/fonts/TikTokSans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
