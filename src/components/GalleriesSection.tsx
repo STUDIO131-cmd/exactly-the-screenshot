@@ -29,6 +29,7 @@ interface GalleriesSectionProps {
 
 const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
   const [openGallery, setOpenGallery] = useState<string | null>(null);
+  const [lightboxPhoto, setLightboxPhoto] = useState<string | null>(null);
 
   const currentGallery = galleries.find((g) => g.id === openGallery);
 
@@ -117,7 +118,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                   </h4>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {(igorPhotosByGallery[openGallery] || defaultIgorPhotos).map((photo, i) => (
-                      <div key={`igor-${i}`} className="aspect-[4/5] rounded-lg overflow-hidden bg-muted">
+                      <div key={`igor-${i}`} className="aspect-[4/5] rounded-lg overflow-hidden bg-muted cursor-pointer" onClick={() => setLightboxPhoto(photo)}>
                         <img
                           src={photo}
                           alt={`Igor Gagliardi - ${currentGallery.title} ${i + 1}`}
@@ -145,7 +146,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                   </h4>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {equipePhotos.map((photo, i) => (
-                      <div key={`equipe-${i}`} className="aspect-[4/5] rounded-lg overflow-hidden bg-muted">
+                      <div key={`equipe-${i}`} className="aspect-[4/5] rounded-lg overflow-hidden bg-muted cursor-pointer" onClick={() => setLightboxPhoto(currentGallery.cover)}>
                         <img
                           src={currentGallery.cover}
                           alt={`Equipe Studio 131 - ${currentGallery.title} ${i + 1}`}
@@ -172,6 +173,34 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                 </button>
               </div>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightboxPhoto && (
+          <motion.div
+            className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4 cursor-pointer"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setLightboxPhoto(null)}
+          >
+            <button
+              onClick={() => setLightboxPhoto(null)}
+              className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors z-20"
+            >
+              <X size={24} className="text-white" />
+            </button>
+            <motion.img
+              src={lightboxPhoto}
+              alt="Foto ampliada"
+              className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+            />
           </motion.div>
         )}
       </AnimatePresence>
