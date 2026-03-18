@@ -118,14 +118,12 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                 loading="lazy"
                 decoding="async"
               />
-              {/* Bottom gradient for text readability */}
-              <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-primary/70 to-transparent" />
               {/* Centered title + subtitle */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col items-center text-center">
-                <h3 className="font-epika text-primary-foreground text-xl md:text-2xl">
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <h3 className="font-epika text-primary-foreground text-xl md:text-2xl drop-shadow-lg">
                   {gallery.title}
                 </h3>
-                <p className="text-primary-foreground/70 text-xs tracking-wider uppercase mt-1">
+                <p className="text-primary-foreground/70 text-xs tracking-wider uppercase mt-1 drop-shadow-md">
                   Confira álbuns
                 </p>
               </div>
