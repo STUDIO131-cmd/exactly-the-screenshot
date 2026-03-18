@@ -146,7 +146,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                   </h4>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {equipePhotos.map((photo, i) => (
-                      <div key={`equipe-${i}`} className="aspect-[4/5] rounded-lg overflow-hidden bg-muted">
+                      <div key={`equipe-${i}`} className="aspect-[4/5] rounded-lg overflow-hidden bg-muted cursor-pointer" onClick={() => setLightboxPhoto(currentGallery.cover)}>
                         <img
                           src={currentGallery.cover}
                           alt={`Equipe Studio 131 - ${currentGallery.title} ${i + 1}`}
