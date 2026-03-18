@@ -275,7 +275,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
 
               <div className="p-6 md:p-10 pb-24">
                 {/* Título e descrição */}
-                <h3 className="font-epika text-2xl md:text-3xl text-foreground text-center mb-3">
+                <h3 className="text-2xl md:text-3xl text-neutral-200 text-center mb-3">
                   {currentGallery.title}
                 </h3>
                 <p className="text-muted-foreground text-center text-sm md:text-base max-w-2xl mx-auto mb-10">
