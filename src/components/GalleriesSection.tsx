@@ -237,18 +237,12 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
               decoding="async" />
             
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-neutral-800/30 group-hover:bg-neutral-900/60 transition-colors duration-300 rounded-lg px-4 py-2 text-center">
-                  <h3 className="text-neutral-100 text-sm md:text-base drop-shadow-sm font-sans group-hover:hidden">
+                <div className="bg-neutral-800/30 rounded-lg px-4 py-2 text-center">
+                  <h3 className="text-neutral-100 text-sm md:text-base drop-shadow-sm font-sans">
                     {gallery.title}
                   </h3>
-                  <p className="text-neutral-300/60 text-[10px] tracking-widest uppercase mt-0.5 font-sans group-hover:hidden">
+                  <p className="text-neutral-300/60 text-[10px] tracking-widest uppercase mt-0.5 font-sans">
                     Ver álbuns
-                  </p>
-                  <p className="hidden group-hover:block text-neutral-100 text-sm md:text-base font-sans drop-shadow-sm">
-                    Clique e acesse
-                  </p>
-                  <p className="hidden group-hover:block text-neutral-100 text-sm md:text-base font-sans drop-shadow-sm">
-                    o portfólio
                   </p>
                 </div>
               </div>
