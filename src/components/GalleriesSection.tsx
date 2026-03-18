@@ -241,7 +241,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                   <h3 className="text-neutral-100 text-sm md:text-base drop-shadow-sm font-sans">
                     {gallery.title}
                   </h3>
-                  <p className="text-neutral-300/60 text-[10px] tracking-widest uppercase mt-0.5">
+                  <p className="text-neutral-300/60 text-[10px] tracking-widest uppercase mt-0.5 font-sans">
                     Ver álbuns
                   </p>
                 </div>
