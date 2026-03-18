@@ -237,7 +237,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
               decoding="async" />
             
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2 text-center">
+                <div className="bg-neutral-800/30 rounded-lg px-4 py-2 text-center">
                   <h3 className="text-neutral-100 text-sm md:text-base drop-shadow-sm">
                     {gallery.title}
                   </h3>
