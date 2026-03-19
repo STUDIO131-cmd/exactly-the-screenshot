@@ -17,7 +17,7 @@ const HeroSection = () => {
           transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}>
           
           <img
-            src={logoWhite}
+            src={logoHero}
             alt="131 Fotos"
             className="w-28 md:w-36 h-auto" />
           
