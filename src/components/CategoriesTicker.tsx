@@ -14,7 +14,7 @@ const CategoriesTicker = () => {
         {[...categories, ...categories, ...categories].map((cat, i) => (
           <span
             key={i}
-            className="text-lg md:text-xl text-stone-800 mx-5 font-sans font-semibold"
+            className="text-lg md:text-xl text-white mx-5 font-tiktok font-light"
           >
             {cat}
             <span className="mx-5 text-stone-600/40">•</span>
