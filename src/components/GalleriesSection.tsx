@@ -255,7 +255,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
       <AnimatePresence>
         {openGalleryId && currentGallery && !openAlbum &&
         <motion.div
-          className="fixed inset-0 z-50 bg-primary/90 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-primary/90 flex items-center justify-center p-2 md:p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
