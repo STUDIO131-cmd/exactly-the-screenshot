@@ -216,17 +216,17 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
   };
 
   return (
-    <section className="py-16 px-6">
+    <section className="py-16 px-4 md:px-6">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl text-center mb-12 text-neutral-200 md:text-5xl font-sans mx-[145px]">
+        <h2 className="text-3xl text-center mb-12 text-neutral-200 md:text-5xl font-sans mx-4 md:mx-[145px]">
           Galerias
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
           {galleries.map((gallery) =>
           <div
             key={gallery.id}
-            className="group relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer"
+            className="group relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.06)] hover:shadow-[0_0_30px_rgba(255,255,255,0.12)] transition-shadow duration-500"
             onClick={() => setOpenGalleryId(gallery.id)}>
             
               <img
@@ -237,11 +237,11 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
               decoding="async" />
             
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-neutral-800/30 rounded-lg px-4 py-2 text-center">
-                  <h3 className="text-neutral-100 text-sm md:text-base drop-shadow-sm font-sans">
+                <div className="bg-neutral-800/30 rounded-lg px-3 py-1.5 md:px-4 md:py-2 text-center">
+                  <h3 className="text-neutral-100 text-xs md:text-base drop-shadow-sm font-sans">
                     {gallery.title}
                   </h3>
-                  <p className="text-neutral-300/60 text-[10px] tracking-widest uppercase mt-0.5 font-sans">
+                  <p className="text-neutral-300/60 text-[9px] md:text-[10px] tracking-widest uppercase mt-0.5 font-sans">
                     Ver álbuns
                   </p>
                 </div>
