@@ -2,7 +2,7 @@ import { Instagram } from "lucide-react";
 
 const FooterSection = () => {
   return (
-    <footer className="py-12 px-6 border-t border-neutral-700/30">
+    <footer className="py-12 px-6 border-t border-neutral-700/30 font-sans font-light">
       <div className="max-w-4xl mx-auto flex flex-col items-center gap-6">
         <h2 className="text-2xl font-semibold text-neutral-200">131 Fotos</h2>
 
