@@ -106,7 +106,7 @@
   100% { transform: translateX(-33.33%); }
 }
 .animate-scroll-left {
-  animation: scroll-left 20s linear infinite;
+  animation: scroll-left 12s linear infinite;
 }
 
 /* Fade in */
