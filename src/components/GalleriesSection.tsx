@@ -185,15 +185,15 @@ interface GalleriesSectionProps {
 }
 
 const PriceBar = ({ onAgendar }: {onAgendar: () => void;}) =>
-<div className="sticky bottom-0 left-0 right-0 bg-primary/90 backdrop-blur-sm px-6 py-4 flex items-center justify-between gap-4 rounded-b-2xl">
-    <p className="text-primary-foreground text-sm md:text-base">
+<div className="sticky bottom-0 left-0 right-0 bg-primary/90 backdrop-blur-sm px-4 md:px-6 py-3 md:py-4 flex flex-col sm:flex-row items-center justify-between gap-2 md:gap-4 rounded-b-2xl">
+    <p className="text-primary-foreground text-xs md:text-sm lg:text-base text-center sm:text-left">
       Sessões a partir de <span className="font-semibold">R$797,00</span> a <span className="font-semibold">R$2.250,00</span>
     </p>
     <button
     onClick={onAgendar}
-    className="flex items-center gap-2 px-6 py-3 bg-background text-foreground text-sm tracking-wider uppercase rounded-full hover:bg-background/90 transition-colors whitespace-nowrap">
+    className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-background text-foreground text-xs md:text-sm tracking-wider uppercase rounded-full hover:bg-background/90 transition-colors whitespace-nowrap">
     
-      <Calendar size={18} />
+      <Calendar size={16} />
       Agendar agora
     </button>
   </div>;
@@ -216,17 +216,17 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
   };
 
   return (
-    <section className="py-16 px-6">
+    <section className="py-16 px-4 md:px-6">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl text-center mb-12 text-neutral-200 md:text-5xl font-sans mx-[145px]">
+        <h2 className="text-3xl text-center mb-12 text-neutral-200 md:text-5xl font-sans mx-4 md:mx-[145px]">
           Galerias
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
           {galleries.map((gallery) =>
           <div
             key={gallery.id}
-            className="group relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer"
+            className="group relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.06)] hover:shadow-[0_0_30px_rgba(255,255,255,0.12)] transition-shadow duration-500"
             onClick={() => setOpenGalleryId(gallery.id)}>
             
               <img
@@ -237,11 +237,11 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
               decoding="async" />
             
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-neutral-800/30 rounded-lg px-4 py-2 text-center">
-                  <h3 className="text-neutral-100 text-sm md:text-base drop-shadow-sm font-sans">
+                <div className="bg-neutral-800/30 rounded-lg px-3 py-1.5 md:px-4 md:py-2 text-center">
+                  <h3 className="text-neutral-100 text-xs md:text-base drop-shadow-sm font-sans">
                     {gallery.title}
                   </h3>
-                  <p className="text-neutral-300/60 text-[10px] tracking-widest uppercase mt-0.5 font-sans">
+                  <p className="text-neutral-300/60 text-[9px] md:text-[10px] tracking-widest uppercase mt-0.5 font-sans">
                     Ver álbuns
                   </p>
                 </div>
@@ -255,7 +255,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
       <AnimatePresence>
         {openGalleryId && currentGallery && !openAlbum &&
         <motion.div
-          className="fixed inset-0 z-50 bg-primary/90 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-primary/90 flex items-center justify-center p-2 md:p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -275,7 +275,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                 <X size={24} className="text-foreground" />
               </button>
 
-              <div className="p-6 md:p-10 pb-24">
+              <div className="p-4 md:p-6 lg:p-10 pb-24">
                 {/* Título e descrição */}
                 <h3 className="text-2xl text-neutral-200 text-center mb-3 md:text-4xl font-sans">
                   {currentGallery.title}
