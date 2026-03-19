@@ -185,15 +185,15 @@ interface GalleriesSectionProps {
 }
 
 const PriceBar = ({ onAgendar }: {onAgendar: () => void;}) =>
-<div className="sticky bottom-0 left-0 right-0 bg-primary/90 backdrop-blur-sm px-6 py-4 flex items-center justify-between gap-4 rounded-b-2xl">
-    <p className="text-primary-foreground text-sm md:text-base">
+<div className="sticky bottom-0 left-0 right-0 bg-primary/90 backdrop-blur-sm px-4 md:px-6 py-3 md:py-4 flex flex-col sm:flex-row items-center justify-between gap-2 md:gap-4 rounded-b-2xl">
+    <p className="text-primary-foreground text-xs md:text-sm lg:text-base text-center sm:text-left">
       Sessões a partir de <span className="font-semibold">R$797,00</span> a <span className="font-semibold">R$2.250,00</span>
     </p>
     <button
     onClick={onAgendar}
-    className="flex items-center gap-2 px-6 py-3 bg-background text-foreground text-sm tracking-wider uppercase rounded-full hover:bg-background/90 transition-colors whitespace-nowrap">
+    className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-background text-foreground text-xs md:text-sm tracking-wider uppercase rounded-full hover:bg-background/90 transition-colors whitespace-nowrap">
     
-      <Calendar size={18} />
+      <Calendar size={16} />
       Agendar agora
     </button>
   </div>;
