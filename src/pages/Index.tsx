@@ -45,6 +45,7 @@ const Index = () => {
       <TestimonialsSection />
       <AboutSection />
       <BookingSection />
+      <LaunchPrioritySection />
       <FooterSection />
       <WhatsAppFloat onClick={() => setIsChatOpen(true)} />
       <BookingChat isOpen={isChatOpen} onClose={handleCloseChat} selectedDate={chatDate} />
