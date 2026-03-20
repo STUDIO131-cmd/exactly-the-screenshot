@@ -51,7 +51,7 @@ const AboutSection = () => {
           className="mt-10 mb-8 w-full group cursor-pointer"
         >
           <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-400/50 to-transparent mb-4" />
-          <span className="block text-[11px] uppercase tracking-[0.25em] text-neutral-400 group-hover:text-neutral-200 transition-colors">
+          <span className="block text-[11px] uppercase tracking-[0.25em] text-neutral-300 group-hover:text-neutral-100 transition-colors [text-shadow:0_0_12px_rgba(200,200,200,0.25)]">
             Voltar às galerias
           </span>
           <span className="block text-xs text-neutral-500 mt-1">
