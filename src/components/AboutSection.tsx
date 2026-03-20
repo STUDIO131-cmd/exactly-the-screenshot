@@ -1,43 +1,96 @@
 import { motion } from "framer-motion";
+import personalidadesIcon from "@/assets/personalidades-icon.png";
 
 const AboutSection = () => {
+  const scrollToGalleries = () => {
+    document.getElementById("galleries")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const openProposal = () => {
+    window.dispatchEvent(new CustomEvent("openBookingChat"));
+  };
+
   return (
     <section className="py-20 px-6 font-sans font-light">
       <motion.div
-        className="max-w-3xl mx-auto text-center"
+        className="max-w-xl mx-auto text-center"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
       >
-        <h2 className="text-3xl md:text-4xl mb-8 text-neutral-200">
+        {/* Eye icon — pastel yellow tint */}
+        <img
+          src={personalidadesIcon}
+          alt="Personalidades 131 Fotos"
+          className="w-20 mx-auto mb-6 drop-shadow-[0_0_16px_rgba(232,210,150,0.5)]"
+          style={{
+            filter: "sepia(0.6) saturate(1.2) brightness(1.1) hue-rotate(-10deg)",
+          }}
+        />
+
+        <h2 className="text-3xl md:text-4xl mb-8 text-neutral-200 drop-shadow-[0_0_20px_rgba(255,255,255,0.15)] [text-shadow:0_0_25px_rgba(255,255,255,0.12)]">
           O que fotografamos
         </h2>
 
-        <div className="text-lg md:text-xl leading-relaxed text-neutral-300 space-y-6">
-          <p>Fotografamos pessoas em momentos reais da vida.</p>
-          <p>Não personagens. Não poses vazias. Não há cenas fabricadas.</p>
+        {/* Body text — justified + centered feel */}
+        <div className="text-sm md:text-base leading-relaxed text-neutral-300 space-y-5 text-justify [text-align-last:center]">
+          <p>Momentos reais e importantes da vida.</p>
           <p>
-            Nosso estilo é <em>lifestyle</em> porque acreditamos que a beleza está no que
-            acontece entre um gesto e outro. No silêncio, no riso espontâneo, no olhar que
-            não precisa ser ensaiado.
-          </p>
-          <p className="text-neutral-400">
-            Ensaios pessoais. Casais. Gestantes. Retratos. 15 anos. Pequenos eventos.
+            Trabalhamos com um olhar documental e espontâneo, fruto de repertório
+            e conexões.
           </p>
           <p>
             O que muda não é o tipo de sessão.
             <br />
-            <strong>É o momento vivido.</strong>
+            <strong className="text-neutral-100">É o momento vivido.</strong>
           </p>
-          <p className="text-2xl md:text-3xl text-neutral-200 mt-8">
-            Poesia, sensibilidade e eternidade.
-          </p>
-          <p className="text-neutral-400 text-base">
-            Esse é o nosso olhar para a sua história.
-            <br />
-            <em>Fotografia documental.</em>
-          </p>
+          <p>Nas galerias você confere nosso portfólio.</p>
+        </div>
+
+        {/* Subtle button / divider */}
+        <button
+          onClick={scrollToGalleries}
+          className="mt-10 mb-8 w-full group cursor-pointer"
+        >
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-500/30 to-transparent mb-4" />
+          <span className="block text-[11px] uppercase tracking-[0.25em] text-neutral-400 group-hover:text-neutral-200 transition-colors">
+            Voltar às galerias
+          </span>
+          <span className="block text-xs text-neutral-500 mt-1">
+            Ensaios pessoais · Casais · Gestantes · Retratos · 15 anos · Pequenos eventos
+          </span>
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-500/30 to-transparent mt-4" />
+        </button>
+
+        {/* Closing line */}
+        <p className="text-neutral-400 italic text-sm mb-10">
+          Essa é nossa visão.
+        </p>
+
+        {/* Repeated icon in neon circle + CTA */}
+        <div className="flex flex-col items-center gap-4">
+          <div
+            className="w-12 h-12 rounded-full border border-[rgba(232,210,150,0.5)] flex items-center justify-center"
+            style={{
+              boxShadow: "0 0 18px rgba(232,210,150,0.3), inset 0 0 8px rgba(232,210,150,0.1)",
+            }}
+          >
+            <img
+              src={personalidadesIcon}
+              alt=""
+              className="w-7 h-7"
+              style={{
+                filter: "sepia(0.6) saturate(1.2) brightness(1.1) hue-rotate(-10deg)",
+              }}
+            />
+          </div>
+          <button
+            onClick={openProposal}
+            className="text-sm text-[rgba(232,210,150,0.8)] hover:text-[rgba(232,210,150,1)] transition-colors tracking-wide underline underline-offset-4 decoration-[rgba(232,210,150,0.3)]"
+          >
+            Quero conhecer proposta
+          </button>
         </div>
       </motion.div>
     </section>
