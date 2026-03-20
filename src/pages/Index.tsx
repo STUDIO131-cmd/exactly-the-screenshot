@@ -25,6 +25,7 @@ const Index = () => {
       <HeroSection />
       <CategoriesTicker />
       <GalleriesSection onOpenBookingChat={() => setIsChatOpen(true)} />
+      <BookingPromoBar />
       <TestimonialsSection />
       <AboutSection />
       <BookingSection />
