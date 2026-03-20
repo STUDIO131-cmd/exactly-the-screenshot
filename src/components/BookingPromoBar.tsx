@@ -15,8 +15,8 @@ const BookingPromoBar = () => {
       <div className="max-w-3xl mx-auto">
         <div className="dusty-texture relative bg-white/[0.07] backdrop-blur-md border border-white/[0.15] rounded-2xl shadow-[0_0_60px_rgba(255,255,255,0.12),0_0_120px_rgba(200,180,255,0.08),0_0_200px_rgba(180,160,255,0.05),inset_0_0_80px_rgba(255,255,255,0.05)] p-10 md:p-14 text-center overflow-hidden">
           {/* Title */}
-          <h2 className="text-3xl md:text-4xl font-light tracking-wide text-white/90 drop-shadow-[0_0_25px_rgba(255,255,255,0.3)] [text-shadow:0_0_30px_rgba(255,255,255,0.2),0_0_60px_rgba(200,180,255,0.15)] mb-3">
-            Planeje sua sessão conosco!
+          <h2 className="text-base md:text-lg font-light tracking-widest uppercase text-white/50 mb-3">
+            Simule datas, planos ou nos contrate.
           </h2>
 
           {/* Price range */}
