@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Calendar, MessageCircle } from "lucide-react";
+import { X, MessageCircle } from "lucide-react";
 
-type ChatStep = "welcome" | "session_type" | "has_date" | "select_date" | "confirm" | "done";
+type ChatStep = "welcome" | "photographer_choice" | "difference" | "session_type" | "has_date" | "select_date" | "confirm" | "done";
 
 interface Message {
   id: number;
@@ -20,7 +20,13 @@ const sessionTypes = [
   "Eventos",
 ];
 
-// Datas disponíveis (simulação - futuramente conectar com Google Calendar)
+const photographerOptions = [
+  "Agendar com Igor",
+  "Agendar com fotógrafo da equipe Studio 131",
+  "Entender a diferença",
+  "Conferir os dois cenários",
+];
+
 const availableDates = [
   "Sábado, 22 de Março",
   "Domingo, 23 de Março",
@@ -32,13 +38,15 @@ const availableDates = [
 interface BookingChatProps {
   isOpen: boolean;
   onClose: () => void;
+  selectedDate?: string;
 }
 
-const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
+const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
   const [step, setStep] = useState<ChatStep>("welcome");
   const [messages, setMessages] = useState<Message[]>([]);
   const [selectedSession, setSelectedSession] = useState<string>("");
-  const [selectedDate, setSelectedDate] = useState<string>("");
+  const [selectedDateState, setSelectedDateState] = useState<string>("");
+  const [selectedPhotographer, setSelectedPhotographer] = useState<string>("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -50,12 +58,17 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
     scrollToBottom();
   }, [messages]);
 
-  // Inicializa o chat quando abre
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       startChat();
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (selectedDate) {
+      setSelectedDateState(selectedDate);
+    }
+  }, [selectedDate]);
 
   const addBotMessage = (text: string, options?: string[]) => {
     setIsTyping(true);
@@ -78,36 +91,94 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
   const startChat = () => {
     setMessages([]);
     setStep("welcome");
+    const dateText = selectedDate ? ` para o dia ${selectedDate}` : "";
     setTimeout(() => {
       addBotMessage(
-        "Olá! 👋 Que bom ter você aqui. Vou te ajudar a agendar sua sessão de fotos."
+        `Olá! 👋 Que bom ter você aqui${dateText}. Vou te ajudar a agendar sua sessão de fotos.`
       );
       setTimeout(() => {
         addBotMessage(
-          "Qual tipo de sessão você tem interesse?",
-          sessionTypes
+          "Com quem você gostaria de agendar?",
+          photographerOptions
         );
-        setStep("session_type");
+        setStep("photographer_choice");
       }, 1200);
     }, 500);
   };
 
   const handleOptionSelect = (option: string) => {
-    if (step === "session_type") {
+    if (step === "photographer_choice") {
+      if (option === "Entender a diferença") {
+        addUserMessage(option);
+        setTimeout(() => {
+          addBotMessage(
+            "📸 **Igor** é o fotógrafo principal do estúdio, com estilo autoral e abordagem mais intimista.\n\n🎯 A **equipe Studio 131** conta com fotógrafos talentosos que seguem a mesma linguagem visual, com ótimo custo-benefício."
+          );
+          setTimeout(() => {
+            addBotMessage(
+              "Agora que você conhece a diferença, com quem gostaria de agendar?",
+              ["Agendar com Igor", "Agendar com fotógrafo da equipe Studio 131", "Conferir os dois cenários"]
+            );
+          }, 1200);
+        }, 500);
+        return;
+      }
+      if (option === "Conferir os dois cenários") {
+        addUserMessage(option);
+        setTimeout(() => {
+          addBotMessage(
+            "Perfeito! Vou te direcionar para o WhatsApp onde podemos apresentar as duas propostas em detalhe. 💬",
+            ["Continuar no WhatsApp"]
+          );
+          setSelectedPhotographer("ambos os cenários");
+          setStep("confirm");
+        }, 500);
+        return;
+      }
       addUserMessage(option);
-      setSelectedSession(option);
+      setSelectedPhotographer(option);
       setTimeout(() => {
         addBotMessage(
-          `Ótima escolha! ${option} é uma das nossas especialidades. 📸`
+          `Ótima escolha! ${option.includes("Igor") ? "Igor vai adorar registrar seus momentos" : "Nossa equipe está pronta para te atender"}. 📸`
         );
         setTimeout(() => {
           addBotMessage(
-            "Você já tem uma data em mente para a sessão?",
-            ["Sim, tenho uma data", "Não, quero ver disponibilidade"]
+            "Qual tipo de sessão você tem interesse?",
+            sessionTypes
           );
-          setStep("has_date");
+          setStep("session_type");
         }, 1000);
       }, 500);
+    } else if (step === "session_type") {
+      addUserMessage(option);
+      setSelectedSession(option);
+      if (selectedDateState) {
+        setTimeout(() => {
+          addBotMessage(
+            `Perfeito! Sessão de ${option} no dia ${selectedDateState}.`
+          );
+          setTimeout(() => {
+            addBotMessage(
+              `Para confirmar, vou te direcionar para o WhatsApp para finalizar os detalhes. 💬`,
+              ["Continuar no WhatsApp"]
+            );
+            setStep("confirm");
+          }, 1000);
+        }, 500);
+      } else {
+        setTimeout(() => {
+          addBotMessage(
+            `Ótima escolha! ${option} é uma das nossas especialidades. 📸`
+          );
+          setTimeout(() => {
+            addBotMessage(
+              "Você já tem uma data em mente para a sessão?",
+              ["Sim, tenho uma data", "Não, quero ver disponibilidade"]
+            );
+            setStep("has_date");
+          }, 1000);
+        }, 500);
+      }
     } else if (step === "has_date") {
       addUserMessage(option);
       setTimeout(() => {
@@ -119,11 +190,9 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
       }, 500);
     } else if (step === "select_date") {
       addUserMessage(option);
-      setSelectedDate(option);
+      setSelectedDateState(option);
       setTimeout(() => {
-        addBotMessage(
-          `Excelente! Vou reservar ${option} para você.`
-        );
+        addBotMessage(`Excelente! Vou reservar ${option} para você.`);
         setTimeout(() => {
           addBotMessage(
             `Para confirmar sua sessão de ${selectedSession} no dia ${option}, vou te direcionar para o WhatsApp para finalizar os detalhes. 💬`,
@@ -133,21 +202,12 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
         }, 1000);
       }, 500);
     } else if (step === "confirm") {
-      // Redireciona para WhatsApp
       const message = encodeURIComponent(
-        `Olá! Gostaria de agendar uma sessão de ${selectedSession} para o dia ${selectedDate}. Vim pelo site 131 Fotos.`
+        `Olá! Gostaria de agendar uma sessão de ${selectedSession} para o dia ${selectedDateState}. ${selectedPhotographer ? `Preferência: ${selectedPhotographer}.` : ""} Vim pelo site 131 Fotos.`
       );
       window.open(`https://wa.me/5517992595117?text=${message}`, "_blank");
       onClose();
     }
-  };
-
-  const resetChat = () => {
-    setMessages([]);
-    setSelectedSession("");
-    setSelectedDate("");
-    setStep("welcome");
-    startChat();
   };
 
   return (
@@ -202,9 +262,8 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
                         : "bg-background text-foreground shadow-sm rounded-bl-md"
                     }`}
                   >
-                    <p className="text-sm font-sans">{msg.text}</p>
+                    <p className="text-sm font-sans whitespace-pre-line">{msg.text}</p>
                     
-                    {/* Options */}
                     {msg.options && msg.type === "bot" && (
                       <div className="mt-3 space-y-2">
                         {msg.options.map((option, i) => (
@@ -222,7 +281,6 @@ const BookingChat = ({ isOpen, onClose }: BookingChatProps) => {
                 </motion.div>
               ))}
 
-              {/* Typing indicator */}
               {isTyping && (
                 <motion.div
                   initial={{ opacity: 0 }}
