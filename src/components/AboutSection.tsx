@@ -61,7 +61,7 @@ const AboutSection = () => {
         </button>
 
         {/* Closing line */}
-        <p className="text-neutral-400 italic text-sm mb-10">
+        <p className="text-neutral-300 italic text-sm mb-10">
           Essa é nossa visão.
         </p>
 
