@@ -70,7 +70,7 @@ const AboutSection = () => {
           <div
             className="w-12 h-12 rounded-full border border-[rgba(240,240,240,0.5)] flex items-center justify-center"
             style={{
-              boxShadow: "0 0 18px rgba(255,255,255,0.35), 0 0 40px rgba(240,240,240,0.2), inset 0 0 8px rgba(255,255,255,0.1)",
+              boxShadow: "0 0 18px rgba(255,255,255,0.63), 0 0 40px rgba(240,240,240,0.36), 0 0 60px rgba(255,255,255,0.25), inset 0 0 8px rgba(255,255,255,0.18)",
             }}
           >
             <img
