@@ -26,7 +26,7 @@ const AboutSection = () => {
           className="w-40 mx-auto mb-6 drop-shadow-[0_0_16px_rgba(232,210,150,0.5)] brightness-[0.3] sepia saturate-150"
         />
 
-        <h2 className="text-3xl md:text-4xl mb-8 text-neutral-200 drop-shadow-[0_0_20px_rgba(255,255,255,0.15)] [text-shadow:0_0_25px_rgba(255,255,255,0.12)]">
+        <h2 className="text-3xl md:text-4xl mb-8 text-neutral-200 drop-shadow-[0_0_30px_rgba(220,220,220,0.4)] [text-shadow:0_0_20px_rgba(220,220,220,0.35),0_0_50px_rgba(200,200,200,0.2),0_0_80px_rgba(180,180,180,0.1)]">
           O que fotografamos
         </h2>
 
@@ -50,14 +50,14 @@ const AboutSection = () => {
           onClick={scrollToGalleries}
           className="mt-10 mb-8 w-full group cursor-pointer"
         >
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-500/30 to-transparent mb-4" />
-          <span className="block text-[11px] uppercase tracking-[0.25em] text-neutral-400 group-hover:text-neutral-200 transition-colors">
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-400/50 to-transparent mb-4" />
+          <span className="block text-[11px] uppercase tracking-[0.25em] text-neutral-300 group-hover:text-neutral-100 transition-colors [text-shadow:0_0_12px_rgba(200,200,200,0.25)]">
             Voltar às galerias
           </span>
-          <span className="block text-xs text-neutral-500 mt-1">
+          <span className="block text-xs text-neutral-400 mt-1">
             Ensaios pessoais · Casais · Gestantes · Retratos · 15 anos · Pequenos eventos
           </span>
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-500/30 to-transparent mt-4" />
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-400/50 to-transparent mt-4" />
         </button>
 
         {/* Closing line */}
