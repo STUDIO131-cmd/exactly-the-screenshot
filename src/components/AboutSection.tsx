@@ -71,7 +71,7 @@ const AboutSection = () => {
         <div className="mb-14 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
         {/* Closing line */}
-        <p className="text-neutral-300 italic text-sm mb-10">
+        <p className="text-neutral-300 italic text-sm mb-14">
           Essa é nossa visão.
         </p>
 
