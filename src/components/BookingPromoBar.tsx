@@ -24,7 +24,7 @@ const BookingPromoBar = () => {
             {/* Vintage calendar SVG button */}
             <button
               onClick={openBookingChat}
-              className="mx-auto mb-10 block group transition-transform hover:scale-105"
+              className="mx-auto mb-6 block group transition-transform hover:scale-105"
               aria-label="Ver agenda"
             >
               <svg

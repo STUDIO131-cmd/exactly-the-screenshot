@@ -51,7 +51,7 @@ const TestimonialsSection = () => {
             Nosso baú de memórias
           </h2>
         </div>
-        <p className="text-center text-neutral-400 tracking-widest uppercase text-sm mb-12">
+        <p className="text-center text-neutral-400 tracking-widest uppercase text-sm mb-8">
           Depoimentos e vídeos bônus
         </p>
 

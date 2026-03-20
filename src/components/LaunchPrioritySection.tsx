@@ -72,7 +72,7 @@ const LaunchPrioritySection = () => {
           <p className="text-xs text-neutral-400 font-sans mb-1">
             Campanha de Dia das Mães
           </p>
-          <p className="text-xs text-neutral-500 mb-8">
+          <p className="text-xs text-neutral-500 mb-5">
             Abertura abril · Realização em maio
           </p>
 
