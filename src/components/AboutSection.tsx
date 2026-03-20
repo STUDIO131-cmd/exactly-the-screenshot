@@ -76,7 +76,7 @@ const AboutSection = () => {
             <img
               src={personalidadesIcon}
               alt=""
-              className="w-7 h-7"
+              className="w-7 h-7 brightness-[0.3] sepia saturate-150"
             />
           </div>
           <button
