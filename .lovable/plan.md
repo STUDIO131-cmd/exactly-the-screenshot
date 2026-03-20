@@ -1,21 +1,33 @@
 
 
-## Plano: Ajustar tipografia e adicionar dividers estilizados
+## Plano: Glass bar CTA com cantos arredondados (não circular)
 
-### Mudanças no `src/components/AboutSection.tsx`
+**Arquivo:** `src/components/AboutSection.tsx` (linhas 80-92)
 
-**1. Reduzir tamanhos de título e subtítulo**
-- h2 "O que fotografamos": de `text-3xl md:text-4xl` para `text-2xl md:text-3xl`
-- Subtítulo dentro da glass bar ("Voltar às galerias"): de `text-5xl md:text-6xl` para `text-3xl md:text-4xl`
-- Categorias: de `text-sm` para `text-xs`
+Substituir o bloco atual (botão texto + logo) por um `<motion.button>` glass bar com cantos arredondados (`rounded-2xl`, não redondo/circular), seguindo o padrão do botão "Voltar às galerias" já existente na mesma seção.
 
-**2. Inserir dividers com gradiente de opacidade nas pontas**
-- Divider horizontal entre o body text e a glass bar
-- Divider horizontal entre a glass bar e o texto "Essa é nossa visão"
-- Estilo: `<div>` com `h-px` e `bg-gradient-to-r from-transparent via-white/20 to-transparent`
+### Novo elemento
 
-**3. Espaçar mais o conteúdo externo ao botão glass bar**
-- Aumentar `mt-10` para `mt-14` (acima da glass bar)
-- Aumentar `mb-8` para `mb-14` (abaixo da glass bar)
-- Aumentar `mb-10` do texto "Essa é nossa visão" para `mb-14`
+```text
+┌────────────────────────────────┐
+│  ✦ shimmer animado             │
+│                                │
+│    Toque e planeje             │
+│    uma sessão                  │
+│    [logo personalidades]       │
+│                                │
+└────────────────────────────────┘
+```
+
+### Alterações
+
+- Remover linhas 80-92 (div com botão texto + logo)
+- Inserir `<motion.button>` com:
+  - `rounded-2xl` (cantos arredondados, não redondo)
+  - `bg-white/10 backdrop-blur-lg border border-white/15`
+  - Shimmer animado diagonal (mesmo padrão do botão galerias)
+  - Texto "Toque e planeje" / "uma sessão" em duas linhas, fonte Kapakana cursiva
+  - Logo abaixo do texto, dentro do glass bar
+  - `onClick={openProposal}`
+  - `whileHover={{ scale: 1.02 }}`, `whileTap={{ scale: 0.98 }}`
 
