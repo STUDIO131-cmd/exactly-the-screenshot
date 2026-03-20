@@ -4,6 +4,7 @@ import CategoriesTicker from "@/components/CategoriesTicker";
 import GalleriesSection from "@/components/GalleriesSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import AboutSection from "@/components/AboutSection";
+import BookingPromoBar from "@/components/BookingPromoBar";
 import BookingSection from "@/components/BookingSection";
 import FooterSection from "@/components/FooterSection";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
