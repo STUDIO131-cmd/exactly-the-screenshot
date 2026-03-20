@@ -1,20 +1,14 @@
 
 
-## Plano: Trocar ordem das seções
+## Plano: Ajustar textos da IntentionText e TestimonialsSection
 
-Inverter a posição de **"Planeje sua sessão"** (BookingPromoBar) e **"Nosso baú de memórias"** (TestimonialsSection) no `Index.tsx`.
+### Mudanças
 
-### Mudança
+1. **`src/components/IntentionText.tsx`** (linha 17-21) — Alterar o segundo parágrafo para:
+   > "Abaixo temos nosso portfólio com depoimentos e/ou entregas bônus:"
 
-**`src/pages/Index.tsx`** — Trocar as linhas para que TestimonialsSection venha antes de BookingPromoBar:
+2. **`src/components/TestimonialsSection.tsx`** (linha 50-52) — Alterar o h2 para uma única linha:
+   > "Baú de Memórias"
 
-```
-Atual:                          Novo:
-IntentionText                   IntentionText
-BookingPromoBar       →         TestimonialsSection
-TestimonialsSection   →         BookingPromoBar
-AboutSection                    AboutSection
-```
-
-Uma única edição de 2 linhas.
+3. **`src/components/TestimonialsSection.tsx`** (linha 54-55) — Remover o subtítulo "Depoimentos e vídeos bônus" pois já estará no texto acima.
 
