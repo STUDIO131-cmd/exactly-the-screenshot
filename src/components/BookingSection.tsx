@@ -18,8 +18,11 @@ const BookingSection = () => {
   return (
     <section id="booking-section" className="py-4 px-6 font-sans font-light">
       <div className="max-w-2xl mx-auto text-center">
-        <p className="text-neutral-400 mb-8 text-sm tracking-widest uppercase">
+        <p className="text-neutral-400 mb-2 text-sm tracking-widest uppercase">
           Consultar disponibilidade
+        </p>
+        <p className="text-neutral-500 mb-8 text-[0.65rem] md:text-xs leading-relaxed max-w-md mx-auto">
+          Nossa agenda é selecionada para respeitar os clientes que atendemos em outras frentes — trabalhamos com antecipação e poucas vagas.
         </p>
 
         <div className="flex justify-center">
