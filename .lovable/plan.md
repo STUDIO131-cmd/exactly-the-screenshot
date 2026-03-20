@@ -1,33 +1,55 @@
 
 
-## Plano: Glass bar CTA com cantos arredondados (não circular)
+## Seção "Futuros Lançamentos" — Lista de Prioridade
 
-**Arquivo:** `src/components/AboutSection.tsx` (linhas 80-92)
+### O que será criado
 
-Substituir o bloco atual (botão texto + logo) por um `<motion.button>` glass bar com cantos arredondados (`rounded-2xl`, não redondo/circular), seguindo o padrão do botão "Voltar às galerias" já existente na mesma seção.
+Uma nova seção acima do footer com a campanha **"Esse Instante"** (abertura abril, execução maio). Contém um formulário de captura (nome completo + WhatsApp) que envia os dados por email para `igorgagliardi@studio131.com.br`.
 
-### Novo elemento
+### Estrutura visual
 
 ```text
-┌────────────────────────────────┐
-│  ✦ shimmer animado             │
-│                                │
-│    Toque e planeje             │
-│    uma sessão                  │
-│    [logo personalidades]       │
-│                                │
-└────────────────────────────────┘
+┌──────────────────────────────────────┐
+│         FUTUROS LANÇAMENTOS          │
+│                                      │
+│  Garanta prioridade em nossa próxima │
+│  agenda especial e receba a proposta │
+│  antes de todo mundo.                │
+│                                      │
+│  ┌──────────────────────────────┐    │
+│  │ CAMPANHA: ESSE INSTANTE     │    │
+│  │ Abertura abril · Execução maio│   │
+│  │                              │    │
+│  │ [Nome completo         ]     │    │
+│  │ [WhatsApp              ]     │    │
+│  │                              │    │
+│  │ [✏️ Entre na lista de prioridade]│ │
+│  └──────────────────────────────┘    │
+└──────────────────────────────────────┘
 ```
 
-### Alterações
+O botão terá um ícone SVG de caneta/assinatura em amarelo pastel ao lado do texto.
 
-- Remover linhas 80-92 (div com botão texto + logo)
-- Inserir `<motion.button>` com:
-  - `rounded-2xl` (cantos arredondados, não redondo)
-  - `bg-white/10 backdrop-blur-lg border border-white/15`
-  - Shimmer animado diagonal (mesmo padrão do botão galerias)
-  - Texto "Toque e planeje" / "uma sessão" em duas linhas, fonte Kapakana cursiva
-  - Logo abaixo do texto, dentro do glass bar
-  - `onClick={openProposal}`
-  - `whileHover={{ scale: 1.02 }}`, `whileTap={{ scale: 0.98 }}`
+### Envio do email
+
+Como o projeto não tem backend (sem Supabase/Cloud), será necessário habilitar o **Lovable Cloud** para criar uma Edge Function que envie o email. A Edge Function receberá nome + WhatsApp e disparará um email para `igorgagliardi@studio131.com.br` com:
+
+- **Assunto**: `Lista Prioridade Fotografia Lancamento: [Nome Completo]`
+- **Corpo**: Nome completo e número de WhatsApp do lead
+
+### Arquivos e alterações
+
+| Arquivo | Ação |
+|---|---|
+| `src/components/LaunchPrioritySection.tsx` | **Criar** — Nova seção com título, subtítulo, card da campanha "Esse Instante", formulário (nome + WhatsApp), botão com ícone SVG de caneta amarelo pastel |
+| `src/pages/Index.tsx` | **Editar** — Importar e inserir `LaunchPrioritySection` entre `BookingSection` e `FooterSection` |
+| Lovable Cloud + Edge Function | **Criar** — Habilitar Cloud, criar função `send-priority-email` que envia email com os dados do formulário |
+
+### Detalhes técnicos
+
+- Validação client-side com zod (nome não vazio, WhatsApp formato brasileiro)
+- Feedback visual: loading state no botão, toast de sucesso/erro
+- Ícone de caneta/assinatura inline SVG em `#F5E6A3` (amarelo pastel)
+- Estilo consistente com o restante: fundo escuro, `font-sans font-light`, tracking wide, cores neutras
+- Máscara de WhatsApp: `(XX) XXXXX-XXXX`
 
