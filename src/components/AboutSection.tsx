@@ -23,7 +23,7 @@ const AboutSection = () => {
         <img
           src={personalidadesIcon}
           alt="Personalidades 131 Fotos"
-          className="w-40 mx-auto mb-6 drop-shadow-[0_0_24px_rgba(255,255,255,0.5)] drop-shadow-[0_0_48px_rgba(240,240,240,0.3)] brightness-[0.3] sepia saturate-150"
+          className="w-40 mx-auto mb-6 drop-shadow-[0_0_24px_rgba(255,255,255,0.9)] drop-shadow-[0_0_48px_rgba(240,240,240,0.54)] drop-shadow-[0_0_72px_rgba(255,255,255,0.4)] brightness-[0.3] sepia saturate-150"
         />
 
         <h2 className="text-3xl md:text-4xl mb-8 text-neutral-100 drop-shadow-[0_0_30px_rgba(255,255,255,0.5)] [text-shadow:0_0_20px_rgba(255,255,255,0.4),0_0_50px_rgba(240,240,240,0.25),0_0_80px_rgba(220,220,220,0.15)]">
