@@ -71,7 +71,7 @@ const TestimonialsSection = () => {
               {testimonials.map((item) => (
                 <div
                   key={item.id}
-                  className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 aspect-[9/16] rounded-2xl overflow-hidden bg-neutral-800/40 backdrop-blur-sm border border-neutral-700/30 flex items-center justify-center"
+                  className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 aspect-[3/4] rounded-2xl overflow-hidden bg-neutral-800/40 backdrop-blur-sm border border-neutral-700/30 flex items-center justify-center"
                 >
                   <div className="text-center p-6">
                     <p className="text-neutral-200 text-xl mb-4">

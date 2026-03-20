@@ -66,7 +66,7 @@ const LaunchPrioritySection = () => {
           <p className="text-[10px] uppercase tracking-[0.25em] text-neutral-500 mb-1">
             Campanha
           </p>
-          <h3 className="text-6xl md:text-8xl tracking-normal mb-1" style={{ fontFamily: "'Kapakana', cursive", color: '#F5E6A3' }}>
+          <h3 className="text-4xl md:text-6xl tracking-normal mb-1" style={{ fontFamily: "'Kapakana', cursive", color: '#F5E6A3' }}>
             Esse instante
           </h3>
           <p className="text-xs text-neutral-400 font-sans mb-1">
