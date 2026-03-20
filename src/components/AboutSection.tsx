@@ -61,8 +61,8 @@ const AboutSection = () => {
             <span className="relative block text-3xl md:text-4xl normal-case tracking-normal text-neutral-200 group-hover:text-white transition-colors [text-shadow:0_0_12px_rgba(255,255,255,0.3)]" style={{ fontFamily: "'Kapakana', cursive" }}>
               Voltar às galerias
             </span>
-            <span className="relative block text-[0.55rem] md:text-xs text-neutral-300 mt-3 text-center">
-              Ensaios pessoais · Casais · Gestantes · Retratos · 15 anos · Pequenos eventos
+            <span className="relative block text-[0.5rem] sm:text-[0.65rem] md:text-xs text-neutral-300 mt-3 text-center tracking-tight">
+              Ensaios pessoais · Casais · Gestantes · Retratos · 15 anos · Eventos
             </span>
           </div>
         </motion.button>
