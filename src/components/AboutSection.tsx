@@ -82,7 +82,7 @@ const AboutSection = () => {
             onClick={openProposal}
             className="text-sm text-[rgba(232,210,150,0.8)] hover:text-[rgba(232,210,150,1)] transition-colors tracking-wide underline underline-offset-4 decoration-[rgba(232,210,150,0.3)]"
           >
-            Quero conhecer proposta
+            Quero planejar uma sessão
           </button>
           <img
             src={personalidadesLogo}
