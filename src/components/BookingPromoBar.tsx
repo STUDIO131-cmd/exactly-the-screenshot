@@ -17,7 +17,7 @@ const BookingPromoBar = () => {
               Planeje sua sessão:
             </h2>
 
-            <p className="text-sm md:text-base text-white/50 tracking-widest uppercase mb-10">
+            <p className="text-sm md:text-base text-white/50 tracking-widest uppercase mb-6">
               Simule datas, planos e entenda como funciona
             </p>
 
