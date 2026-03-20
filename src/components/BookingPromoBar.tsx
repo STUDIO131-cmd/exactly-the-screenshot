@@ -60,12 +60,12 @@ const BookingPromoBar = () => {
           {/* Booking buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5">
             <button
-              onClick={() => openWhatsApp("Igor", "5517992595117")}
+              onClick={scrollToBooking}
               className="flex items-center gap-3 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 px-5 py-2.5 transition-colors">
               
               <div className="w-8 h-8 rounded-full bg-white/20 shrink-0" />
               <span className="text-sm text-white/80 tracking-wide whitespace-nowrap">
-                Agendar com Igor
+                Conferir agenda da equipe
               </span>
             </button>
 
@@ -79,7 +79,7 @@ const BookingPromoBar = () => {
               
               <div className="w-8 h-8 rounded-full bg-white/20 shrink-0" />
               <span className="text-sm text-white/80 tracking-wide whitespace-nowrap">
-                Agendar com Equipe Studio 131
+                Entender como funciona
               </span>
             </button>
           </div>
