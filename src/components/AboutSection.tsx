@@ -40,7 +40,7 @@ const AboutSection = () => {
           <p>
             O que muda não é o tipo de sessão.
             <br />
-            <strong className="text-neutral-100">É o momento vivido.</strong>
+            <strong className="text-white">É o momento vivido.</strong>
           </p>
           <p>Nas galerias você confere nosso portfólio.</p>
         </div>
