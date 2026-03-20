@@ -15,9 +15,7 @@ const IntentionText = () => {
             eternizar um momento importante.
           </p>
           <p className="text-sm md:text-base text-neutral-300 leading-relaxed tracking-wide font-sans">
-            Compartilhe sobre esse
-            <br />
-            momento conosco:
+            Abaixo temos nosso portfólio com depoimentos e/ou entregas bônus:
           </p>
         </div>
 

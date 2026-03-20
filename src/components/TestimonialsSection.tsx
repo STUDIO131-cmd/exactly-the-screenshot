@@ -48,12 +48,9 @@ const TestimonialsSection = () => {
             <circle cx="50" cy="32" r="0.5" fill="rgba(232,210,150,0.14)" />
           </svg>
           <h2 className="text-3xl md:text-4xl text-center font-light tracking-wide text-[rgba(232,210,150,0.85)] drop-shadow-[0_0_20px_rgba(232,210,150,0.3)] [text-shadow:0_0_25px_rgba(232,210,150,0.2),0_0_50px_rgba(232,210,150,0.1)]">
-            Nosso baú de memórias
+            Baú de Memórias
           </h2>
         </div>
-        <p className="text-center text-neutral-400 tracking-widest uppercase text-sm mb-8">
-          Depoimentos e vídeos bônus
-        </p>
 
         <div className="relative">
           <button
