@@ -89,17 +89,19 @@ const AboutSection = () => {
               animate={{ x: ["-150%", "150%"] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
             />
-            <span className="relative block text-3xl md:text-4xl leading-tight text-neutral-200 group-hover:text-white transition-colors [text-shadow:0_0_12px_rgba(255,255,255,0.3)]">
-              Toque e planeje
-              <br />
-              uma sessão
-            </span>
-            <img
-              src={personalidadesLogo}
-              alt="Personalidades Logo"
-              className="relative mx-auto mt-4 opacity-80 object-contain"
-              style={{ width: '11.2rem' }}
-            />
+            <div className="relative flex flex-col items-center justify-center">
+              <span className="block text-2xl md:text-3xl leading-tight text-neutral-200 group-hover:text-white transition-colors [text-shadow:0_0_12px_rgba(255,255,255,0.3)]">
+                Toque e planeje
+                <br />
+                uma sessão
+              </span>
+              <img
+                src={personalidadesLogo}
+                alt="Personalidades Logo"
+                className="mx-auto mt-3 opacity-80 object-contain"
+                style={{ width: '9rem' }}
+              />
+            </div>
           </div>
         </motion.button>
       </motion.div>
