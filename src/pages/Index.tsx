@@ -7,6 +7,7 @@ import AboutSection from "@/components/AboutSection";
 import BookingPromoBar from "@/components/BookingPromoBar";
 import IntentionText from "@/components/IntentionText";
 import BookingSection from "@/components/BookingSection";
+import LaunchPrioritySection from "@/components/LaunchPrioritySection";
 import FooterSection from "@/components/FooterSection";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import BookingChat from "@/components/BookingChat";
