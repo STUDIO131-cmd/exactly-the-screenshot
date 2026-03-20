@@ -6,7 +6,7 @@ const FooterSection = () => {
   };
 
   return (
-    <footer className="py-12 px-6 font-sans font-light" style={{ backgroundColor: '#E8E4DF', color: '#3E2C1E' }}>
+    <footer className="py-12 px-6 font-sans font-light" style={{ backgroundColor: 'rgba(232, 228, 223, 0.3)', color: '#3E2C1E' }}>
       <div className="max-w-4xl mx-auto flex flex-col items-center gap-8">
         {/* Logo menor */}
         <img src={logoWhite} alt="Studio 131" className="h-10 opacity-80 invert" />
