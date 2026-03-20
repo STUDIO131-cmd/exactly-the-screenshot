@@ -127,11 +127,15 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
         addUserMessage(option);
         setTimeout(() => {
           addBotMessage(
-            "Perfeito! Vou te direcionar para o WhatsApp onde podemos apresentar as duas propostas em detalhe. 💬",
-            ["Continuar no WhatsApp"]
+            "Ótima ideia! Vou te explicar as diferenças:\n\n📸 **Igor (Fotógrafo Principal)**\n• Estilo autoral e direção intimista\n• Repertório consolidado com anos de experiência\n• Cada ensaio é uma obra única com sua assinatura\n• Valor diferenciado pela exclusividade\n\n🎯 **Equipe Studio 131**\n• Fotógrafos talentosos treinados na linguagem do estúdio\n• Repertório versátil e em constante evolução\n• Ótimo custo-benefício com qualidade profissional\n• Mesma estrutura e pós-produção do estúdio"
           );
-          setSelectedPhotographer("ambos os cenários");
-          setStep("confirm");
+          setTimeout(() => {
+            addBotMessage(
+              "Com essas informações, o que gostaria de fazer?",
+              ["Agendar com Igor", "Agendar com fotógrafo da equipe Studio 131", "Tenho outra dúvida"]
+            );
+            setStep("comparing");
+          }, 1200);
         }, 500);
         return;
       }
