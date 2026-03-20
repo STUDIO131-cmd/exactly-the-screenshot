@@ -21,7 +21,7 @@ const BookingPromoBar = () => {
 
           {/* Price range */}
           <p className="text-sm md:text-base text-white/50 tracking-widest uppercase mb-10">
-            Sessões a partir de R$797 – R$2.250
+            Simule datas, planos e entenda como funciona
           </p>
 
           {/* Vintage calendar SVG button */}
