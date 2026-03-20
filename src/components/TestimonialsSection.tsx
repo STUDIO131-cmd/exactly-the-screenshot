@@ -16,11 +16,43 @@ const TestimonialsSection = () => {
   return (
     <section className="py-16 px-6 font-sans font-light">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl text-center mb-4 text-neutral-200">
-          O que se vive através da fotografia
-        </h2>
-        <p className="text-center text-neutral-400 mb-12">
-          Bastidores e depoimentos
+        {/* Vintage trunk SVG + Title */}
+        <div className="flex flex-col items-center mb-3">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 64 64"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="mb-4 drop-shadow-[0_0_18px_rgba(232,210,150,0.45)]"
+          >
+            {/* Trunk body */}
+            <rect x="8" y="22" width="48" height="28" rx="4" stroke="rgba(232,210,150,0.7)" strokeWidth="1.5" fill="rgba(232,210,150,0.06)" />
+            {/* Lid arc */}
+            <path d="M8 22 C8 10 56 10 56 22" stroke="rgba(232,210,150,0.7)" strokeWidth="1.5" fill="rgba(232,210,150,0.03)" />
+            {/* Center latch */}
+            <rect x="28" y="18" width="8" height="8" rx="2" stroke="rgba(232,210,150,0.6)" strokeWidth="1.2" fill="none" />
+            <circle cx="32" cy="22" r="1.2" fill="rgba(232,210,150,0.5)" />
+            {/* Side straps */}
+            <path d="M16 22V50" stroke="rgba(232,210,150,0.25)" strokeWidth="1" />
+            <path d="M48 22V50" stroke="rgba(232,210,150,0.25)" strokeWidth="1" />
+            {/* Handle */}
+            <path d="M24 12 C24 8 40 8 40 12" stroke="rgba(232,210,150,0.5)" strokeWidth="1.3" strokeLinecap="round" fill="none" />
+            {/* Noise texture dots */}
+            <circle cx="20" cy="34" r="0.6" fill="rgba(232,210,150,0.2)" />
+            <circle cx="35" cy="30" r="0.5" fill="rgba(232,210,150,0.15)" />
+            <circle cx="44" cy="38" r="0.7" fill="rgba(232,210,150,0.18)" />
+            <circle cx="26" cy="42" r="0.5" fill="rgba(232,210,150,0.12)" />
+            <circle cx="38" cy="44" r="0.6" fill="rgba(232,210,150,0.2)" />
+            <circle cx="15" cy="40" r="0.4" fill="rgba(232,210,150,0.1)" />
+            <circle cx="50" cy="32" r="0.5" fill="rgba(232,210,150,0.14)" />
+          </svg>
+          <h2 className="text-3xl md:text-4xl text-center font-light tracking-wide text-[rgba(232,210,150,0.85)] drop-shadow-[0_0_20px_rgba(232,210,150,0.3)] [text-shadow:0_0_25px_rgba(232,210,150,0.2),0_0_50px_rgba(232,210,150,0.1)]">
+            Nosso baú de memórias
+          </h2>
+        </div>
+        <p className="text-center text-neutral-400 tracking-widest uppercase text-sm mb-12">
+          Depoimentos e vídeos bônus
         </p>
 
         <div className="relative">
