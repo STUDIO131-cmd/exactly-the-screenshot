@@ -66,11 +66,14 @@ const LaunchPrioritySection = () => {
           <p className="text-[10px] uppercase tracking-[0.25em] text-neutral-500 mb-1">
             Campanha
           </p>
-          <h3 className="text-lg text-neutral-200 font-semibold tracking-wide mb-1">
+          <h3 className="text-2xl md:text-3xl text-neutral-200 tracking-normal mb-1" style={{ fontFamily: "'Kapakana', cursive" }}>
             Esse Instante
           </h3>
+          <p className="text-xs text-neutral-400 font-sans mb-1">
+            Campanha de Dia das Mães
+          </p>
           <p className="text-xs text-neutral-500 mb-8">
-            Abertura abril · Execução maio
+            Abertura abril · Realização em maio
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4 max-w-sm mx-auto">
