@@ -1,8 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, MessageCircle } from "lucide-react";
+import { X, MessageCircle, Send } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
-type ChatStep = "welcome" | "photographer_choice" | "difference" | "session_type" | "has_date" | "select_date" | "confirm" | "done" | "comparing" | "faq_in_chat";
+type ChatStep =
+  | "welcome"
+  | "photographer_choice"
+  | "difference"
+  | "session_type"
+  | "has_date"
+  | "select_date"
+  | "confirm"
+  | "done"
+  | "comparing"
+  | "faq_in_chat"
+  | "ai_chat";
 
 interface Message {
   id: number;
@@ -48,7 +60,10 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
   const [selectedDateState, setSelectedDateState] = useState<string>("");
   const [selectedPhotographer, setSelectedPhotographer] = useState<string>("");
   const [isTyping, setIsTyping] = useState(false);
+  const [freeTextInput, setFreeTextInput] = useState("");
+  const [aiConversation, setAiConversation] = useState<{ role: string; content: string }[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -70,6 +85,12 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
     }
   }, [selectedDate]);
 
+  useEffect(() => {
+    if (step === "ai_chat" && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [step, messages]);
+
   const addBotMessage = (text: string, options?: string[]) => {
     setIsTyping(true);
     setTimeout(() => {
@@ -79,6 +100,13 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
       ]);
       setIsTyping(false);
     }, 800);
+  };
+
+  const addBotMessageImmediate = (text: string, options?: string[]) => {
+    setMessages((prev) => [
+      ...prev,
+      { id: Date.now(), type: "bot", text, options },
+    ]);
   };
 
   const addUserMessage = (text: string) => {
@@ -106,7 +134,91 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
     }, 500);
   };
 
+  const askAI = async (question: string) => {
+    setIsTyping(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("studio-chat", {
+        body: { question, conversationHistory: aiConversation },
+      });
+
+      if (error) throw error;
+
+      const answer = data?.answer || "Desculpe, não consegui processar. Tente novamente!";
+      setAiConversation((prev) => [
+        ...prev,
+        { role: "user", content: question },
+        { role: "assistant", content: answer },
+      ]);
+
+      setIsTyping(false);
+      addBotMessageImmediate(answer, [
+        "Agendar com Igor",
+        "Agendar com fotógrafo da equipe Studio 131",
+        "Tenho outra dúvida",
+        "Falar no WhatsApp",
+      ]);
+    } catch (e) {
+      console.error("AI chat error:", e);
+      setIsTyping(false);
+      addBotMessageImmediate(
+        "Desculpe, tive um problema ao processar sua pergunta. Você pode tentar novamente ou falar conosco pelo WhatsApp. 💬",
+        [
+          "Agendar com Igor",
+          "Agendar com fotógrafo da equipe Studio 131",
+          "Falar no WhatsApp",
+        ]
+      );
+    }
+  };
+
+  const handleFreeTextSubmit = () => {
+    const text = freeTextInput.trim();
+    if (!text) return;
+    addUserMessage(text);
+    setFreeTextInput("");
+    askAI(text);
+  };
+
+  const handlePhotographerSelected = (option: string) => {
+    setSelectedPhotographer(option);
+    setTimeout(() => {
+      addBotMessage(
+        `Ótima escolha! ${option.includes("Igor") ? "Igor vai adorar registrar seus momentos" : "Nossa equipe está pronta para te atender"}. 📸`
+      );
+      setTimeout(() => {
+        addBotMessage("Qual tipo de sessão você tem interesse?", sessionTypes);
+        setStep("session_type");
+      }, 1000);
+    }, 500);
+  };
+
   const handleOptionSelect = (option: string) => {
+    // Global handlers for booking options that appear in AI chat
+    if (step === "ai_chat" || step === "faq_in_chat") {
+      if (option === "Falar no WhatsApp") {
+        addUserMessage(option);
+        const message = encodeURIComponent(
+          "Olá! Gostaria de saber mais sobre os serviços do Studio 131. Vim pelo site 131 Fotos."
+        );
+        window.open(`https://wa.me/5517992595117?text=${message}`, "_blank");
+        onClose();
+        return;
+      }
+      if (option === "Tenho outra dúvida") {
+        addUserMessage(option);
+        setTimeout(() => {
+          addBotMessage("Claro! Digite sua dúvida abaixo que eu respondo na hora 👇");
+          setStep("ai_chat");
+        }, 300);
+        return;
+      }
+      if (option.includes("Agendar")) {
+        addUserMessage(option);
+        handlePhotographerSelected(option);
+        return;
+      }
+    }
+
     if (step === "photographer_choice") {
       if (option === "Entender a diferença") {
         addUserMessage(option);
@@ -140,69 +252,23 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
         return;
       }
       addUserMessage(option);
-      setSelectedPhotographer(option);
-      setTimeout(() => {
-        addBotMessage(
-          `Ótima escolha! ${option.includes("Igor") ? "Igor vai adorar registrar seus momentos" : "Nossa equipe está pronta para te atender"}. 📸`
-        );
-        setTimeout(() => {
-          addBotMessage(
-            "Qual tipo de sessão você tem interesse?",
-            sessionTypes
-          );
-          setStep("session_type");
-        }, 1000);
-      }, 500);
+      handlePhotographerSelected(option);
     } else if (step === "comparing") {
       addUserMessage(option);
       if (option === "Tenho outra dúvida") {
         setTimeout(() => {
-          addBotMessage(
-            "Claro! Aqui vão algumas dúvidas frequentes:\n\n💰 **Preços** — Sessões com Igor têm valor diferenciado pela autoria. Sessões com a equipe oferecem ótimo custo-benefício.\n\n📷 **Tipos de sessão** — Retratos Profissionais, Gestantes, 15 Anos, Casais, Ensaio Pessoal e Eventos.\n\n📅 **Agendamento** — Trabalhamos com antecipação e poucas vagas. Finalizamos detalhes pelo WhatsApp.",
-            ["Agendar com Igor", "Agendar com fotógrafo da equipe Studio 131", "Falar no WhatsApp"]
-          );
-          setStep("faq_in_chat");
-        }, 500);
+          addBotMessage("Claro! Digite sua dúvida abaixo que eu respondo na hora 👇");
+          setStep("ai_chat");
+        }, 300);
       } else {
-        setSelectedPhotographer(option);
-        setTimeout(() => {
-          addBotMessage(
-            `Ótima escolha! ${option.includes("Igor") ? "Igor vai adorar registrar seus momentos" : "Nossa equipe está pronta para te atender"}. 📸`
-          );
-          setTimeout(() => {
-            addBotMessage("Qual tipo de sessão você tem interesse?", sessionTypes);
-            setStep("session_type");
-          }, 1000);
-        }, 500);
+        handlePhotographerSelected(option);
       }
-    } else if (step === "faq_in_chat") {
-      addUserMessage(option);
-      if (option === "Falar no WhatsApp") {
-        const message = encodeURIComponent(
-          "Olá! Gostaria de saber mais sobre os serviços do Studio 131. Vim pelo site 131 Fotos."
-        );
-        window.open(`https://wa.me/5517992595117?text=${message}`, "_blank");
-        onClose();
-        return;
-      }
-      setSelectedPhotographer(option);
-      setTimeout(() => {
-        addBotMessage(
-          `Ótima escolha! ${option.includes("Igor") ? "Igor vai adorar registrar seus momentos" : "Nossa equipe está pronta para te atender"}. 📸`
-        );
-        setTimeout(() => {
-          addBotMessage("Qual tipo de sessão você tem interesse?", sessionTypes);
-          setStep("session_type");
-        }, 1000);
-      }, 500);
     } else if (step === "session_type") {
       addUserMessage(option);
       setSelectedSession(option);
       if (selectedDateState) {
         setTimeout(() => {
-          addBotMessage(
-            `Perfeito! Sessão de ${option} no dia ${selectedDateState}.`
-          );
+          addBotMessage(`Perfeito! Sessão de ${option} no dia ${selectedDateState}.`);
           setTimeout(() => {
             addBotMessage(
               `Para confirmar, vou te direcionar para o WhatsApp para finalizar os detalhes. 💬`,
@@ -213,9 +279,7 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
         }, 500);
       } else {
         setTimeout(() => {
-          addBotMessage(
-            `Ótima escolha! ${option} é uma das nossas especialidades. 📸`
-          );
+          addBotMessage(`Ótima escolha! ${option} é uma das nossas especialidades. 📸`);
           setTimeout(() => {
             addBotMessage(
               "Você já tem uma data em mente para a sessão?",
@@ -256,6 +320,8 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
     }
   };
 
+  const showInput = step === "ai_chat";
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -281,7 +347,9 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
                 </div>
                 <div>
                   <h3 className="font-tiktok font-semibold">131 Fotos</h3>
-                  <p className="text-xs text-primary-foreground/70">Agendamento</p>
+                  <p className="text-xs text-primary-foreground/70">
+                    {showInput ? "Assistente IA" : "Agendamento"}
+                  </p>
                 </div>
               </div>
               <button
@@ -309,7 +377,7 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
                     }`}
                   >
                     <p className="text-sm font-sans whitespace-pre-line">{msg.text}</p>
-                    
+
                     {msg.options && msg.type === "bot" && (
                       <div className="mt-3 space-y-2">
                         {msg.options.map((option, i) => (
@@ -347,11 +415,40 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
             </div>
 
             {/* Footer */}
-            <div className="bg-background border-t border-border px-4 py-3">
-              <p className="text-center text-xs text-muted-foreground font-tiktok">
-                Powered by 131 Fotos • Studio 131
-              </p>
-            </div>
+            {showInput ? (
+              <div className="bg-background border-t border-border px-3 py-3">
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleFreeTextSubmit();
+                  }}
+                  className="flex gap-2"
+                >
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={freeTextInput}
+                    onChange={(e) => setFreeTextInput(e.target.value)}
+                    placeholder="Digite sua dúvida..."
+                    disabled={isTyping}
+                    className="flex-1 bg-muted rounded-xl px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary disabled:opacity-50"
+                  />
+                  <button
+                    type="submit"
+                    disabled={!freeTextInput.trim() || isTyping}
+                    className="bg-primary text-primary-foreground rounded-xl p-2.5 hover:bg-primary/90 transition-colors disabled:opacity-50"
+                  >
+                    <Send size={18} />
+                  </button>
+                </form>
+              </div>
+            ) : (
+              <div className="bg-background border-t border-border px-4 py-3">
+                <p className="text-center text-xs text-muted-foreground font-tiktok">
+                  Powered by 131 Fotos • Studio 131
+                </p>
+              </div>
+            )}
           </motion.div>
         </motion.div>
       )}
