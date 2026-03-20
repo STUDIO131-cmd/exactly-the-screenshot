@@ -77,9 +77,6 @@ const AboutSection = () => {
               src={personalidadesIcon}
               alt=""
               className="w-7 h-7"
-              style={{
-                filter: "sepia(0.6) saturate(1.2) brightness(1.1) hue-rotate(-10deg)",
-              }}
             />
           </div>
           <button
