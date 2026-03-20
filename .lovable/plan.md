@@ -1,19 +1,20 @@
 
 
-## Atualizar tipografia da seção "Futuros Lançamentos"
+## Plano: Trocar ordem das seções
 
-### Alterações em `src/components/LaunchPrioritySection.tsx`
+Inverter a posição de **"Planeje sua sessão"** (BookingPromoBar) e **"Nosso baú de memórias"** (TestimonialsSection) no `Index.tsx`.
 
-1. **"Esse Instante"** — aplicar fonte cursiva Kapakana (`style={{ fontFamily: "'Kapakana', cursive" }}`), aumentar tamanho para `text-2xl` ou `text-3xl`
-2. **Adicionar subtítulo** "Campanha de Dia das Mães" em TikTok Sans (fonte padrão do projeto), abaixo do nome da campanha
-3. **Texto de datas** — ajustar para "Abertura abril · Realização em maio" (trocar "Execução" por "Realização")
+### Mudança
 
-### Resultado visual
+**`src/pages/Index.tsx`** — Trocar as linhas para que TestimonialsSection venha antes de BookingPromoBar:
 
-```text
-        CAMPANHA
-   Esse Instante        ← Kapakana cursiva, maior
-  Campanha de Dia das Mães  ← TikTok Sans, pequeno
-  Abertura abril · Realização em maio
 ```
+Atual:                          Novo:
+IntentionText                   IntentionText
+BookingPromoBar       →         TestimonialsSection
+TestimonialsSection   →         BookingPromoBar
+AboutSection                    AboutSection
+```
+
+Uma única edição de 2 linhas.
 
