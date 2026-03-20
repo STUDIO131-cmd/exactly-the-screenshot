@@ -2,3 +2,6 @@ project_id = "cmsqjdcgucgioaukxxce"
 
 [functions.send-priority-email]
 verify_jwt = false
+
+[functions.studio-chat]
+verify_jwt = false
