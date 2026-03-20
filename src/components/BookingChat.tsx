@@ -151,12 +151,7 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
       ]);
 
       setIsTyping(false);
-      addBotMessageImmediate(answer, [
-        "Agendar com Igor",
-        "Agendar com fotógrafo da equipe Studio 131",
-        "Tenho outra dúvida",
-        "Falar no WhatsApp",
-      ]);
+      addBotMessageImmediate(answer);
     } catch (e) {
       console.error("AI chat error:", e);
       setIsTyping(false);
