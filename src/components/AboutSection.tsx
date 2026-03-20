@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import personalidadesIcon from "@/assets/personalidades-icon.png";
+
 
 const AboutSection = () => {
   const scrollToGalleries = () => {
