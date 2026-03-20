@@ -1,44 +1,60 @@
 
 
-## Diagnostic: Font Inconsistencies Across the Site
+## New BookingPromoBar Section (Below Galerias)
 
-### Problem
-The memory states "TikTok Sans is the global default font for all text elements," but the CSS body default is set to `Moneta` serif. Meanwhile, Tailwind's `font-sans` maps to TikTok Sans. This creates a mismatch: components that don't explicitly set `font-sans` or `font-tiktok` render in Moneta (serif), causing visual inconsistency.
+### What we're building
+A promotional section placed directly below GalleriesSection with:
+- Glass bar with subtle neon glow + dusty grain texture overlay
+- "Agende sua sessão" title with text glow
+- Price range display (R$797 – R$2.250)
+- Vintage SVG calendar icon/button that scrolls to BookingSection
+- Two rounded buttons with circular photo placeholders side by side, separated by a clean vertical divider:
+  **[ 🔵 Agendar com Igor ]  |  [ 🔵 Agendar com Equipe Studio 131 ]**
 
-### Scope
-**DO NOT TOUCH**: HeroSection, CategoriesTicker, GalleriesSection (already adjusted).
+```text
+┌──────────────────────────────────────────────────┐
+│  ░░░░░░░ dusty grain texture ░░░░░░░░░░░░░░░░░░ │
+│  ┌────────────────────────────────────────────┐  │
+│  │  glass bar (blur + neon glow border)       │  │
+│  │                                            │  │
+│  │  "Agende sua sessão"                       │  │
+│  │  "Sessões a partir de R$797 – R$2.250"     │  │
+│  │                                            │  │
+│  │  [ 📅 vintage calendar SVG ]               │  │
+│  │                                            │  │
+│  │  [🔵 Agendar com Igor] | [🔵 Agendar ...] │  │
+│  └────────────────────────────────────────────┘  │
+└──────────────────────────────────────────────────┘
+```
 
-**Sections to fix** (all lack explicit `font-sans` on their text):
+### Technical Steps
 
-| Component | Issue |
-|---|---|
-| **TestimonialsSection** | Title, subtitle, card text all fall back to Moneta serif. No `font-sans` anywhere. |
-| **AboutSection** | Title + all body paragraphs in Moneta. Missing `font-sans font-light`. |
-| **BookingSection** | Title, subtitle, date text, button text in Moneta. Calendar component inherits serif. |
-| **FooterSection** | Title (`font-semibold` but no font-family), links, copyright in Moneta. |
-| **PricingSection** | Titles, prices, descriptions, features all in Moneta (not currently rendered on page but should be consistent). |
-| **WhatsAppFloat** | Already uses `font-tiktok` -- OK. |
-| **BookingChat** | Already uses `font-tiktok` in key spots -- OK, but message text `text-sm` lacks it. |
+1. **Create `src/components/BookingPromoBar.tsx`**
+   - Glass container: `bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl` with `shadow-[0_0_30px_rgba(255,255,255,0.08)]`
+   - Dusty grain overlay via CSS class (SVG noise filter as pseudo-element)
+   - Title "Agende sua sessão" with `drop-shadow-[0_0_15px_rgba(255,255,255,0.15)]`
+   - Price range subtitle
+   - Inline vintage calendar SVG button → scrolls to `#booking-section`
+   - Two rounded pill buttons, each with a circular placeholder (for photo) on the left:
+     - "Agendar com Igor" → opens WhatsApp to Igor's number
+     - "Agendar com Equipe Studio 131" → opens WhatsApp to studio number
+   - Between the two buttons: a thin vertical divider `w-px h-8 bg-white/20`
+   - Buttons styled: `rounded-full bg-white/10 border border-white/10 hover:bg-white/15 px-5 py-2.5` with `flex items-center gap-3`
+   - Circular photo placeholder: `w-8 h-8 rounded-full bg-white/20` (ready for real photos later)
 
-### Fix: Global CSS Change
-Change the body default font from `Moneta` to `TikTok Sans` in `src/index.css`. This is the simplest, most consistent fix -- every element inherits TikTok Sans by default, and only elements that explicitly need serif would use `font-moneta` or `font-epika`.
+2. **Update `src/components/BookingSection.tsx`**
+   - Add `id="booking-section"` to the section element
 
-### Steps
+3. **Update `src/pages/Index.tsx`**
+   - Import `BookingPromoBar`
+   - Place it between `GalleriesSection` and `TestimonialsSection`
 
-1. **`src/index.css`** -- Change body `font-family` from `'Moneta', Georgia, serif` to `'TikTok Sans', -apple-system, sans-serif` and add `font-weight: 300` (light) for the global default.
+4. **Update `src/index.css`**
+   - Add `.dusty-texture::before` pseudo-element with SVG noise filter for grain effect
 
-2. **`src/components/TestimonialsSection.tsx`** -- Add `font-sans font-light` to the section wrapper so all text inherits properly. Ensure title uses appropriate weight.
-
-3. **`src/components/AboutSection.tsx`** -- Add `font-sans font-light` to body text wrapper. Keep title at normal weight.
-
-4. **`src/components/BookingSection.tsx`** -- Add `font-sans` to section wrapper. Ensure button and date text have `font-sans`.
-
-5. **`src/components/FooterSection.tsx`** -- Add `font-sans` to footer wrapper. Adjust title to `font-sans font-semibold`.
-
-6. **`src/components/PricingSection.tsx`** -- Add `font-sans` to section wrapper for consistency.
-
-7. **`src/components/BookingChat.tsx`** -- Add `font-sans` to message text for consistency.
-
-### Result
-All text site-wide will render in TikTok Sans font-light by default, with consistent typography across every section.
+### Files Changed
+- `src/components/BookingPromoBar.tsx` (new)
+- `src/components/BookingSection.tsx` (add id)
+- `src/pages/Index.tsx` (add component)
+- `src/index.css` (grain texture)
 
