@@ -54,7 +54,7 @@ const AboutSection = () => {
           <span className="block text-[11px] uppercase tracking-[0.25em] text-neutral-300 group-hover:text-neutral-100 transition-colors [text-shadow:0_0_12px_rgba(200,200,200,0.25)]">
             Voltar às galerias
           </span>
-          <span className="block text-xs text-neutral-500 mt-1">
+          <span className="block text-xs text-neutral-400 mt-1">
             Ensaios pessoais · Casais · Gestantes · Retratos · 15 anos · Pequenos eventos
           </span>
           <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-500/30 to-transparent mt-4" />
