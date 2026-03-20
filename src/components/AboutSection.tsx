@@ -98,7 +98,7 @@ const AboutSection = () => {
               <img
                 src={personalidadesLogo}
                 alt="Personalidades Logo"
-                className="mx-auto mt-3 opacity-80 object-contain"
+                className="mx-auto mt-1.5 opacity-80 object-contain"
                 style={{ width: '9rem' }}
               />
             </div>
