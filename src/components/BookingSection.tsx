@@ -18,8 +18,11 @@ const BookingSection = () => {
   return (
     <section id="booking-section" className="py-4 px-6 font-sans font-light">
       <div className="max-w-2xl mx-auto text-center">
-        <p className="text-neutral-400 mb-8 text-sm tracking-widest uppercase">
+        <p className="text-neutral-400 mb-2 text-sm tracking-widest uppercase">
           Consultar disponibilidade
+        </p>
+        <p className="text-neutral-500 mb-8 text-[0.65rem] md:text-xs leading-relaxed max-w-md mx-auto">
+          Nossa agenda é selecionada para respeitar os clientes que atendemos em outras frentes — trabalhamos com antecipação e poucas vagas.
         </p>
 
         <div className="flex justify-center">
@@ -28,7 +31,11 @@ const BookingSection = () => {
               mode="single"
               selected={selectedDate}
               onSelect={handleDateSelect}
-              disabled={(date) => date < new Date()}
+              disabled={(date) => {
+                const now = new Date(new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" }));
+                now.setHours(0, 0, 0, 0);
+                return date < now;
+              }}
               locale={ptBR}
               className="pointer-events-auto !text-neutral-900 [&_.rdp-caption_label]:text-lg [&_.rdp-caption_label]:font-semibold [&_.rdp-head_cell]:text-neutral-500 [&_.rdp-head_cell]:w-12 [&_.rdp-head_cell]:text-sm [&_.rdp-cell]:w-12 [&_.rdp-cell]:h-12 [&_.rdp-day]:w-12 [&_.rdp-day]:h-12 [&_.rdp-day]:text-base [&_.rdp-nav_button]:h-9 [&_.rdp-nav_button]:w-9 [&_.rdp-table]:w-full [&_.rdp-day_selected]:bg-neutral-900 [&_.rdp-day_selected]:text-white [&_.rdp-day_today]:bg-neutral-200 [&_.rdp-day_today]:text-neutral-900 [&_.rdp-button:hover]:bg-neutral-100 p-5"
             />
