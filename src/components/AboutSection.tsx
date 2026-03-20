@@ -31,7 +31,7 @@ const AboutSection = () => {
         </h2>
 
         {/* Body text — justified + centered feel */}
-        <div className="text-sm md:text-base leading-relaxed text-neutral-300 space-y-5 text-justify [text-align-last:center]">
+        <div className="text-sm md:text-base leading-relaxed text-neutral-200 space-y-5 text-justify [text-align-last:center]">
           <p>Momentos reais e importantes da vida.</p>
           <p>
             Trabalhamos com um olhar documental e espontâneo, fruto de repertório
