@@ -72,7 +72,7 @@ const AboutSection = () => {
           <img
             src={personalidadesLogo}
             alt="Personalidades Logo"
-            className="mt-2 opacity-80 object-contain" style={{ width: '11.2rem' }}
+            className="mb-0 opacity-80 object-contain" style={{ width: '11.2rem' }}
           />
         </div>
       </motion.div>

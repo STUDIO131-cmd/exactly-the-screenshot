@@ -13,13 +13,26 @@ import BookingChat from "@/components/BookingChat";
 
 const Index = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatDate, setChatDate] = useState<string | undefined>();
 
-  // Listener para evento customizado
   useEffect(() => {
-    const handleOpenChat = () => setIsChatOpen(true);
+    const handleOpenChat = (e: Event) => {
+      const customEvent = e as CustomEvent<{ date?: string }>;
+      if (customEvent.detail?.date) {
+        setChatDate(customEvent.detail.date);
+      } else {
+        setChatDate(undefined);
+      }
+      setIsChatOpen(true);
+    };
     window.addEventListener('openBookingChat', handleOpenChat);
     return () => window.removeEventListener('openBookingChat', handleOpenChat);
   }, []);
+
+  const handleCloseChat = () => {
+    setIsChatOpen(false);
+    setChatDate(undefined);
+  };
 
   return (
     <main>
@@ -33,7 +46,7 @@ const Index = () => {
       <BookingSection />
       <FooterSection />
       <WhatsAppFloat onClick={() => setIsChatOpen(true)} />
-      <BookingChat isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+      <BookingChat isOpen={isChatOpen} onClose={handleCloseChat} selectedDate={chatDate} />
     </main>
   );
 };
