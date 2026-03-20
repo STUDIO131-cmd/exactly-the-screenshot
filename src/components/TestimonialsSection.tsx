@@ -50,6 +50,9 @@ const TestimonialsSection = () => {
           <h2 className="text-3xl md:text-4xl text-center font-light tracking-wide text-[rgba(232,210,150,0.85)] drop-shadow-[0_0_20px_rgba(232,210,150,0.3)] [text-shadow:0_0_25px_rgba(232,210,150,0.2),0_0_50px_rgba(232,210,150,0.1)]">
             Baú de Memórias
           </h2>
+          <p className="text-xs md:text-sm text-neutral-400 text-center tracking-wide font-light mt-1">
+            Confira histórias, depoimentos e vídeos bônus no baú da fotografia
+          </p>
         </div>
 
         <div className="relative">
