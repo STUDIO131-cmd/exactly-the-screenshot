@@ -72,7 +72,9 @@ const AboutSection = () => {
 
         {/* Closing line */}
         <p className="text-neutral-300 italic text-sm mb-14">
-          Essa é nossa visão.
+          Essa é a nossa visão.
+          <br />
+          Agora, que tal compartilhar a sua.
         </p>
 
         <div className="flex flex-col items-center gap-4">
@@ -80,7 +82,7 @@ const AboutSection = () => {
             onClick={openProposal}
             className="text-sm text-[rgba(232,210,150,0.8)] hover:text-[rgba(232,210,150,1)] transition-colors tracking-wide underline underline-offset-4 decoration-[rgba(232,210,150,0.3)]"
           >
-            Quero conhecer proposta
+            Quero planejar uma sessão
           </button>
           <img
             src={personalidadesLogo}
