@@ -68,7 +68,7 @@ const AboutSection = () => {
         {/* Repeated icon in neon circle + CTA */}
         <div className="flex flex-col items-center gap-4">
           <div
-            className="w-12 h-12 rounded-full border border-[rgba(240,240,240,0.5)] flex items-center justify-center"
+            className="w-48 h-48 rounded-full border border-[rgba(240,240,240,0.5)] flex items-center justify-center"
             style={{
               boxShadow: "0 0 18px rgba(255,255,255,0.63), 0 0 40px rgba(240,240,240,0.36), 0 0 60px rgba(255,255,255,0.25), inset 0 0 8px rgba(255,255,255,0.18)",
             }}
@@ -76,7 +76,7 @@ const AboutSection = () => {
             <img
               src={personalidadesIcon}
               alt=""
-              className="w-7 h-7 brightness-[0.3] sepia saturate-150"
+              className="w-28 h-28 brightness-[0.3] sepia saturate-150"
             />
           </div>
           <button
