@@ -43,7 +43,7 @@ const AboutSection = () => {
         </div>
 
         {/* Divider top */}
-        <div className="mt-14 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        <div className="mt-8 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
         {/* Glass bar button */}
         <motion.button
