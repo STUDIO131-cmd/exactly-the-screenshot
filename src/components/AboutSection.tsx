@@ -42,28 +42,33 @@ const AboutSection = () => {
           <p>Nas galerias você confere nosso portfólio.</p>
         </div>
 
-        {/* Subtle button / divider — 3x larger */}
+        {/* Divider top */}
+        <div className="mt-14 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+        {/* Glass bar button */}
         <motion.button
           onClick={scrollToGalleries}
-          className="mt-10 mb-8 w-full group cursor-pointer"
+          className="mt-6 mb-6 w-full group cursor-pointer"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
           <div className="relative overflow-hidden rounded-2xl bg-white/10 backdrop-blur-lg border border-white/15 px-6 py-6">
-            {/* Sliding shine effect */}
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
               animate={{ x: ["-150%", "150%"] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
             />
-            <span className="relative block text-5xl md:text-6xl normal-case tracking-normal text-neutral-200 group-hover:text-white transition-colors [text-shadow:0_0_12px_rgba(255,255,255,0.3)]" style={{ fontFamily: "'Kapakana', cursive" }}>
+            <span className="relative block text-3xl md:text-4xl normal-case tracking-normal text-neutral-200 group-hover:text-white transition-colors [text-shadow:0_0_12px_rgba(255,255,255,0.3)]" style={{ fontFamily: "'Kapakana', cursive" }}>
               Voltar às galerias
             </span>
-            <span className="relative block text-sm text-neutral-300 mt-3">
+            <span className="relative block text-xs text-neutral-300 mt-3">
               Ensaios pessoais · Casais · Gestantes · Retratos · 15 anos · Pequenos eventos
             </span>
           </div>
         </motion.button>
+
+        {/* Divider bottom */}
+        <div className="mb-14 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
         {/* Closing line */}
         <p className="text-neutral-300 italic text-sm mb-10">
