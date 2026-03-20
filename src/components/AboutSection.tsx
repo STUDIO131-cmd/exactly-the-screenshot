@@ -74,7 +74,7 @@ const AboutSection = () => {
         <p className="text-neutral-300 italic text-sm mb-14">
           Essa é a nossa visão.
           <br />
-          Agora, que tal compartilhar a sua.
+          Agora, que tal compartilhar a sua?
         </p>
 
         <div className="flex flex-col items-center gap-4">
