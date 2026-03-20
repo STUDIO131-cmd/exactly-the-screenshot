@@ -12,7 +12,7 @@ const AboutSection = () => {
   };
 
   return (
-    <section className="py-20 px-6 font-sans font-light">
+    <section className="py-10 md:py-16 px-6 font-sans font-light">
       <motion.div
         className="max-w-xl mx-auto text-center"
         initial={{ opacity: 0, y: 30 }}

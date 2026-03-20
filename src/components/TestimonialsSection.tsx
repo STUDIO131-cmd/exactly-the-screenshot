@@ -14,7 +14,7 @@ const TestimonialsSection = () => {
   const maxSlide = Math.max(0, testimonials.length - 1);
 
   return (
-    <section className="py-16 px-6 font-sans font-light">
+    <section className="py-10 md:py-16 px-6 font-sans font-light">
       <div className="max-w-6xl mx-auto">
         {/* Vintage trunk SVG + Title */}
         <div className="flex flex-col items-center mb-3">

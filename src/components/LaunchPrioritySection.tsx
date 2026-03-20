@@ -47,7 +47,7 @@ const LaunchPrioritySection = () => {
   };
 
   return (
-    <section className="py-20 px-6 font-sans font-light">
+    <section className="py-10 md:py-16 px-6 font-sans font-light">
       <div className="max-w-2xl mx-auto text-center">
         <h2 className="text-xs uppercase tracking-[0.3em] text-neutral-500 mb-3">
           Futuros Lançamentos
