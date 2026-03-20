@@ -61,20 +61,8 @@ const AboutSection = () => {
           Essa é nossa visão.
         </p>
 
-        {/* Repeated icon in neon circle + CTA */}
         <div className="flex flex-col items-center gap-4">
-          <div
-            className="w-48 h-48 rounded-full border border-[rgba(240,240,240,0.5)] flex items-center justify-center"
-            style={{
-              boxShadow: "0 0 25px rgba(255,255,255,0.9), 0 0 60px rgba(255,255,255,0.7), 0 0 100px rgba(255,255,255,0.45), 0 0 150px rgba(255,255,255,0.25), inset 0 0 15px rgba(255,255,255,0.3)",
-            }}
-          >
-            <img
-              src={personalidadesIcon}
-              alt=""
-              className="w-28 h-28 brightness-[0.3] sepia saturate-150"
-            />
-          </div>
+
           <button
             onClick={openProposal}
             className="text-sm text-[rgba(232,210,150,0.8)] hover:text-[rgba(232,210,150,1)] transition-colors tracking-wide underline underline-offset-4 decoration-[rgba(232,210,150,0.3)]"
