@@ -79,11 +79,11 @@ const AboutSection = () => {
 
         <motion.button
           onClick={openProposal}
-          className="w-full group cursor-pointer"
+          className="group cursor-pointer mx-auto"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <div className="relative overflow-hidden rounded-full bg-white/10 backdrop-blur-lg border border-white/15 px-10 py-8">
+          <div className="relative overflow-hidden rounded-full bg-white/10 backdrop-blur-lg border border-white/15 w-64 h-64 md:w-72 md:h-72 flex items-center justify-center">
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
               animate={{ x: ["-150%", "150%"] }}
