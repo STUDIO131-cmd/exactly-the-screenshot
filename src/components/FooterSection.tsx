@@ -9,7 +9,7 @@ const FooterSection = () => {
     <footer className="py-12 px-6 font-sans font-light" style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', color: '#ffffff' }}>
       <div className="max-w-4xl mx-auto flex flex-col items-center gap-8">
         {/* Logo menor */}
-        <img src={logoWhite} alt="Studio 131" className="h-10 opacity-80 invert" />
+        <img src={logoWhite} alt="Studio 131" className="h-10 opacity-40" />
 
         {/* Glass bar com 4 botões em 2 linhas */}
         <div
