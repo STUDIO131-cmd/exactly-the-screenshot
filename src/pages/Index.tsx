@@ -41,8 +41,8 @@ const Index = () => {
       <CategoriesTicker />
       <GalleriesSection onOpenBookingChat={() => setIsChatOpen(true)} />
       <IntentionText />
-      <BookingPromoBar />
       <TestimonialsSection />
+      <BookingPromoBar />
       <AboutSection />
       <BookingSection />
       <LaunchPrioritySection />
