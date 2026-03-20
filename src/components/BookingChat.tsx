@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, MessageCircle } from "lucide-react";
 
-type ChatStep = "welcome" | "photographer_choice" | "difference" | "session_type" | "has_date" | "select_date" | "confirm" | "done";
+type ChatStep = "welcome" | "photographer_choice" | "difference" | "session_type" | "has_date" | "select_date" | "confirm" | "done" | "comparing" | "faq_in_chat";
 
 interface Message {
   id: number;
