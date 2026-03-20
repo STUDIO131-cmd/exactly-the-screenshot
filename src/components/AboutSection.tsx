@@ -77,19 +77,31 @@ const AboutSection = () => {
           Agora, que tal compartilhar a sua?
         </p>
 
-        <div className="flex flex-col items-center gap-4">
-          <button
-            onClick={openProposal}
-            className="text-sm text-[rgba(232,210,150,0.8)] hover:text-[rgba(232,210,150,1)] transition-colors tracking-wide underline underline-offset-4 decoration-[rgba(232,210,150,0.3)]"
-          >
-            Quero planejar uma sessão
-          </button>
-          <img
-            src={personalidadesLogo}
-            alt="Personalidades Logo"
-            className="mb-0 opacity-80 object-contain" style={{ width: '11.2rem' }}
-          />
-        </div>
+        <motion.button
+          onClick={openProposal}
+          className="w-full group cursor-pointer"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <div className="relative overflow-hidden rounded-2xl bg-white/10 backdrop-blur-lg border border-white/15 px-6 py-8">
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
+              animate={{ x: ["-150%", "150%"] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
+            />
+            <span className="relative block text-3xl md:text-4xl leading-tight text-neutral-200 group-hover:text-white transition-colors [text-shadow:0_0_12px_rgba(255,255,255,0.3)]" style={{ fontFamily: "'Kapakana', cursive" }}>
+              Toque e planeje
+              <br />
+              uma sessão
+            </span>
+            <img
+              src={personalidadesLogo}
+              alt="Personalidades Logo"
+              className="relative mx-auto mt-4 opacity-80 object-contain"
+              style={{ width: '11.2rem' }}
+            />
+          </div>
+        </motion.button>
       </motion.div>
     </section>
   );
