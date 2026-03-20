@@ -21,7 +21,7 @@ const BookingSection = () => {
         <p className="text-neutral-400 mb-2 text-sm tracking-widest uppercase">
           Consultar disponibilidade
         </p>
-        <p className="text-neutral-500 mb-8 text-[0.65rem] md:text-xs leading-relaxed max-w-md mx-auto">
+        <p className="text-neutral-400 mb-8 text-[0.65rem] md:text-xs leading-relaxed max-w-md mx-auto">
           Nossa agenda é selecionada para respeitar os clientes que atendemos em outras frentes — trabalhamos com antecipação e poucas vagas.
         </p>
 
