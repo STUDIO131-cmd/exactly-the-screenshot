@@ -13,7 +13,7 @@ const BookingPromoBar = () => {
   return (
     <section className="py-20 px-6 font-sans font-light">
       <div className="max-w-3xl mx-auto">
-        <div className="dusty-texture relative bg-white/5 backdrop-blur-md border border-white/[0.12] rounded-2xl shadow-[0_0_40px_rgba(255,255,255,0.06),0_0_80px_rgba(200,180,255,0.04),inset_0_0_60px_rgba(255,255,255,0.03)] p-10 md:p-14 text-center overflow-hidden">
+        <div className="dusty-texture relative bg-white/[0.07] backdrop-blur-md border border-white/[0.15] rounded-2xl shadow-[0_0_60px_rgba(255,255,255,0.12),0_0_120px_rgba(200,180,255,0.08),0_0_200px_rgba(180,160,255,0.05),inset_0_0_80px_rgba(255,255,255,0.05)] p-10 md:p-14 text-center overflow-hidden">
           {/* Title */}
           <h2 className="text-3xl md:text-4xl font-light tracking-wide text-white/90 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)] mb-3">
             Agende sua sessão
