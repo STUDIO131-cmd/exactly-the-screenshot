@@ -47,7 +47,7 @@ const AboutSection = () => {
           className="mt-10 mb-8 w-full group cursor-pointer py-8"
         >
           <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-300/50 to-transparent mb-6" />
-          <span className="block text-base normal-case tracking-normal text-neutral-200 group-hover:text-white transition-colors [text-shadow:0_0_12px_rgba(255,255,255,0.3)]" style={{ fontFamily: "'Kapakana', cursive" }}>
+          <span className="block text-5xl md:text-6xl normal-case tracking-normal text-neutral-200 group-hover:text-white transition-colors [text-shadow:0_0_12px_rgba(255,255,255,0.3)]" style={{ fontFamily: "'Kapakana', cursive" }}>
             Voltar às galerias
           </span>
           <span className="block text-sm text-neutral-300 mt-3">
