@@ -50,7 +50,7 @@ const AboutSection = () => {
           onClick={scrollToGalleries}
           className="mt-10 mb-8 w-full group cursor-pointer"
         >
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-500/30 to-transparent mb-4" />
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-400/50 to-transparent mb-4" />
           <span className="block text-[11px] uppercase tracking-[0.25em] text-neutral-400 group-hover:text-neutral-200 transition-colors">
             Voltar às galerias
           </span>
