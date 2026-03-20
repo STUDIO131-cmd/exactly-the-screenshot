@@ -23,10 +23,7 @@ const AboutSection = () => {
         <img
           src={personalidadesIcon}
           alt="Personalidades 131 Fotos"
-          className="w-20 mx-auto mb-6 drop-shadow-[0_0_16px_rgba(232,210,150,0.5)]"
-          style={{
-            filter: "sepia(0.6) saturate(1.2) brightness(1.1) hue-rotate(-10deg)",
-          }}
+          className="w-40 mx-auto mb-6 drop-shadow-[0_0_16px_rgba(232,210,150,0.5)]"
         />
 
         <h2 className="text-3xl md:text-4xl mb-8 text-neutral-200 drop-shadow-[0_0_20px_rgba(255,255,255,0.15)] [text-shadow:0_0_25px_rgba(255,255,255,0.12)]">
@@ -80,9 +77,6 @@ const AboutSection = () => {
               src={personalidadesIcon}
               alt=""
               className="w-7 h-7"
-              style={{
-                filter: "sepia(0.6) saturate(1.2) brightness(1.1) hue-rotate(-10deg)",
-              }}
             />
           </div>
           <button
