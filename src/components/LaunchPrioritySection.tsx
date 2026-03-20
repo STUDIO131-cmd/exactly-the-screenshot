@@ -52,7 +52,7 @@ const LaunchPrioritySection = () => {
         <h2 className="text-xs uppercase tracking-[0.3em] text-neutral-500 mb-3">
           Futuros Lançamentos
         </h2>
-        <p className="text-neutral-400 text-sm leading-relaxed max-w-md mx-auto mb-10">
+        <p className="text-neutral-400 text-sm leading-relaxed max-w-md mx-auto mb-6">
           Garanta prioridade em nossa próxima agenda especial e receba a proposta antes de todo mundo.
         </p>
 
