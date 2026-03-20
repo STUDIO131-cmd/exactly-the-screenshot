@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, MessageCircle } from "lucide-react";
 
-type ChatStep = "welcome" | "photographer_choice" | "difference" | "session_type" | "has_date" | "select_date" | "confirm" | "done";
+type ChatStep = "welcome" | "photographer_choice" | "difference" | "session_type" | "has_date" | "select_date" | "confirm" | "done" | "comparing" | "faq_in_chat";
 
 interface Message {
   id: number;
@@ -127,11 +127,15 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
         addUserMessage(option);
         setTimeout(() => {
           addBotMessage(
-            "Perfeito! Vou te direcionar para o WhatsApp onde podemos apresentar as duas propostas em detalhe. 💬",
-            ["Continuar no WhatsApp"]
+            "Ótima ideia! Vou te explicar as diferenças:\n\n📸 **Igor (Fotógrafo Principal)**\n• Estilo autoral e direção intimista\n• Repertório consolidado com anos de experiência\n• Cada ensaio é uma obra única com sua assinatura\n• Valor diferenciado pela exclusividade\n\n🎯 **Equipe Studio 131**\n• Fotógrafos talentosos treinados na linguagem do estúdio\n• Repertório versátil e em constante evolução\n• Ótimo custo-benefício com qualidade profissional\n• Mesma estrutura e pós-produção do estúdio"
           );
-          setSelectedPhotographer("ambos os cenários");
-          setStep("confirm");
+          setTimeout(() => {
+            addBotMessage(
+              "Com essas informações, o que gostaria de fazer?",
+              ["Agendar com Igor", "Agendar com fotógrafo da equipe Studio 131", "Tenho outra dúvida"]
+            );
+            setStep("comparing");
+          }, 1200);
         }, 500);
         return;
       }
@@ -146,6 +150,48 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
             "Qual tipo de sessão você tem interesse?",
             sessionTypes
           );
+          setStep("session_type");
+        }, 1000);
+      }, 500);
+    } else if (step === "comparing") {
+      addUserMessage(option);
+      if (option === "Tenho outra dúvida") {
+        setTimeout(() => {
+          addBotMessage(
+            "Claro! Aqui vão algumas dúvidas frequentes:\n\n💰 **Preços** — Sessões com Igor têm valor diferenciado pela autoria. Sessões com a equipe oferecem ótimo custo-benefício.\n\n📷 **Tipos de sessão** — Retratos Profissionais, Gestantes, 15 Anos, Casais, Ensaio Pessoal e Eventos.\n\n📅 **Agendamento** — Trabalhamos com antecipação e poucas vagas. Finalizamos detalhes pelo WhatsApp.",
+            ["Agendar com Igor", "Agendar com fotógrafo da equipe Studio 131", "Falar no WhatsApp"]
+          );
+          setStep("faq_in_chat");
+        }, 500);
+      } else {
+        setSelectedPhotographer(option);
+        setTimeout(() => {
+          addBotMessage(
+            `Ótima escolha! ${option.includes("Igor") ? "Igor vai adorar registrar seus momentos" : "Nossa equipe está pronta para te atender"}. 📸`
+          );
+          setTimeout(() => {
+            addBotMessage("Qual tipo de sessão você tem interesse?", sessionTypes);
+            setStep("session_type");
+          }, 1000);
+        }, 500);
+      }
+    } else if (step === "faq_in_chat") {
+      addUserMessage(option);
+      if (option === "Falar no WhatsApp") {
+        const message = encodeURIComponent(
+          "Olá! Gostaria de saber mais sobre os serviços do Studio 131. Vim pelo site 131 Fotos."
+        );
+        window.open(`https://wa.me/5517992595117?text=${message}`, "_blank");
+        onClose();
+        return;
+      }
+      setSelectedPhotographer(option);
+      setTimeout(() => {
+        addBotMessage(
+          `Ótima escolha! ${option.includes("Igor") ? "Igor vai adorar registrar seus momentos" : "Nossa equipe está pronta para te atender"}. 📸`
+        );
+        setTimeout(() => {
+          addBotMessage("Qual tipo de sessão você tem interesse?", sessionTypes);
           setStep("session_type");
         }, 1000);
       }, 500);
