@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import personalidadesLogo from "@/assets/personalidades-logo-white.png";
 
 
 const AboutSection = () => {
