@@ -68,9 +68,9 @@ const AboutSection = () => {
         {/* Repeated icon in neon circle + CTA */}
         <div className="flex flex-col items-center gap-4">
           <div
-            className="w-12 h-12 rounded-full border border-[rgba(232,210,150,0.5)] flex items-center justify-center"
+            className="w-12 h-12 rounded-full border border-[rgba(240,240,240,0.5)] flex items-center justify-center"
             style={{
-              boxShadow: "0 0 18px rgba(232,210,150,0.3), inset 0 0 8px rgba(232,210,150,0.1)",
+              boxShadow: "0 0 18px rgba(255,255,255,0.35), 0 0 40px rgba(240,240,240,0.2), inset 0 0 8px rgba(255,255,255,0.1)",
             }}
           >
             <img
