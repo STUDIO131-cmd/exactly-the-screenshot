@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import personalidadesIcon from "@/assets/personalidades-icon.png";
+
 
 const AboutSection = () => {
   const scrollToGalleries = () => {
@@ -19,12 +19,8 @@ const AboutSection = () => {
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
       >
-        {/* Eye icon — pastel yellow tint */}
-        <img
-          src={personalidadesIcon}
-          alt="Personalidades 131 Fotos"
-          className="w-40 mx-auto mb-6 drop-shadow-[0_0_30px_rgba(255,255,255,1)] drop-shadow-[0_0_60px_rgba(255,255,255,0.85)] drop-shadow-[0_0_100px_rgba(255,255,255,0.6)] drop-shadow-[0_0_150px_rgba(255,255,255,0.35)] brightness-[0.3] sepia saturate-150"
-        />
+
+
 
         <h2 className="text-3xl md:text-4xl mb-8 text-neutral-100 drop-shadow-[0_0_30px_rgba(255,255,255,0.5)] [text-shadow:0_0_20px_rgba(255,255,255,0.4),0_0_50px_rgba(240,240,240,0.25),0_0_80px_rgba(220,220,220,0.15)]">
           O que fotografamos
@@ -65,20 +61,8 @@ const AboutSection = () => {
           Essa é nossa visão.
         </p>
 
-        {/* Repeated icon in neon circle + CTA */}
         <div className="flex flex-col items-center gap-4">
-          <div
-            className="w-48 h-48 rounded-full border border-[rgba(240,240,240,0.5)] flex items-center justify-center"
-            style={{
-              boxShadow: "0 0 25px rgba(255,255,255,0.9), 0 0 60px rgba(255,255,255,0.7), 0 0 100px rgba(255,255,255,0.45), 0 0 150px rgba(255,255,255,0.25), inset 0 0 15px rgba(255,255,255,0.3)",
-            }}
-          >
-            <img
-              src={personalidadesIcon}
-              alt=""
-              className="w-28 h-28 brightness-[0.3] sepia saturate-150"
-            />
-          </div>
+
           <button
             onClick={openProposal}
             className="text-sm text-[rgba(232,210,150,0.8)] hover:text-[rgba(232,210,150,1)] transition-colors tracking-wide underline underline-offset-4 decoration-[rgba(232,210,150,0.3)]"
