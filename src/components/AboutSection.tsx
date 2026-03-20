@@ -12,7 +12,7 @@ const AboutSection = () => {
   };
 
   return (
-    <section className="py-20 px-6 font-sans font-light">
+    <section className="py-10 md:py-16 px-6 font-sans font-light">
       <motion.div
         className="max-w-xl mx-auto text-center"
         initial={{ opacity: 0, y: 30 }}
@@ -43,7 +43,7 @@ const AboutSection = () => {
         </div>
 
         {/* Divider top */}
-        <div className="mt-14 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        <div className="mt-8 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
         {/* Glass bar button */}
         <motion.button
@@ -68,10 +68,10 @@ const AboutSection = () => {
         </motion.button>
 
         {/* Divider bottom */}
-        <div className="mb-14 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        <div className="mb-8 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
         {/* Closing line */}
-        <p className="text-neutral-300 italic text-sm mb-14">
+        <p className="text-neutral-300 italic text-sm mb-8">
           Essa é a nossa visão.
           <br />
           Agora, que tal compartilhar a sua?
@@ -83,7 +83,7 @@ const AboutSection = () => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <div className="relative overflow-hidden rounded-full bg-white/10 backdrop-blur-lg border border-white/15 w-48 h-48 md:w-56 md:h-56 flex items-center justify-center">
+          <div className="relative overflow-hidden rounded-full bg-white/10 backdrop-blur-lg border border-white/15 w-40 h-40 md:w-48 md:h-48 flex items-center justify-center">
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
               animate={{ x: ["-150%", "150%"] }}

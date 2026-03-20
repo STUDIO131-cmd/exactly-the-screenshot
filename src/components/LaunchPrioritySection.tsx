@@ -47,12 +47,12 @@ const LaunchPrioritySection = () => {
   };
 
   return (
-    <section className="py-20 px-6 font-sans font-light">
+    <section className="py-10 md:py-16 px-6 font-sans font-light">
       <div className="max-w-2xl mx-auto text-center">
         <h2 className="text-xs uppercase tracking-[0.3em] text-neutral-500 mb-3">
           Futuros Lançamentos
         </h2>
-        <p className="text-neutral-400 text-sm leading-relaxed max-w-md mx-auto mb-10">
+        <p className="text-neutral-400 text-sm leading-relaxed max-w-md mx-auto mb-6">
           Garanta prioridade em nossa próxima agenda especial e receba a proposta antes de todo mundo.
         </p>
 
@@ -66,13 +66,13 @@ const LaunchPrioritySection = () => {
           <p className="text-[10px] uppercase tracking-[0.25em] text-neutral-500 mb-1">
             Campanha
           </p>
-          <h3 className="text-6xl md:text-8xl tracking-normal mb-1" style={{ fontFamily: "'Kapakana', cursive", color: '#F5E6A3' }}>
+          <h3 className="text-4xl md:text-6xl tracking-normal mb-1" style={{ fontFamily: "'Kapakana', cursive", color: '#F5E6A3' }}>
             Esse instante
           </h3>
           <p className="text-xs text-neutral-400 font-sans mb-1">
             Campanha de Dia das Mães
           </p>
-          <p className="text-xs text-neutral-500 mb-8">
+          <p className="text-xs text-neutral-500 mb-5">
             Abertura abril · Realização em maio
           </p>
 

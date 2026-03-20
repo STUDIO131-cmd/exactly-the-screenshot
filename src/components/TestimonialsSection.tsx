@@ -14,7 +14,7 @@ const TestimonialsSection = () => {
   const maxSlide = Math.max(0, testimonials.length - 1);
 
   return (
-    <section className="py-16 px-6 font-sans font-light">
+    <section className="py-10 md:py-16 px-6 font-sans font-light">
       <div className="max-w-6xl mx-auto">
         {/* Vintage trunk SVG + Title */}
         <div className="flex flex-col items-center mb-3">
@@ -51,7 +51,7 @@ const TestimonialsSection = () => {
             Nosso baú de memórias
           </h2>
         </div>
-        <p className="text-center text-neutral-400 tracking-widest uppercase text-sm mb-12">
+        <p className="text-center text-neutral-400 tracking-widest uppercase text-sm mb-8">
           Depoimentos e vídeos bônus
         </p>
 
@@ -71,7 +71,7 @@ const TestimonialsSection = () => {
               {testimonials.map((item) => (
                 <div
                   key={item.id}
-                  className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 aspect-[9/16] rounded-2xl overflow-hidden bg-neutral-800/40 backdrop-blur-sm border border-neutral-700/30 flex items-center justify-center"
+                  className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 aspect-[3/4] rounded-2xl overflow-hidden bg-neutral-800/40 backdrop-blur-sm border border-neutral-700/30 flex items-center justify-center"
                 >
                   <div className="text-center p-6">
                     <p className="text-neutral-200 text-xl mb-4">

@@ -1,6 +1,6 @@
 const IntentionText = () => {
   return (
-    <section className="py-16 px-4 md:px-6">
+    <section className="py-10 md:py-16 px-4 md:px-6">
       <div className="max-w-md mx-auto text-center space-y-6">
         <div className="w-full h-[2px] bg-gradient-to-r from-transparent via-neutral-400/40 to-transparent" />
 

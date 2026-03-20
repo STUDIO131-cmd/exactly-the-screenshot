@@ -216,9 +216,9 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
   };
 
   return (
-    <section className="py-16 px-4 md:px-6">
+    <section className="py-10 md:py-16 px-4 md:px-6">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl md:text-5xl text-center mb-12 text-neutral-200 font-sans mx-0 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)]">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl text-center mb-8 text-neutral-200 font-sans mx-0 drop-shadow-[0_0_15px_rgba(255,255,255,0.15)]">
           Galerias
         </h2>
 
