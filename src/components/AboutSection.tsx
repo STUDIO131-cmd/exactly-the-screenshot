@@ -83,13 +83,13 @@ const AboutSection = () => {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <div className="relative overflow-hidden rounded-2xl bg-white/10 backdrop-blur-lg border border-white/15 px-6 py-8">
+          <div className="relative overflow-hidden rounded-full bg-white/10 backdrop-blur-lg border border-white/15 px-10 py-8">
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
               animate={{ x: ["-150%", "150%"] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
             />
-            <span className="relative block text-3xl md:text-4xl leading-tight text-neutral-200 group-hover:text-white transition-colors [text-shadow:0_0_12px_rgba(255,255,255,0.3)]" style={{ fontFamily: "'Kapakana', cursive" }}>
+            <span className="relative block text-3xl md:text-4xl leading-tight text-neutral-200 group-hover:text-white transition-colors [text-shadow:0_0_12px_rgba(255,255,255,0.3)]">
               Toque e planeje
               <br />
               uma sessão
