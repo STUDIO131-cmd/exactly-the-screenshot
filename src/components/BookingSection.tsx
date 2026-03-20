@@ -15,7 +15,7 @@ const BookingSection = () => {
   };
 
   return (
-    <section className="py-16 px-6 font-sans font-light">
+    <section id="booking-section" className="py-16 px-6 font-sans font-light">
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl mb-4 text-neutral-200">Agende sua sessão</h2>
         <p className="text-neutral-400 mb-12">
