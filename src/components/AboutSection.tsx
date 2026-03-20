@@ -57,7 +57,7 @@ const AboutSection = () => {
           <span className="block text-xs text-neutral-400 mt-1">
             Ensaios pessoais · Casais · Gestantes · Retratos · 15 anos · Pequenos eventos
           </span>
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-500/30 to-transparent mt-4" />
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-400/50 to-transparent mt-4" />
         </button>
 
         {/* Closing line */}
