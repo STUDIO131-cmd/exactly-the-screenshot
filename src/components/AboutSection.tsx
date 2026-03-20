@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import personalidadesLogo from "@/assets/personalidades-logo-white.png";
 
 
 const AboutSection = () => {
@@ -62,13 +63,17 @@ const AboutSection = () => {
         </p>
 
         <div className="flex flex-col items-center gap-4">
-
           <button
             onClick={openProposal}
             className="text-sm text-[rgba(232,210,150,0.8)] hover:text-[rgba(232,210,150,1)] transition-colors tracking-wide underline underline-offset-4 decoration-[rgba(232,210,150,0.3)]"
           >
             Quero conhecer proposta
           </button>
+          <img
+            src={personalidadesLogo}
+            alt="Personalidades Logo"
+            className="w-16 h-16 mt-2 opacity-80"
+          />
         </div>
       </motion.div>
     </section>
