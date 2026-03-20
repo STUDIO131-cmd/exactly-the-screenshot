@@ -23,7 +23,7 @@ const AboutSection = () => {
         <img
           src={personalidadesIcon}
           alt="Personalidades 131 Fotos"
-          className="w-40 mx-auto mb-6 drop-shadow-[0_0_16px_rgba(232,210,150,0.5)] brightness-[0.3] sepia saturate-150"
+          className="w-40 mx-auto mb-6 drop-shadow-[0_0_24px_rgba(255,255,255,0.5)] drop-shadow-[0_0_48px_rgba(240,240,240,0.3)] brightness-[0.3] sepia saturate-150"
         />
 
         <h2 className="text-3xl md:text-4xl mb-8 text-neutral-100 drop-shadow-[0_0_30px_rgba(255,255,255,0.5)] [text-shadow:0_0_20px_rgba(255,255,255,0.4),0_0_50px_rgba(240,240,240,0.25),0_0_80px_rgba(220,220,220,0.15)]">
@@ -68,9 +68,9 @@ const AboutSection = () => {
         {/* Repeated icon in neon circle + CTA */}
         <div className="flex flex-col items-center gap-4">
           <div
-            className="w-12 h-12 rounded-full border border-[rgba(232,210,150,0.5)] flex items-center justify-center"
+            className="w-12 h-12 rounded-full border border-[rgba(240,240,240,0.5)] flex items-center justify-center"
             style={{
-              boxShadow: "0 0 18px rgba(232,210,150,0.3), inset 0 0 8px rgba(232,210,150,0.1)",
+              boxShadow: "0 0 18px rgba(255,255,255,0.35), 0 0 40px rgba(240,240,240,0.2), inset 0 0 8px rgba(255,255,255,0.1)",
             }}
           >
             <img
