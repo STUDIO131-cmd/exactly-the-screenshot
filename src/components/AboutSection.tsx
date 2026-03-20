@@ -79,27 +79,29 @@ const AboutSection = () => {
 
         <motion.button
           onClick={openProposal}
-          className="w-full group cursor-pointer"
+          className="group cursor-pointer mx-auto"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          <div className="relative overflow-hidden rounded-full bg-white/10 backdrop-blur-lg border border-white/15 px-10 py-8">
+          <div className="relative overflow-hidden rounded-full bg-white/10 backdrop-blur-lg border border-white/15 w-64 h-64 md:w-72 md:h-72 flex items-center justify-center">
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
               animate={{ x: ["-150%", "150%"] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
             />
-            <span className="relative block text-3xl md:text-4xl leading-tight text-neutral-200 group-hover:text-white transition-colors [text-shadow:0_0_12px_rgba(255,255,255,0.3)]">
-              Toque e planeje
-              <br />
-              uma sessão
-            </span>
-            <img
-              src={personalidadesLogo}
-              alt="Personalidades Logo"
-              className="relative mx-auto mt-4 opacity-80 object-contain"
-              style={{ width: '11.2rem' }}
-            />
+            <div className="relative flex flex-col items-center justify-center">
+              <span className="block text-2xl md:text-3xl leading-tight text-neutral-200 group-hover:text-white transition-colors [text-shadow:0_0_12px_rgba(255,255,255,0.3)]">
+                Toque e planeje
+                <br />
+                uma sessão
+              </span>
+              <img
+                src={personalidadesLogo}
+                alt="Personalidades Logo"
+                className="mx-auto mt-3 opacity-80 object-contain"
+                style={{ width: '9rem' }}
+              />
+            </div>
           </div>
         </motion.button>
       </motion.div>
