@@ -5,6 +5,15 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import AdminLayout from "./pages/admin/AdminLayout.tsx";
+import DashboardPage from "./pages/admin/DashboardPage.tsx";
+import ProductsPage from "./pages/admin/ProductsPage.tsx";
+import VariantsPage from "./pages/admin/VariantsPage.tsx";
+import PoliciesPage from "./pages/admin/PoliciesPage.tsx";
+import FaqsPage from "./pages/admin/FaqsPage.tsx";
+import LeadsPage from "./pages/admin/LeadsPage.tsx";
+import SimulatorPage from "./pages/admin/SimulatorPage.tsx";
+import KnowledgePage from "./pages/admin/KnowledgePage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +25,16 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<DashboardPage />} />
+            <Route path="products" element={<ProductsPage />} />
+            <Route path="variants" element={<VariantsPage />} />
+            <Route path="policies" element={<PoliciesPage />} />
+            <Route path="faqs" element={<FaqsPage />} />
+            <Route path="leads" element={<LeadsPage />} />
+            <Route path="simulator" element={<SimulatorPage />} />
+            <Route path="knowledge" element={<KnowledgePage />} />
+          </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

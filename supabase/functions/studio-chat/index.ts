@@ -22,62 +22,106 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Fetch studio data from database
-    const [servicesRes, datesRes, infoRes] = await Promise.all([
-      supabase.from("studio_services").select("*").eq("is_active", true),
+    // Fetch all product data from normalized tables
+    const [familiesRes, productsRes, variantsRes, pricingRes, policiesRes, faqsRes, campaignsRes, datesRes] = await Promise.all([
+      supabase.from("product_families").select("*").eq("is_active", true),
+      supabase.from("products").select("*").eq("is_active", true),
+      supabase.from("variants").select("*").eq("is_active", true),
+      supabase.from("pricing").select("*"),
+      supabase.from("policies").select("*"),
+      supabase.from("faq_entries").select("*").eq("is_active", true),
+      supabase.from("campaign_rules").select("*"),
       supabase.from("available_dates").select("*").eq("is_available", true).gte("date", new Date().toISOString().split("T")[0]).order("date"),
-      supabase.from("studio_info").select("*"),
     ]);
 
-    const services = servicesRes.data || [];
+    const families = familiesRes.data || [];
+    const products = productsRes.data || [];
+    const variants = variantsRes.data || [];
+    const pricing = pricingRes.data || [];
+    const policies = policiesRes.data || [];
+    const faqs = faqsRes.data || [];
+    const campaigns = campaignsRes.data || [];
     const dates = datesRes.data || [];
-    const info = infoRes.data || [];
 
-    const infoMap: Record<string, string> = {};
-    info.forEach((i: { key: string; value: string }) => {
-      infoMap[i.key] = i.value;
-    });
-
-    const servicesText = services
-      .map((s: { name: string; description: string; price_igor: number | null; price_team: number | null }) => {
-        let line = `- ${s.name}: ${s.description || ""}`;
-        if (s.price_igor) line += ` | Com Igor: R$${s.price_igor}`;
-        if (s.price_team) line += ` | Com Equipe: R$${s.price_team}`;
+    // Build rich context for the AI
+    const catalogText = products.map((p: any) => {
+      const family = families.find((f: any) => f.id === p.family_id);
+      const productVariants = variants.filter((v: any) => v.product_id === p.id);
+      const variantLines = productVariants.map((v: any) => {
+        const price = pricing.find((pr: any) => pr.variant_id === v.id);
+        let line = `  • ${v.name}`;
+        if (v.duration_minutes) line += ` | ${v.duration_minutes}min`;
+        if (v.edited_photos) line += ` | ${v.edited_photos} fotos editadas`;
+        if (v.printed_photos) line += ` | ${v.printed_photos} fotos reveladas`;
+        if (v.video_included) line += ` | inclui vídeo`;
+        if (v.strategy_included) line += ` | inclui estratégia de imagem`;
+        if (v.photographer_type) line += ` | Fotógrafo: ${v.photographer_type}`;
+        if (v.max_people) line += ` | até ${v.max_people} pessoas`;
+        if (v.outfit_changes) line += ` | ${v.outfit_changes} trocas de roupa`;
+        if (v.outfit_changes_rule) line += ` | trocas: ${v.outfit_changes_rule}`;
+        if (v.venue_type) line += ` | local: ${v.venue_type}`;
+        if (v.limited_slots) line += ` | ⚠️ apenas ${v.limited_slots} vagas`;
+        if (price) {
+          line += ` | R$${price.price_cash} à vista`;
+          if (price.installments_qty) line += ` ou ${price.installments_qty}x de R$${price.installment_value}`;
+          if (price.extra_photo_price) line += ` | foto extra: R$${price.extra_photo_price}`;
+          if (price.extra_hour_price) line += ` | hora extra: R$${price.extra_hour_price}`;
+          if (price.video_addon_price) line += ` | vídeo adicional: R$${price.video_addon_price}`;
+        }
         return line;
-      })
-      .join("\n");
+      }).join("\n");
+      return `📸 ${p.name} (${family?.name || ""})\nObjetivo: ${p.objective || ""}\n${variantLines}`;
+    }).join("\n\n");
 
-    const datesText = dates
-      .map((d: { date: string; photographer: string; notes: string | null }) => `- ${d.date} (${d.photographer})${d.notes ? ` — ${d.notes}` : ""}`)
-      .join("\n");
+    const policiesText = policies.filter((p: any) => p.is_global).map((p: any) => `- ${p.title}: ${p.description}`).join("\n");
 
-    const systemPrompt = `Você é a assistente virtual do Studio 131 Fotos, um estúdio de fotografia. Responda de forma simpática, breve e objetiva. Use emojis com moderação. Sempre em português do Brasil.
+    const faqsText = faqs.map((f: any) => `P: ${f.question}\nR: ${f.answer}`).join("\n\n");
 
-INFORMAÇÕES DO ESTÚDIO:
+    const datesText = dates.length > 0
+      ? dates.map((d: any) => `- ${d.date} (${d.photographer})${d.notes ? ` — ${d.notes}` : ""}`).join("\n")
+      : "Consulte disponibilidade pelo WhatsApp.";
 
-Sobre Igor (fotógrafo principal):
-${infoMap["igor_descricao"] || "Fotógrafo principal com estilo autoral e intimista."}
+    const activeCampaigns = campaigns.filter((c: any) => {
+      const now = new Date().toISOString().split("T")[0];
+      return (!c.start_date || c.start_date <= now) && (!c.end_date || c.end_date >= now);
+    });
+    const campaignText = activeCampaigns.length > 0
+      ? activeCampaigns.map((c: any) => `🎯 ${c.campaign_name}${c.slot_limit ? ` — ${c.slot_limit} vagas` : ""}`).join("\n")
+      : "";
 
-Sobre a Equipe Studio 131:
-${infoMap["equipe_descricao"] || "Fotógrafos talentosos com ótimo custo-benefício."}
+    const systemPrompt = `Você é a assistente virtual do Studio 131 Fotos, um estúdio de fotografia em Catanduva-SP. Responda de forma simpática, breve e objetiva. Use emojis com moderação. Sempre em português do Brasil.
 
-Diferença de valor:
-${infoMap["diferenca_valor"] || "Igor tem valor diferenciado pela exclusividade. Equipe tem ótimo custo-benefício."}
+CATÁLOGO COMPLETO DE OFERTAS:
 
-Horário: ${infoMap["horario_funcionamento"] || "Segunda a Sábado, 9h às 18h"}
+${catalogText}
 
-SESSÕES DISPONÍVEIS:
-${servicesText || "Retratos Profissionais, Gestantes, 15 Anos, Casais, Ensaio Pessoal, Eventos"}
+REGRAS OPERACIONAIS:
+${policiesText}
 
+${campaignText ? `CAMPANHAS ATIVAS:\n${campaignText}\n` : ""}
 DATAS DISPONÍVEIS:
-${datesText || "Consulte disponibilidade pelo WhatsApp."}
+${datesText}
+
+PERGUNTAS FREQUENTES:
+${faqsText}
+
+LÓGICA DE RECOMENDAÇÃO:
+- Se o cliente quer atualizar foto profissional sem estratégia → Retratos Base (R$797)
+- Se quer construir posicionamento ou estratégia de imagem → Posicionamento Profissional (R$2.250)
+- Se é evento → Cobertura de Eventos (R$999)
+- Se é Dia das Mães e quer na casa → Dia das Mães Experience (R$1.789)
+- Se é Dia das Mães e busca economia → Dia das Mães Studio (R$699)
+- Se é casal/gestante/15 anos e quer vídeo ou fotos reveladas → Experience (R$2.250)
+- Se é casal/gestante/15 anos e busca economia → Studio (R$999)
+- Sessões com Igor: Experience, Posicionamento. Sessões com Equipe: Studio, Base, Eventos.
 
 REGRAS:
 - Seja breve (máx 3-4 frases)
 - Se a pergunta não for sobre fotografia/estúdio, redirecione educadamente
-- Se não souber o preço exato, diga que os valores variam e sugira contato pelo WhatsApp
 - Nunca invente informações que não estão acima
-- Se o cliente quiser agendar, incentive a continuar no chat de agendamento`;
+- Sempre explique a recomendação em linguagem humana
+- Se o cliente quiser agendar, incentive a continuar no chat
+- Pagamento: 50% no agendamento + 50% na véspera, ou 3x no cartão`;
 
     const messages = [
       { role: "system", content: systemPrompt },
