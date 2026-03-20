@@ -90,7 +90,7 @@ const AboutSection = () => {
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
             />
             <div className="relative flex flex-col items-center justify-center">
-              <span className="block text-sm md:text-base leading-snug text-neutral-300 group-hover:text-neutral-100 transition-colors tracking-wide">
+              <span className="block text-xs md:text-sm leading-tight text-neutral-300 group-hover:text-neutral-100 transition-colors tracking-wide">
                 Toque e planeje
                 <br />
                 uma sessão
