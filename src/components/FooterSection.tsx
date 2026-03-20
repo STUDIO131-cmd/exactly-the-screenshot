@@ -6,7 +6,7 @@ const FooterSection = () => {
   };
 
   return (
-    <footer className="py-12 px-6 font-sans font-light" style={{ backgroundColor: 'rgba(232, 228, 223, 0.3)', color: '#3E2C1E' }}>
+    <footer className="py-12 px-6 font-sans font-light" style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)', color: '#ffffff' }}>
       <div className="max-w-4xl mx-auto flex flex-col items-center gap-8">
         {/* Logo menor */}
         <img src={logoWhite} alt="Studio 131" className="h-10 opacity-80 invert" />
@@ -15,9 +15,9 @@ const FooterSection = () => {
         <div
           className="w-full max-w-lg rounded-2xl px-6 py-5 flex flex-col gap-3"
           style={{
-            background: 'rgba(62, 44, 30, 0.08)',
+            background: 'rgba(255, 255, 255, 0.08)',
             backdropFilter: 'blur(12px)',
-            border: '1px solid rgba(62, 44, 30, 0.12)',
+            border: '1px solid rgba(255, 255, 255, 0.12)',
           }}
         >
           {/* Linha 1 */}
@@ -28,9 +28,9 @@ const FooterSection = () => {
               rel="noopener noreferrer"
               className="flex-1 text-center text-xs py-2.5 rounded-lg transition-colors"
               style={{
-                background: 'rgba(62, 44, 30, 0.07)',
-                border: '1px solid rgba(62, 44, 30, 0.1)',
-                color: '#3E2C1E',
+                background: 'rgba(255, 255, 255, 0.07)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                color: '#ffffff',
               }}
             >
               Conheça a agência
@@ -41,9 +41,9 @@ const FooterSection = () => {
               rel="noopener noreferrer"
               className="flex-1 text-center text-xs py-2.5 rounded-lg transition-colors"
               style={{
-                background: 'rgba(62, 44, 30, 0.07)',
-                border: '1px solid rgba(62, 44, 30, 0.1)',
-                color: '#3E2C1E',
+                background: 'rgba(255, 255, 255, 0.07)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                color: '#ffffff',
               }}
             >
               O Plano Profissional
@@ -58,9 +58,9 @@ const FooterSection = () => {
               rel="noopener noreferrer"
               className="flex-1 text-center text-xs py-2.5 rounded-lg transition-colors flex flex-col items-center justify-center"
               style={{
-                background: 'rgba(62, 44, 30, 0.07)',
-                border: '1px solid rgba(62, 44, 30, 0.1)',
-                color: '#3E2C1E',
+                background: 'rgba(255, 255, 255, 0.07)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                color: '#ffffff',
               }}
             >
               <span>The Journey</span>
@@ -70,9 +70,9 @@ const FooterSection = () => {
               onClick={scrollToTop}
               className="flex-1 text-center text-xs py-2.5 rounded-lg transition-colors cursor-pointer"
               style={{
-                background: 'rgba(62, 44, 30, 0.07)',
-                border: '1px solid rgba(62, 44, 30, 0.1)',
-                color: '#3E2C1E',
+                background: 'rgba(255, 255, 255, 0.07)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                color: '#ffffff',
               }}
             >
               Voltar ao topo
@@ -81,7 +81,7 @@ const FooterSection = () => {
         </div>
 
         {/* Copyright */}
-        <p className="text-xs" style={{ color: '#3E2C1E', opacity: 0.5 }}>
+        <p className="text-xs" style={{ color: '#ffffff', opacity: 0.5 }}>
           131 Fotos © 2026 — Todos os direitos reservados
         </p>
       </div>
