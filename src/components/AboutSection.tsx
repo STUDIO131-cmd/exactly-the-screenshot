@@ -43,19 +43,27 @@ const AboutSection = () => {
         </div>
 
         {/* Subtle button / divider — 3x larger */}
-        <button
+        <motion.button
           onClick={scrollToGalleries}
-          className="mt-10 mb-8 w-full group cursor-pointer py-8"
+          className="mt-10 mb-8 w-full group cursor-pointer"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
         >
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-300/50 to-transparent mb-6" />
-          <span className="block text-5xl md:text-6xl normal-case tracking-normal text-neutral-200 group-hover:text-white transition-colors [text-shadow:0_0_12px_rgba(255,255,255,0.3)]" style={{ fontFamily: "'Kapakana', cursive" }}>
-            Voltar às galerias
-          </span>
-          <span className="block text-sm text-neutral-300 mt-3">
-            Ensaios pessoais · Casais · Gestantes · Retratos · 15 anos · Pequenos eventos
-          </span>
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-300/50 to-transparent mt-6" />
-        </button>
+          <div className="relative overflow-hidden rounded-2xl bg-white/10 backdrop-blur-lg border border-white/15 px-6 py-6">
+            {/* Sliding shine effect */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
+              animate={{ x: ["-150%", "150%"] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", repeatDelay: 2 }}
+            />
+            <span className="relative block text-5xl md:text-6xl normal-case tracking-normal text-neutral-200 group-hover:text-white transition-colors [text-shadow:0_0_12px_rgba(255,255,255,0.3)]" style={{ fontFamily: "'Kapakana', cursive" }}>
+              Voltar às galerias
+            </span>
+            <span className="relative block text-sm text-neutral-300 mt-3">
+              Ensaios pessoais · Casais · Gestantes · Retratos · 15 anos · Pequenos eventos
+            </span>
+          </div>
+        </motion.button>
 
         {/* Closing line */}
         <p className="text-neutral-300 italic text-sm mb-10">
