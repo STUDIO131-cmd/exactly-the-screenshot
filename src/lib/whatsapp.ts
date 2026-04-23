@@ -35,14 +35,17 @@ const buildWhatsAppWebUrl = (context: WhatsAppContext, opts?: BuildOpts): string
 const buildWhatsAppDeepLink = (context: WhatsAppContext, opts?: BuildOpts): string =>
   `whatsapp://send?phone=${WHATSAPP_NUMBER}&text=${buildEncodedMessage(context, opts)}`;
 
-const openLink = (href: string, target: "_blank" | "_self" | "_top") => {
-  const a = document.createElement("a");
-  a.href = href;
-  a.target = target;
-  a.rel = "noopener noreferrer";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+const isMobileDevice = () => /Android|iPhone|iPad|iPod/i.test(window.navigator.userAgent);
+
+const navigateTop = (href: string): boolean => {
+  if (window.self === window.top) return false;
+
+  try {
+    window.top?.location.assign(href);
+    return true;
+  } catch {
+    return false;
+  }
 };
 
 const buildMessage = (context: WhatsAppContext, opts: BuildOpts = {}): string => {
@@ -105,30 +108,34 @@ export const openWhatsApp = (
   opts?: BuildOpts
 ): void => {
   if (typeof window === "undefined") return;
+  const isMobile = isMobileDevice();
   const mobileUrl = buildWhatsAppDeepLink(context, opts);
-  const browserUrl = /Android|iPhone|iPad|iPod/i.test(window.navigator.userAgent)
+  const browserUrl = isMobile
     ? buildWhatsAppUrl(context, opts)
     : buildWhatsAppWebUrl(context, opts);
-  const target = window.self !== window.top ? "_top" : "_blank";
 
   try {
-    if (/Android|iPhone|iPad|iPod/i.test(window.navigator.userAgent)) {
-      openLink(mobileUrl, window.self !== window.top ? "_top" : "_self");
+    if (isMobile) {
+      window.location.href = mobileUrl;
       window.setTimeout(() => {
         if (document.visibilityState === "visible") {
-          openLink(browserUrl, target);
+          if (!navigateTop(browserUrl)) {
+            window.location.href = browserUrl;
+          }
         }
       }, 500);
       return;
     }
 
-    openLink(browserUrl, target);
-  } catch {
-    if (target === "_top") {
-      window.location.href = browserUrl;
+    if (navigateTop(browserUrl)) {
       return;
     }
 
-    window.open(browserUrl, "_blank", "noopener,noreferrer");
+    const popup = window.open(browserUrl, "_blank", "noopener,noreferrer");
+    if (!popup) {
+      window.location.href = browserUrl;
+    }
+  } catch {
+    window.location.href = browserUrl;
   }
 };
