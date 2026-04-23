@@ -1,73 +1,71 @@
 
 
-## Plano: Centralizar WhatsApp + mensagens contextuais
+## Plano: Enriquecer IA com base de conhecimento do 131 Fotos
 
 ### Objetivo
-Substituir todas as referências hardcoded ao número `5517992595117` por um helper único com mensagens pré-formatadas por contexto.
+Carregar todas as informações estratégicas que você enviou na tabela `studio_info` (key/value) e fazer a edge function `studio-chat` injetar isso no prompt da IA, para que ela responda de forma consultiva e completa.
 
-### Novo arquivo: `src/lib/whatsapp.ts`
+### 1. Popular tabela `studio_info` (migration)
 
-Constante central + builder de URL + biblioteca de templates por contexto:
+Insert das chaves abaixo (com `upsert` em `key`):
 
-```ts
-export const WHATSAPP_NUMBER = "5517992595117";
-
-export type WhatsAppContext =
-  | "general"              // CTA genérico (header, hero, floating button)
-  | "booking_interest"     // após preencher formulário de interesse
-  | "booking_date"         // já escolheu data
-  | "ai_escalation"        // resumo da IA
-  | "ai_error"             // falha técnica da IA
-  | "faq_followup"         // dúvida vinda do FAQ
-  | "gallery_inquiry"      // contato vindo das galerias
-  | "pricing_question"     // dúvida sobre preços
-  | "priority_launch"      // lista VIP
-  | "custom";              // mensagem livre
-
-interface BuildOpts {
-  name?: string;
-  date?: string;
-  session?: string;
-  photographer?: string;
-  summary?: string;
-  custom?: string;
-}
-
-export function buildWhatsAppUrl(context: WhatsAppContext, opts?: BuildOpts): string
-export function openWhatsApp(context: WhatsAppContext, opts?: BuildOpts): void
-```
-
-### Templates por contexto
-
-| Contexto | Mensagem |
+| key | value |
 |---|---|
-| `general` | "Olá! Vim pelo site 131 Fotos e gostaria de saber mais sobre os serviços." |
-| `booking_interest` | "Olá! Sou {name}. Tenho interesse em agendar uma sessão{session?} no dia {date}{photographer?}. Pode confirmar o horário disponível?" |
-| `booking_date` | "Olá! Vim pelo site 131 Fotos e gostaria de agendar uma sessão para o dia {date}." |
-| `ai_escalation` | "Olá! Vim pelo site 131 Fotos. {summary}" |
-| `ai_error` | "Olá! Tive uma dúvida no chat do site 131 Fotos e gostaria de falar com o atendimento." |
-| `faq_followup` | "Olá! Estava lendo as perguntas frequentes no site 131 Fotos e gostaria de tirar uma dúvida." |
-| `gallery_inquiry` | "Olá! Vi as galerias no site 131 Fotos e me interessei por uma sessão. Podemos conversar?" |
-| `pricing_question` | "Olá! Tenho uma dúvida sobre preços e pacotes do Studio 131." |
-| `priority_launch` | "Olá! Sou {name}, entrei na lista prioritária do site 131 Fotos e gostaria de mais informações." |
-| `custom` | usa `opts.custom` |
+| `endereco` | "Dentro do Hotel Ibis Catanduva (SP), com estacionamento amplo e seguro." |
+| `cidades_atendidas` | "Atendimento presencial no estúdio em Catanduva-SP. Sessões fora de Catanduva são projetos personalizados — alinhamos proposta e logística sob medida via WhatsApp." |
+| `pagamento_e_cancelamento` | "Formas de pagamento, política de remarcação e cancelamento são detalhadas pelo nosso atendimento no WhatsApp." |
+| `diferenciais` | "10 anos de carreira do Igor garantindo repertório para capturar espontaneidade. Clientes relatam que é 'tranquilo fotografar conosco' — deixamos todos à vontade. A maioria dos nossos clientes nunca foi fotografada antes e se surpreende com o resultado." |
+| `cabelo_e_maquiagem` | "Não oferecemos serviço de beleza no local, mas indicamos parceiros de confiança em Catanduva." |
+| `prazo_entrega` | "1 semana útil após a seleção das fotos pelo cliente." |
+| `selecao_fotos` | "Fotografamos várias imagens na sessão. O cliente recebe uma galeria privada para escolher suas preferidas, que então recebem edição final." |
+| `presente` | "Nossos produtos são excelentes para presentear. Fazemos abordagem-surpresa ao presenteado com mensagem especial e cartão digital." |
+| `acompanhantes` | "É possível levar acompanhantes para apoio emocional. A quantidade de pessoas participando da sessão depende do objetivo e é negociada via WhatsApp." |
+| `guia_de_preparo` | "Todos os clientes recebem um guia completo de preparo: como escolher as roupas, o que evitar, o que priorizar e recomendações práticas finais." |
+| `duracao_sessao` | "Entre 1h e 2h30, dependendo do escopo do produto contratado." |
+| `idiomas` | "Atendimento em português e inglês." |
 
-### Arquivos a refatorar (substituir hardcoded → helper)
+### 2. Atualizar `supabase/functions/studio-chat/index.ts`
 
-1. **`src/components/BookingChat.tsx`** — já tem `WHATSAPP_NUMBER` local + 3 chamadas `openWhatsApp` → trocar por helper centralizado e usar contextos `general`, `booking_interest`, `ai_escalation`, `ai_error`
-2. **`src/components/WhatsAppFloat.tsx`** — verificar e usar contexto `general`
-3. **`src/components/HeroSection.tsx`**, **`FooterSection.tsx`**, **`PricingSection.tsx`**, **`FaqSheet.tsx`**, **`GalleriesSection.tsx`**, **`BookingPromoBar.tsx`** — buscar usos e migrar com contexto adequado
-4. **`src/components/LaunchPrioritySection.tsx`** — pode usar `priority_launch` como follow-up
+- Adicionar query: `supabase.from("studio_info").select("*")`
+- Montar bloco `INFORMAÇÕES DO ESTÚDIO` no system prompt com todos os pares `key: value` formatados de forma legível
+- Posicionar essa seção **logo após** o catálogo, antes de políticas
+- Atualizar a regra de escalada: "Se a pergunta for sobre formas de pagamento, parcelamento, remarcação ou cancelamento, responda que esses detalhes são tratados pelo atendimento e use `[ESCALAR_WHATSAPP]` com o resumo."
 
-### Passos
+### 3. Página admin para editar (mínimo viável)
 
-1. Buscar todos os usos do número/wa.me
-2. Criar `src/lib/whatsapp.ts`
-3. Refatorar cada arquivo encontrado para usar o helper
+Nova página `/admin/info` (`src/pages/admin/StudioInfoPage.tsx`):
+- Lista todos os registros de `studio_info` em formato editável (key readonly + textarea para `value`)
+- Botão "Salvar" por linha → `update`
+- Botão "Adicionar nova chave" → cria registro novo
+- Adicionar item "Informações" no menu de `AdminLayout.tsx`
+
+### 4. RLS
+
+Verificar políticas de `studio_info`:
+- `SELECT` público (edge function usa service role, mas frontend admin lê com anon key)
+- `INSERT/UPDATE/DELETE` permitidos para gestão (mesma estratégia das outras tabelas admin)
+
+Se faltar, criar migration com as policies.
+
+### 5. Atualização de memória
+
+Atualizar `mem://tech/ai-chat-agent` registrando que a IA agora consome `studio_info` dinamicamente, e criar referência nova `mem://business/studio-info` listando as chaves cadastradas.
+
+### Arquivos
+
+**Criar:**
+- `src/pages/admin/StudioInfoPage.tsx`
+- Migration SQL (insert/upsert dos 12 registros + policies se necessário)
+
+**Editar:**
+- `supabase/functions/studio-chat/index.ts` — ler `studio_info` + injetar no prompt
+- `src/App.tsx` — registrar rota `/admin/info`
+- `src/pages/admin/AdminLayout.tsx` — adicionar item de menu
 
 ### Vantagens
-- Trocar o número no futuro = 1 linha
-- Mensagens consistentes e estratégicas (sempre dizem "vim pelo site")
-- IA já tem fallback estruturado
-- Cada CTA tem narrativa coerente com o contexto
+
+- IA passa a responder com endereço, prazo, política de acompanhantes, idiomas, etc. com naturalidade
+- Tudo editável pelo admin sem precisar mexer em código
+- Pagamento/cancelamento conscientemente caem no fluxo de WhatsApp (mantém o atendimento humano no fechamento)
+- Base pronta para crescer (basta adicionar nova chave em `studio_info`)
 
