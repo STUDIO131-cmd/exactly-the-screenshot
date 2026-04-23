@@ -1,5 +1,7 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { LayoutDashboard, Package, Layers, Shield, HelpCircle, Users, Bot, Database, CalendarDays, Info } from "lucide-react";
+import { LayoutDashboard, Package, Layers, Shield, HelpCircle, Users, Bot, Database, CalendarDays, Info, LogOut } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 const navItems = [
   { to: "/admin", icon: LayoutDashboard, label: "Dashboard", end: true },
@@ -15,11 +17,12 @@ const navItems = [
 ];
 
 const AdminLayout = () => {
+  const { user, signOut } = useAuth();
   return (
     <div className="flex min-h-screen bg-background">
       <aside className="w-56 border-r border-border bg-card flex flex-col py-6 px-3 shrink-0">
         <h1 className="text-lg font-semibold px-3 mb-6 font-epika">Studio 131</h1>
-        <nav className="flex flex-col gap-1">
+        <nav className="flex flex-col gap-1 flex-1">
           {navItems.map(({ to, icon: Icon, label, end }) => (
             <NavLink
               key={to}
@@ -38,6 +41,22 @@ const AdminLayout = () => {
             </NavLink>
           ))}
         </nav>
+        <div className="mt-4 px-3 space-y-2 border-t border-border pt-4">
+          {user?.email && (
+            <p className="text-xs text-muted-foreground truncate" title={user.email}>
+              {user.email}
+            </p>
+          )}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={signOut}
+            className="w-full justify-start text-muted-foreground hover:text-foreground"
+          >
+            <LogOut className="h-4 w-4 mr-2" />
+            Sair
+          </Button>
+        </div>
       </aside>
       <main className="flex-1 overflow-auto">
         <Outlet />
