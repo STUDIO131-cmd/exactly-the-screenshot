@@ -1,99 +1,73 @@
 
 
-## Plano: Agenda inteligente + fallback IA → WhatsApp
+## Plano: Centralizar WhatsApp + mensagens contextuais
 
-### 1. Lógica de disponibilidade da agenda
+### Objetivo
+Substituir todas as referências hardcoded ao número `5517992595117` por um helper único com mensagens pré-formatadas por contexto.
 
-Regra automática (sem precisar cadastrar data por data):
-- **Aberto:** apenas **um sábado por mês**, das **08h30 às 18h00**
-- **Fechado:** todos os outros dias da semana, todos os domingos, demais sábados do mês
-- **Fechado em feriados:** nacionais + municipais de Catanduva-SP, mesmo se caírem em sábado disponível
-- **Override manual:** painel admin pode liberar/bloquear datas específicas (mantém tabela `available_dates` como exceção)
+### Novo arquivo: `src/lib/whatsapp.ts`
 
-**Feriados considerados:**
-- Nacionais: Confraternização (01/01), Carnaval (seg+ter), Sexta Santa, Tiradentes (21/04), Dia do Trabalho (01/05), Corpus Christi, Independência (07/09), N. Sra. Aparecida (12/10), Finados (02/11), Proclamação da República (15/11), Consciência Negra (20/11), Natal (25/12)
-- Catanduva-SP: Aniversário da cidade (14/04), Padroeira São Domingos (08/08)
+Constante central + builder de URL + biblioteca de templates por contexto:
 
-**Qual sábado do mês fica aberto:** primeiro sábado do mês por padrão. Se for feriado, cai para o próximo sábado válido.
+```ts
+export const WHATSAPP_NUMBER = "5517992595117";
 
-### 2. UI do calendário (2 lugares)
+export type WhatsAppContext =
+  | "general"              // CTA genérico (header, hero, floating button)
+  | "booking_interest"     // após preencher formulário de interesse
+  | "booking_date"         // já escolheu data
+  | "ai_escalation"        // resumo da IA
+  | "ai_error"             // falha técnica da IA
+  | "faq_followup"         // dúvida vinda do FAQ
+  | "gallery_inquiry"      // contato vindo das galerias
+  | "pricing_question"     // dúvida sobre preços
+  | "priority_launch"      // lista VIP
+  | "custom";              // mensagem livre
 
-**A) `BookingSection` (landing page — "Consultar disponibilidade"):**
-- Calendário mostra mês inteiro
-- Apenas o sábado liberado fica clicável e destacado
-- Demais dias: visualmente cinza/desabilitados
-- Ao clicar no dia liberado → abre `BookingChat` já com a data pré-selecionada (comportamento atual mantido)
+interface BuildOpts {
+  name?: string;
+  date?: string;
+  session?: string;
+  photographer?: string;
+  summary?: string;
+  custom?: string;
+}
 
-**B) `BookingChat` (passo `select_date`):**
-- Mesmo calendário restrito
-- Texto auxiliar: *"Atendemos um sábado por mês, das 08h30 às 18h. Escolha a data desejada e nosso atendimento confirma horário pelo WhatsApp."*
-- Após escolher: passo de **registro de interesse** (nome + telefone + data desejada) → grava em `leads` com `notes` = "Interesse em [data]" → abre WhatsApp com mensagem pronta
-
-### 3. Registro de interesse na data
-
-Novo passo no chat após seleção de data:
+export function buildWhatsAppUrl(context: WhatsAppContext, opts?: BuildOpts): string
+export function openWhatsApp(context: WhatsAppContext, opts?: BuildOpts): void
 ```
-Bot: "Perfeito! Para confirmarmos o horário disponível em [DATA], 
-      preciso só do seu nome e WhatsApp."
-User: digita nome + telefone
-Bot: "Pronto! Estou te direcionando para nosso atendimento confirmar 
-      o horário e período."
-[Botão: Abrir WhatsApp]
-```
-Mensagem pré-formatada para WhatsApp:
-> "Olá! Sou [NOME]. Tenho interesse em agendar uma sessão no dia [DATA]. Pode confirmar o horário disponível?"
 
-Salva em `leads` (já existe a tabela com `name`, `phone`, `notes`, `source='chat'`).
+### Templates por contexto
 
-### 4. Fallback inteligente da IA → WhatsApp
+| Contexto | Mensagem |
+|---|---|
+| `general` | "Olá! Vim pelo site 131 Fotos e gostaria de saber mais sobre os serviços." |
+| `booking_interest` | "Olá! Sou {name}. Tenho interesse em agendar uma sessão{session?} no dia {date}{photographer?}. Pode confirmar o horário disponível?" |
+| `booking_date` | "Olá! Vim pelo site 131 Fotos e gostaria de agendar uma sessão para o dia {date}." |
+| `ai_escalation` | "Olá! Vim pelo site 131 Fotos. {summary}" |
+| `ai_error` | "Olá! Tive uma dúvida no chat do site 131 Fotos e gostaria de falar com o atendimento." |
+| `faq_followup` | "Olá! Estava lendo as perguntas frequentes no site 131 Fotos e gostaria de tirar uma dúvida." |
+| `gallery_inquiry` | "Olá! Vi as galerias no site 131 Fotos e me interessei por uma sessão. Podemos conversar?" |
+| `pricing_question` | "Olá! Tenho uma dúvida sobre preços e pacotes do Studio 131." |
+| `priority_launch` | "Olá! Sou {name}, entrei na lista prioritária do site 131 Fotos e gostaria de mais informações." |
+| `custom` | usa `opts.custom` |
 
-Atualizar **edge function `studio-chat`** para detectar quando não tem resposta confiável:
-- Adicionar instrução no system prompt: *"Se a pergunta sair do escopo (catálogo, preços, datas, políticas) OU você não tiver dados suficientes, responda EXATAMENTE com o marcador `[ESCALAR_WHATSAPP]` seguido de um resumo curto da dúvida do cliente."*
-- No frontend `BookingChat`, ao receber resposta com `[ESCALAR_WHATSAPP]`:
-  - Exibir mensagem do bot: *"Resumi sua dúvida e estou chamando nosso atendimento."*
-  - Mostrar botão destacado: **"Falar no WhatsApp agora"**
-  - WhatsApp abre com o resumo extraído já preenchido
+### Arquivos a refatorar (substituir hardcoded → helper)
 
-### 5. Painel admin — gestão de datas (mínimo viável)
+1. **`src/components/BookingChat.tsx`** — já tem `WHATSAPP_NUMBER` local + 3 chamadas `openWhatsApp` → trocar por helper centralizado e usar contextos `general`, `booking_interest`, `ai_escalation`, `ai_error`
+2. **`src/components/WhatsAppFloat.tsx`** — verificar e usar contexto `general`
+3. **`src/components/HeroSection.tsx`**, **`FooterSection.tsx`**, **`PricingSection.tsx`**, **`FaqSheet.tsx`**, **`GalleriesSection.tsx`**, **`BookingPromoBar.tsx`** — buscar usos e migrar com contexto adequado
+4. **`src/components/LaunchPrioritySection.tsx`** — pode usar `priority_launch` como follow-up
 
-Nova página `/admin/agenda`:
-- Mostra os próximos 6 meses com o sábado padrão calculado
-- Permite **bloquear** um sábado específico (vira exceção em `available_dates` com `is_available=false`)
-- Permite **liberar** uma data extra fora do sábado padrão (insere em `available_dates` com `is_available=true`)
-- Lista de feriados aplicados (somente leitura nesta versão)
+### Passos
 
-### 6. Detalhes técnicos
+1. Buscar todos os usos do número/wa.me
+2. Criar `src/lib/whatsapp.ts`
+3. Refatorar cada arquivo encontrado para usar o helper
 
-**Novo arquivo:** `src/lib/availability.ts`
-- `getCatanduvaHolidays(year)` — calcula feriados móveis (Carnaval, Páscoa, Corpus Christi via algoritmo de Meeus) + fixos
-- `getDefaultOpenSaturday(year, month)` — primeiro sábado válido do mês
-- `isDateAvailable(date, overrides)` — combina regra padrão + exceções da tabela `available_dates`
-
-**Atualizar:**
-- `src/components/BookingSection.tsx` — usar `isDateAvailable` no `disabled` do Calendar; destacar dias abertos
-- `src/components/BookingChat.tsx` — mesmo calendário restrito + novo passo `register_interest` + tratamento de `[ESCALAR_WHATSAPP]`
-- `supabase/functions/studio-chat/index.ts` — instrução de escalar + remover lista hardcoded de datas (passa a explicar a regra "1 sábado/mês, 08h30–18h")
-- `src/App.tsx` — registrar rota `/admin/agenda`
-- `src/pages/admin/AdminLayout.tsx` — adicionar item de menu "Agenda"
-
-**Criar:**
-- `src/lib/availability.ts`
-- `src/pages/admin/AgendaPage.tsx`
-
-**Banco:** mantém `available_dates` como tabela de **exceções** (não precisa mudança de schema). Adicionar política de `INSERT/UPDATE/DELETE` para `available_dates` (hoje só tem `SELECT`) — necessário para o admin gerenciar exceções.
-
-### 7. Fluxo final consolidado
-
-```text
-Landing → calendário restrito (sábados liberados)
-   ↓ clica numa data
-Chat abre com data → confirma → pede nome + WhatsApp
-   ↓ registra lead
-Abre WhatsApp com mensagem pronta de interesse
-
-Chat IA → pergunta fora do escopo
-   ↓ IA responde com [ESCALAR_WHATSAPP] + resumo
-Chat mostra "Resumi sua dúvida, chamando atendimento"
-   ↓ botão WhatsApp com resumo preenchido
-```
+### Vantagens
+- Trocar o número no futuro = 1 linha
+- Mensagens consistentes e estratégicas (sempre dizem "vim pelo site")
+- IA já tem fallback estruturado
+- Cada CTA tem narrativa coerente com o contexto
 
