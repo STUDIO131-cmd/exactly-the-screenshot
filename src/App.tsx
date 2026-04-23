@@ -14,6 +14,7 @@ import FaqsPage from "./pages/admin/FaqsPage.tsx";
 import LeadsPage from "./pages/admin/LeadsPage.tsx";
 import SimulatorPage from "./pages/admin/SimulatorPage.tsx";
 import KnowledgePage from "./pages/admin/KnowledgePage.tsx";
+import AgendaPage from "./pages/admin/AgendaPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
             <Route path="leads" element={<LeadsPage />} />
             <Route path="simulator" element={<SimulatorPage />} />
             <Route path="knowledge" element={<KnowledgePage />} />
+            <Route path="agenda" element={<AgendaPage />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

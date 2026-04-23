@@ -1,7 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, MessageCircle, Send } from "lucide-react";
+import { ptBR } from "date-fns/locale";
 import { supabase } from "@/integrations/supabase/client";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  isDateAvailable,
+  toISODate,
+  AVAILABILITY_HINT,
+  type AvailabilityOverride,
+} from "@/lib/availability";
 
 type ChatStep =
   | "welcome"
@@ -10,17 +18,21 @@ type ChatStep =
   | "session_type"
   | "has_date"
   | "select_date"
+  | "register_interest"
   | "confirm"
   | "done"
   | "comparing"
   | "faq_in_chat"
-  | "ai_chat";
+  | "ai_chat"
+  | "ai_escalated";
 
 interface Message {
   id: number;
   type: "bot" | "user";
   text: string;
   options?: string[];
+  variant?: "default" | "calendar" | "interest_form" | "whatsapp_cta";
+  ctaPayload?: string;
 }
 
 const sessionTypes = [
@@ -39,13 +51,7 @@ const photographerOptions = [
   "Conferir os dois cenários",
 ];
 
-const availableDates = [
-  "Sábado, 22 de Março",
-  "Domingo, 23 de Março",
-  "Sábado, 29 de Março",
-  "Domingo, 30 de Março",
-  "Sábado, 05 de Abril",
-];
+const WHATSAPP_NUMBER = "5517992595117";
 
 interface BookingChatProps {
   isOpen: boolean;
@@ -62,6 +68,9 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
   const [isTyping, setIsTyping] = useState(false);
   const [freeTextInput, setFreeTextInput] = useState("");
   const [aiConversation, setAiConversation] = useState<{ role: string; content: string }[]>([]);
+  const [overrides, setOverrides] = useState<AvailabilityOverride[]>([]);
+  const [interestName, setInterestName] = useState("");
+  const [interestPhone, setInterestPhone] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -76,6 +85,13 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       startChat();
+      // load availability overrides
+      supabase
+        .from("available_dates")
+        .select("date, is_available")
+        .then(({ data }) => {
+          if (data) setOverrides(data as AvailabilityOverride[]);
+        });
     }
   }, [isOpen]);
 
@@ -109,6 +125,17 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
     ]);
   };
 
+  const addBotSpecial = (text: string, variant: Message["variant"], ctaPayload?: string) => {
+    setIsTyping(true);
+    setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now(), type: "bot", text, variant, ctaPayload },
+      ]);
+      setIsTyping(false);
+    }, 600);
+  };
+
   const addUserMessage = (text: string) => {
     setMessages((prev) => [
       ...prev,
@@ -134,6 +161,10 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
     }, 500);
   };
 
+  const openWhatsApp = (text: string) => {
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank");
+  };
+
   const askAI = async (question: string) => {
     setIsTyping(true);
     try {
@@ -143,7 +174,26 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
 
       if (error) throw error;
 
-      const answer = data?.answer || "Desculpe, não consegui processar. Tente novamente!";
+      const answer: string = data?.answer || "Desculpe, não consegui processar. Tente novamente!";
+
+      // Detect escalation marker
+      if (answer.trim().startsWith("[ESCALAR_WHATSAPP]")) {
+        const summary = answer.replace("[ESCALAR_WHATSAPP]", "").trim();
+        setAiConversation((prev) => [
+          ...prev,
+          { role: "user", content: question },
+          { role: "assistant", content: answer },
+        ]);
+        setIsTyping(false);
+        addBotMessageImmediate(
+          "Resumi sua dúvida e estou chamando nosso atendimento. Clique no botão para iniciar a conversa no WhatsApp agora 👇"
+        );
+        const waText = `Olá! Vim pelo site 131 Fotos. ${summary}`;
+        addBotSpecial("", "whatsapp_cta", waText);
+        setStep("ai_escalated");
+        return;
+      }
+
       setAiConversation((prev) => [
         ...prev,
         { role: "user", content: question },
@@ -156,13 +206,14 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
       console.error("AI chat error:", e);
       setIsTyping(false);
       addBotMessageImmediate(
-        "Desculpe, tive um problema ao processar sua pergunta. Você pode tentar novamente ou falar conosco pelo WhatsApp. 💬",
-        [
-          "Agendar com Igor",
-          "Agendar com fotógrafo da equipe Studio 131",
-          "Falar no WhatsApp",
-        ]
+        "Desculpe, tive um problema ao processar sua pergunta. Vou te direcionar para o WhatsApp."
       );
+      addBotSpecial(
+        "",
+        "whatsapp_cta",
+        "Olá! Tive uma dúvida no chat do site 131 Fotos e gostaria de falar com o atendimento."
+      );
+      setStep("ai_escalated");
     }
   };
 
@@ -187,15 +238,60 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
     }, 500);
   };
 
+  const handleCalendarPick = (date: Date | undefined) => {
+    if (!date) return;
+    const formatted = date.toLocaleDateString("pt-BR", {
+      weekday: "long",
+      day: "2-digit",
+      month: "long",
+    });
+    setSelectedDateState(formatted);
+    addUserMessage(formatted);
+    setTimeout(() => {
+      addBotMessage(
+        `Perfeito! Para confirmarmos o horário disponível em ${formatted}, preciso só do seu nome e WhatsApp.`
+      );
+      setTimeout(() => {
+        addBotSpecial("", "interest_form");
+        setStep("register_interest");
+      }, 800);
+    }, 400);
+  };
+
+  const submitInterest = async () => {
+    if (!interestName.trim() || !interestPhone.trim()) return;
+    try {
+      await supabase.from("leads").insert({
+        name: interestName.trim(),
+        phone: interestPhone.trim(),
+        source: "chat",
+        objective: selectedSession || null,
+        notes: `Interesse em ${selectedDateState}${selectedPhotographer ? ` | Preferência: ${selectedPhotographer}` : ""}`,
+      });
+    } catch (e) {
+      console.error("lead save error", e);
+    }
+
+    addUserMessage(`${interestName} • ${interestPhone}`);
+    setTimeout(() => {
+      addBotMessage(
+        "Pronto! Estou te direcionando para nosso atendimento confirmar o horário e o período. 💬"
+      );
+      const waText = `Olá! Sou ${interestName}. Tenho interesse em agendar uma sessão${
+        selectedSession ? ` de ${selectedSession}` : ""
+      } no dia ${selectedDateState}${
+        selectedPhotographer ? ` (preferência: ${selectedPhotographer})` : ""
+      }. Pode confirmar o horário disponível?`;
+      addBotSpecial("", "whatsapp_cta", waText);
+      setStep("confirm");
+    }, 600);
+  };
+
   const handleOptionSelect = (option: string) => {
-    // Global handlers for booking options that appear in AI chat
     if (step === "ai_chat" || step === "faq_in_chat") {
       if (option === "Falar no WhatsApp") {
         addUserMessage(option);
-        const message = encodeURIComponent(
-          "Olá! Gostaria de saber mais sobre os serviços do Studio 131. Vim pelo site 131 Fotos."
-        );
-        window.open(`https://wa.me/5517992595117?text=${message}`, "_blank");
+        openWhatsApp("Olá! Gostaria de saber mais sobre os serviços do Studio 131. Vim pelo site 131 Fotos.");
         onClose();
         return;
       }
@@ -266,56 +362,29 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
           addBotMessage(`Perfeito! Sessão de ${option} no dia ${selectedDateState}.`);
           setTimeout(() => {
             addBotMessage(
-              `Para confirmar, vou te direcionar para o WhatsApp para finalizar os detalhes. 💬`,
-              ["Continuar no WhatsApp"]
+              `Para registrar seu interesse, preciso só do seu nome e WhatsApp 👇`
             );
-            setStep("confirm");
-          }, 1000);
+            addBotSpecial("", "interest_form");
+            setStep("register_interest");
+          }, 800);
         }, 500);
       } else {
         setTimeout(() => {
           addBotMessage(`Ótima escolha! ${option} é uma das nossas especialidades. 📸`);
           setTimeout(() => {
-            addBotMessage(
-              "Você já tem uma data em mente para a sessão?",
-              ["Sim, tenho uma data", "Não, quero ver disponibilidade"]
-            );
-            setStep("has_date");
+            addBotMessage(AVAILABILITY_HINT);
+            addBotSpecial("", "calendar");
+            setStep("select_date");
           }, 1000);
         }, 500);
       }
-    } else if (step === "has_date") {
-      addUserMessage(option);
-      setTimeout(() => {
-        addBotMessage(
-          "Perfeito! Aqui estão as datas disponíveis para os próximos dias:",
-          availableDates
-        );
-        setStep("select_date");
-      }, 500);
-    } else if (step === "select_date") {
-      addUserMessage(option);
-      setSelectedDateState(option);
-      setTimeout(() => {
-        addBotMessage(`Excelente! Vou reservar ${option} para você.`);
-        setTimeout(() => {
-          addBotMessage(
-            `Para confirmar sua sessão de ${selectedSession} no dia ${option}, vou te direcionar para o WhatsApp para finalizar os detalhes. 💬`,
-            ["Continuar no WhatsApp"]
-          );
-          setStep("confirm");
-        }, 1000);
-      }, 500);
-    } else if (step === "confirm") {
-      const message = encodeURIComponent(
-        `Olá! Gostaria de agendar uma sessão de ${selectedSession} para o dia ${selectedDateState}. ${selectedPhotographer ? `Preferência: ${selectedPhotographer}.` : ""} Vim pelo site 131 Fotos.`
-      );
-      window.open(`https://wa.me/5517992595117?text=${message}`, "_blank");
-      onClose();
     }
   };
 
   const showInput = step === "ai_chat";
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   return (
     <AnimatePresence>
@@ -328,7 +397,7 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
           onClick={onClose}
         >
           <motion.div
-            className="w-full max-w-md bg-background rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]"
+            className="w-full max-w-md bg-background rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[85vh]"
             initial={{ scale: 0.9, opacity: 0, y: 50 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 50 }}
@@ -365,13 +434,88 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
                   className={`flex ${msg.type === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                    className={`max-w-[90%] rounded-2xl px-4 py-3 ${
                       msg.type === "user"
                         ? "bg-primary text-primary-foreground rounded-br-md"
                         : "bg-background text-foreground shadow-sm rounded-bl-md"
                     }`}
                   >
-                    <p className="text-sm font-sans whitespace-pre-line">{msg.text}</p>
+                    {msg.text && (
+                      <p className="text-sm font-sans whitespace-pre-line">{msg.text}</p>
+                    )}
+
+                    {msg.variant === "calendar" && (
+                      <div className="bg-white rounded-xl p-2 mt-1">
+                        <Calendar
+                          mode="single"
+                          onSelect={handleCalendarPick}
+                          disabled={(date) => {
+                            const d = new Date(date);
+                            d.setHours(0, 0, 0, 0);
+                            if (d < today) return true;
+                            return !isDateAvailable(d, overrides);
+                          }}
+                          modifiers={{
+                            available: (date) => {
+                              const d = new Date(date);
+                              d.setHours(0, 0, 0, 0);
+                              return d >= today && isDateAvailable(d, overrides);
+                            },
+                          }}
+                          modifiersClassNames={{
+                            available:
+                              "!bg-emerald-100 !text-emerald-900 font-semibold ring-1 ring-emerald-300 hover:!bg-emerald-200",
+                          }}
+                          locale={ptBR}
+                          className="!text-neutral-900 [&_.rdp-day_selected]:!bg-neutral-900 [&_.rdp-day_selected]:!text-white"
+                        />
+                      </div>
+                    )}
+
+                    {msg.variant === "interest_form" && (
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          submitInterest();
+                        }}
+                        className="space-y-2 mt-1"
+                      >
+                        <input
+                          type="text"
+                          value={interestName}
+                          onChange={(e) => setInterestName(e.target.value)}
+                          placeholder="Seu nome"
+                          required
+                          className="w-full bg-muted rounded-lg px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                        />
+                        <input
+                          type="tel"
+                          value={interestPhone}
+                          onChange={(e) => setInterestPhone(e.target.value)}
+                          placeholder="WhatsApp (com DDD)"
+                          required
+                          className="w-full bg-muted rounded-lg px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                        />
+                        <button
+                          type="submit"
+                          className="w-full bg-primary text-primary-foreground rounded-lg py-2 text-sm font-medium hover:bg-primary/90 transition-colors"
+                        >
+                          Registrar interesse
+                        </button>
+                      </form>
+                    )}
+
+                    {msg.variant === "whatsapp_cta" && (
+                      <button
+                        onClick={() => {
+                          if (msg.ctaPayload) openWhatsApp(msg.ctaPayload);
+                        }}
+                        className="w-full bg-emerald-600 text-white rounded-lg py-2.5 text-sm font-medium hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2 mt-1"
+                      >
+                        <MessageCircle size={16} />
+                        Falar no WhatsApp agora
+                      </button>
+                    )}
 
                     {msg.options && msg.type === "bot" && (
                       <div className="mt-3 space-y-2">
