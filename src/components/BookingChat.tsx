@@ -185,8 +185,7 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
         addBotMessageImmediate(
           "Resumi sua dúvida e estou chamando nosso atendimento. Clique no botão para iniciar a conversa no WhatsApp agora 👇"
         );
-        const waText = `Olá! Vim pelo site 131 Fotos. ${summary}`;
-        addBotSpecial("", "whatsapp_cta", waText);
+        addBotSpecial("", "whatsapp_cta", JSON.stringify({ context: "ai_escalation", opts: { summary } }));
         setStep("ai_escalated");
         return;
       }
