@@ -10,6 +10,7 @@ import {
   AVAILABILITY_HINT,
   type AvailabilityOverride,
 } from "@/lib/availability";
+import { openWhatsApp as openWA } from "@/lib/whatsapp";
 
 type ChatStep =
   | "welcome"
