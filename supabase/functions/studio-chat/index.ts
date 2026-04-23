@@ -22,7 +22,7 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const [familiesRes, productsRes, variantsRes, pricingRes, policiesRes, faqsRes, campaignsRes] = await Promise.all([
+    const [familiesRes, productsRes, variantsRes, pricingRes, policiesRes, faqsRes, campaignsRes, studioInfoRes] = await Promise.all([
       supabase.from("product_families").select("*").eq("is_active", true),
       supabase.from("products").select("*").eq("is_active", true),
       supabase.from("variants").select("*").eq("is_active", true),
@@ -30,6 +30,7 @@ serve(async (req) => {
       supabase.from("policies").select("*"),
       supabase.from("faq_entries").select("*").eq("is_active", true),
       supabase.from("campaign_rules").select("*"),
+      supabase.from("studio_info").select("*"),
     ]);
 
     const families = familiesRes.data || [];
@@ -39,6 +40,25 @@ serve(async (req) => {
     const policies = policiesRes.data || [];
     const faqs = faqsRes.data || [];
     const campaigns = campaignsRes.data || [];
+    const studioInfo = studioInfoRes.data || [];
+
+    const keyLabels: Record<string, string> = {
+      endereco: "Endereço do estúdio",
+      cidades_atendidas: "Cidades atendidas",
+      pagamento_e_cancelamento: "Pagamento, remarcação e cancelamento",
+      diferenciais: "Diferenciais",
+      cabelo_e_maquiagem: "Cabelo e maquiagem",
+      prazo_entrega: "Prazo de entrega",
+      selecao_fotos: "Seleção de fotos",
+      presente: "Presentear alguém",
+      acompanhantes: "Acompanhantes na sessão",
+      guia_de_preparo: "Guia de preparo",
+      duracao_sessao: "Duração da sessão",
+      idiomas: "Idiomas de atendimento",
+    };
+    const studioInfoText = studioInfo
+      .map((s: any) => `- ${keyLabels[s.key] || s.key}: ${s.value}`)
+      .join("\n");
 
     const catalogText = products.map((p: any) => {
       const family = families.find((f: any) => f.id === p.family_id);
@@ -86,14 +106,17 @@ CATÁLOGO COMPLETO DE OFERTAS:
 
 ${catalogText}
 
+INFORMAÇÕES DO ESTÚDIO:
+${studioInfoText}
+
 REGRAS OPERACIONAIS:
 ${policiesText}
 
 ${campaignText ? `CAMPANHAS ATIVAS:\n${campaignText}\n` : ""}
 AGENDA:
-- Atendemos um sábado por mês, das 08h30 às 18h00.
+- Atendemos de segunda a sexta normalmente, e o primeiro sábado de cada mês.
+- Domingos e feriados nacionais/municipais de Catanduva-SP são fechados.
 - O cliente escolhe a data desejada no calendário e nosso atendimento confirma o horário pelo WhatsApp.
-- Não atendemos em feriados nacionais nem em feriados municipais de Catanduva-SP.
 - Se o cliente perguntar sobre datas específicas, oriente a registrar interesse pelo calendário ou WhatsApp.
 
 PERGUNTAS FREQUENTES:
@@ -114,10 +137,16 @@ REGRAS:
 - Nunca invente informações que não estão acima.
 - Sempre explique a recomendação em linguagem humana.
 - Se o cliente quiser agendar, incentive a continuar no chat.
-- Pagamento: 50% no agendamento + 50% na véspera, ou 3x no cartão.
+- Use as INFORMAÇÕES DO ESTÚDIO acima para responder dúvidas sobre endereço, prazo, acompanhantes, idiomas, preparo etc.
 
 ESCALAR PARA WHATSAPP — REGRA CRÍTICA:
-Se a pergunta SAIR DO ESCOPO (não for sobre catálogo, preços, agenda, políticas, recomendações ou o estúdio) OU se você NÃO TIVER DADOS suficientes para responder com segurança, responda EXATAMENTE neste formato (sem nada além disso):
+Use o marcador [ESCALAR_WHATSAPP] nas seguintes situações:
+1. A pergunta sair do escopo (não for sobre catálogo, preços, agenda, políticas, recomendações ou o estúdio).
+2. Você NÃO TIVER DADOS suficientes para responder com segurança.
+3. A pergunta for sobre formas de pagamento, parcelamento, remarcação ou cancelamento — esses detalhes são tratados exclusivamente pelo atendimento humano.
+4. O cliente quiser negociar quantidade de acompanhantes, sessão fora de Catanduva ou condições personalizadas.
+
+Quando escalar, responda EXATAMENTE neste formato (sem nada além disso):
 
 [ESCALAR_WHATSAPP] <um resumo curto em primeira pessoa do cliente, com a dúvida dele>
 
