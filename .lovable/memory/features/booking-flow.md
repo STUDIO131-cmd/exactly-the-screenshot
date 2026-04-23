@@ -5,9 +5,11 @@ type: feature
 ---
 
 ## Regra de disponibilidade da agenda
-- Apenas **1 sábado por mês** (primeiro sábado válido), 08h30–18h00
-- Fechado em todos os outros dias e em feriados nacionais + municipais de Catanduva-SP
-- Tabela `available_dates` funciona como **exceções**: bloqueia ou libera datas pontuais
+- **Aberto:** segunda a sexta, das 08h30–18h00
+- **Sábados:** apenas o **primeiro sábado válido do mês** (os demais ficam fechados)
+- **Domingos:** sempre fechados
+- **Feriados:** nacionais + municipais de Catanduva-SP sempre fechados
+- Tabela `available_dates` funciona como **exceções**: bloqueia ou libera datas pontuais (ex.: liberar um domingo, bloquear um dia útil)
 - Lógica centralizada em `src/lib/availability.ts` (`isDateAvailable`, `getDefaultOpenSaturday`, `getCatanduvaHolidays`)
 
 ## Calendário (BookingSection + BookingChat)
