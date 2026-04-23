@@ -160,9 +160,7 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
     }, 500);
   };
 
-  const openWhatsApp = (text: string) => {
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank");
-  };
+
 
   const askAI = async (question: string) => {
     setIsTyping(true);
