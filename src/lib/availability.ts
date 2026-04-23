@@ -103,7 +103,7 @@ export function getDefaultOpenSaturday(year: number, month: number): Date | null
  * Verifica se a data está disponível considerando regra padrão + exceções.
  * - Exceção com is_available=false sempre bloqueia
  * - Exceção com is_available=true sempre libera (mesmo fora do padrão)
- * - Sem exceção: usa regra do "1 sábado por mês"
+ * - Sem exceção: aberta em qualquer dia útil; sábado só no 1º válido do mês; domingo/feriado fechado
  */
 export function isDateAvailable(
   date: Date,
@@ -113,12 +113,25 @@ export function isDateAvailable(
   const override = overrides.find((o) => o.date === iso);
   if (override) return override.is_available;
 
-  // Regra padrão: precisa ser o sábado padrão do mês
-  const defaultSat = getDefaultOpenSaturday(date.getFullYear(), date.getMonth());
-  if (!defaultSat) return false;
-  return toISODate(defaultSat) === iso;
+  // Feriados nunca abrem por padrão
+  if (isHoliday(date)) return false;
+
+  const dow = date.getDay(); // 0 = domingo, 6 = sábado
+
+  // Domingos sempre fechados por padrão
+  if (dow === 0) return false;
+
+  // Sábados: apenas o primeiro sábado válido do mês
+  if (dow === 6) {
+    const defaultSat = getDefaultOpenSaturday(date.getFullYear(), date.getMonth());
+    if (!defaultSat) return false;
+    return toISODate(defaultSat) === iso;
+  }
+
+  // Demais dias úteis: abertos
+  return true;
 }
 
 /** Texto auxiliar padrão para mostrar no calendário. */
 export const AVAILABILITY_HINT =
-  "Atendemos um sábado por mês, das 08h30 às 18h. Escolha a data desejada e nosso atendimento confirma o horário pelo WhatsApp.";
+  "Atendemos de segunda a sexta e em um sábado por mês, das 08h30 às 18h. Escolha a data desejada e nosso atendimento confirma o horário pelo WhatsApp.";
