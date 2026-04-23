@@ -511,7 +511,16 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
                     {msg.variant === "whatsapp_cta" && (
                       <button
                         onClick={() => {
-                          if (msg.ctaPayload) openWhatsApp(msg.ctaPayload);
+                          if (!msg.ctaPayload) {
+                            openWA("general");
+                            return;
+                          }
+                          try {
+                            const parsed = JSON.parse(msg.ctaPayload);
+                            openWA(parsed.context, parsed.opts);
+                          } catch {
+                            openWA("custom", { custom: msg.ctaPayload });
+                          }
                         }}
                         className="w-full bg-emerald-600 text-white rounded-lg py-2.5 text-sm font-medium hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2 mt-1"
                       >
