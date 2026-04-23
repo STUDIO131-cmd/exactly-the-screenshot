@@ -1,6 +1,6 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Camera, Users, DollarSign, Sparkles } from "lucide-react";
-import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { openWhatsApp } from "@/lib/whatsapp";
 
 interface FaqSheetProps {
   isOpen: boolean;
@@ -67,14 +67,13 @@ const FaqSheet = ({ isOpen, onClose }: FaqSheetProps) => {
         <div className="border-t border-border pt-4 pb-2">
           <p className="text-center text-xs text-muted-foreground">
             Ainda tem dúvidas?{" "}
-            <a
-              href={buildWhatsAppUrl("faq_followup")}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={() => openWhatsApp("faq_followup")}
               className="text-primary underline underline-offset-2"
             >
               Fale conosco no WhatsApp
-            </a>
+            </button>
           </p>
         </div>
       </SheetContent>
