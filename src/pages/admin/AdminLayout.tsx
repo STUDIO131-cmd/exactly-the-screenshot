@@ -1,8 +1,9 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { LayoutDashboard, Package, Layers, Shield, HelpCircle, Users, Bot, Database } from "lucide-react";
+import { LayoutDashboard, Package, Layers, Shield, HelpCircle, Users, Bot, Database, CalendarDays } from "lucide-react";
 
 const navItems = [
   { to: "/admin", icon: LayoutDashboard, label: "Dashboard", end: true },
+  { to: "/admin/agenda", icon: CalendarDays, label: "Agenda" },
   { to: "/admin/products", icon: Package, label: "Produtos" },
   { to: "/admin/variants", icon: Layers, label: "Variantes" },
   { to: "/admin/policies", icon: Shield, label: "Políticas" },

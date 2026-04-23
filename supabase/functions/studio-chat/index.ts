@@ -22,8 +22,7 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Fetch all product data from normalized tables
-    const [familiesRes, productsRes, variantsRes, pricingRes, policiesRes, faqsRes, campaignsRes, datesRes] = await Promise.all([
+    const [familiesRes, productsRes, variantsRes, pricingRes, policiesRes, faqsRes, campaignsRes] = await Promise.all([
       supabase.from("product_families").select("*").eq("is_active", true),
       supabase.from("products").select("*").eq("is_active", true),
       supabase.from("variants").select("*").eq("is_active", true),
@@ -31,7 +30,6 @@ serve(async (req) => {
       supabase.from("policies").select("*"),
       supabase.from("faq_entries").select("*").eq("is_active", true),
       supabase.from("campaign_rules").select("*"),
-      supabase.from("available_dates").select("*").eq("is_available", true).gte("date", new Date().toISOString().split("T")[0]).order("date"),
     ]);
 
     const families = familiesRes.data || [];
@@ -41,9 +39,7 @@ serve(async (req) => {
     const policies = policiesRes.data || [];
     const faqs = faqsRes.data || [];
     const campaigns = campaignsRes.data || [];
-    const dates = datesRes.data || [];
 
-    // Build rich context for the AI
     const catalogText = products.map((p: any) => {
       const family = families.find((f: any) => f.id === p.family_id);
       const productVariants = variants.filter((v: any) => v.product_id === p.id);
@@ -74,12 +70,7 @@ serve(async (req) => {
     }).join("\n\n");
 
     const policiesText = policies.filter((p: any) => p.is_global).map((p: any) => `- ${p.title}: ${p.description}`).join("\n");
-
     const faqsText = faqs.map((f: any) => `P: ${f.question}\nR: ${f.answer}`).join("\n\n");
-
-    const datesText = dates.length > 0
-      ? dates.map((d: any) => `- ${d.date} (${d.photographer})${d.notes ? ` — ${d.notes}` : ""}`).join("\n")
-      : "Consulte disponibilidade pelo WhatsApp.";
 
     const activeCampaigns = campaigns.filter((c: any) => {
       const now = new Date().toISOString().split("T")[0];
@@ -99,8 +90,11 @@ REGRAS OPERACIONAIS:
 ${policiesText}
 
 ${campaignText ? `CAMPANHAS ATIVAS:\n${campaignText}\n` : ""}
-DATAS DISPONÍVEIS:
-${datesText}
+AGENDA:
+- Atendemos um sábado por mês, das 08h30 às 18h00.
+- O cliente escolhe a data desejada no calendário e nosso atendimento confirma o horário pelo WhatsApp.
+- Não atendemos em feriados nacionais nem em feriados municipais de Catanduva-SP.
+- Se o cliente perguntar sobre datas específicas, oriente a registrar interesse pelo calendário ou WhatsApp.
 
 PERGUNTAS FREQUENTES:
 ${faqsText}
@@ -116,12 +110,21 @@ LÓGICA DE RECOMENDAÇÃO:
 - Sessões com Igor: Experience, Posicionamento. Sessões com Equipe: Studio, Base, Eventos.
 
 REGRAS:
-- Seja breve (máx 3-4 frases)
-- Se a pergunta não for sobre fotografia/estúdio, redirecione educadamente
-- Nunca invente informações que não estão acima
-- Sempre explique a recomendação em linguagem humana
-- Se o cliente quiser agendar, incentive a continuar no chat
-- Pagamento: 50% no agendamento + 50% na véspera, ou 3x no cartão`;
+- Seja breve (máx 3-4 frases).
+- Nunca invente informações que não estão acima.
+- Sempre explique a recomendação em linguagem humana.
+- Se o cliente quiser agendar, incentive a continuar no chat.
+- Pagamento: 50% no agendamento + 50% na véspera, ou 3x no cartão.
+
+ESCALAR PARA WHATSAPP — REGRA CRÍTICA:
+Se a pergunta SAIR DO ESCOPO (não for sobre catálogo, preços, agenda, políticas, recomendações ou o estúdio) OU se você NÃO TIVER DADOS suficientes para responder com segurança, responda EXATAMENTE neste formato (sem nada além disso):
+
+[ESCALAR_WHATSAPP] <um resumo curto em primeira pessoa do cliente, com a dúvida dele>
+
+Exemplo:
+[ESCALAR_WHATSAPP] Quero saber se vocês fazem ensaio newborn com bebê de 7 dias.
+
+Não use esse marcador se a pergunta for respondível com os dados acima.`;
 
     const messages = [
       { role: "system", content: systemPrompt },
