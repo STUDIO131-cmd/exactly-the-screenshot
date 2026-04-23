@@ -1,5 +1,6 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Camera, Users, DollarSign, Sparkles } from "lucide-react";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 interface FaqSheetProps {
   isOpen: boolean;
