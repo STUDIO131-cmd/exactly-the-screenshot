@@ -22,7 +22,7 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const [familiesRes, productsRes, variantsRes, pricingRes, policiesRes, faqsRes, campaignsRes] = await Promise.all([
+    const [familiesRes, productsRes, variantsRes, pricingRes, policiesRes, faqsRes, campaignsRes, studioInfoRes] = await Promise.all([
       supabase.from("product_families").select("*").eq("is_active", true),
       supabase.from("products").select("*").eq("is_active", true),
       supabase.from("variants").select("*").eq("is_active", true),
@@ -30,6 +30,7 @@ serve(async (req) => {
       supabase.from("policies").select("*"),
       supabase.from("faq_entries").select("*").eq("is_active", true),
       supabase.from("campaign_rules").select("*"),
+      supabase.from("studio_info").select("*"),
     ]);
 
     const families = familiesRes.data || [];
@@ -39,6 +40,25 @@ serve(async (req) => {
     const policies = policiesRes.data || [];
     const faqs = faqsRes.data || [];
     const campaigns = campaignsRes.data || [];
+    const studioInfo = studioInfoRes.data || [];
+
+    const keyLabels: Record<string, string> = {
+      endereco: "Endereço do estúdio",
+      cidades_atendidas: "Cidades atendidas",
+      pagamento_e_cancelamento: "Pagamento, remarcação e cancelamento",
+      diferenciais: "Diferenciais",
+      cabelo_e_maquiagem: "Cabelo e maquiagem",
+      prazo_entrega: "Prazo de entrega",
+      selecao_fotos: "Seleção de fotos",
+      presente: "Presentear alguém",
+      acompanhantes: "Acompanhantes na sessão",
+      guia_de_preparo: "Guia de preparo",
+      duracao_sessao: "Duração da sessão",
+      idiomas: "Idiomas de atendimento",
+    };
+    const studioInfoText = studioInfo
+      .map((s: any) => `- ${keyLabels[s.key] || s.key}: ${s.value}`)
+      .join("\n");
 
     const catalogText = products.map((p: any) => {
       const family = families.find((f: any) => f.id === p.family_id);
