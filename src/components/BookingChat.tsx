@@ -207,7 +207,7 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
       addBotSpecial(
         "",
         "whatsapp_cta",
-        "Olá! Tive uma dúvida no chat do site 131 Fotos e gostaria de falar com o atendimento."
+        JSON.stringify({ context: "ai_error" })
       );
       setStep("ai_escalated");
     }
