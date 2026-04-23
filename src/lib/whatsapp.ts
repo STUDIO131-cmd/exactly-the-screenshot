@@ -26,6 +26,25 @@ export interface BuildOpts {
   custom?: string;
 }
 
+const buildEncodedMessage = (context: WhatsAppContext, opts?: BuildOpts): string =>
+  encodeURIComponent(buildMessage(context, opts));
+
+const buildWhatsAppWebUrl = (context: WhatsAppContext, opts?: BuildOpts): string =>
+  `https://web.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${buildEncodedMessage(context, opts)}`;
+
+const buildWhatsAppDeepLink = (context: WhatsAppContext, opts?: BuildOpts): string =>
+  `whatsapp://send?phone=${WHATSAPP_NUMBER}&text=${buildEncodedMessage(context, opts)}`;
+
+const openLink = (href: string, target: "_blank" | "_self" | "_top") => {
+  const a = document.createElement("a");
+  a.href = href;
+  a.target = target;
+  a.rel = "noopener noreferrer";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
+
 const buildMessage = (context: WhatsAppContext, opts: BuildOpts = {}): string => {
   const { name, date, session, photographer, summary, custom } = opts;
 
@@ -78,8 +97,7 @@ export const buildWhatsAppUrl = (
   context: WhatsAppContext,
   opts?: BuildOpts
 ): string => {
-  const text = buildMessage(context, opts);
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${buildEncodedMessage(context, opts)}`;
 };
 
 export const openWhatsApp = (
@@ -87,21 +105,30 @@ export const openWhatsApp = (
   opts?: BuildOpts
 ): void => {
   if (typeof window === "undefined") return;
-  const url = buildWhatsAppUrl(context, opts);
+  const mobileUrl = buildWhatsAppDeepLink(context, opts);
+  const browserUrl = /Android|iPhone|iPad|iPod/i.test(window.navigator.userAgent)
+    ? buildWhatsAppUrl(context, opts)
+    : buildWhatsAppWebUrl(context, opts);
+  const target = window.self !== window.top ? "_top" : "_blank";
 
-  // Use a programmatic anchor click so the navigation is treated as a
-  // direct user gesture. This avoids pop-up blockers and works inside
-  // iframes like the Lovable preview, where window.open often opens
-  // a blank tab.
   try {
-    const a = document.createElement("a");
-    a.href = url;
-    a.target = "_blank";
-    a.rel = "noopener noreferrer";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    if (/Android|iPhone|iPad|iPod/i.test(window.navigator.userAgent)) {
+      openLink(mobileUrl, window.self !== window.top ? "_top" : "_self");
+      window.setTimeout(() => {
+        if (document.visibilityState === "visible") {
+          openLink(browserUrl, target);
+        }
+      }, 500);
+      return;
+    }
+
+    openLink(browserUrl, target);
   } catch {
-    window.open(url, "_blank", "noopener,noreferrer");
+    if (target === "_top") {
+      window.location.href = browserUrl;
+      return;
+    }
+
+    window.open(browserUrl, "_blank", "noopener,noreferrer");
   }
 };
