@@ -52,8 +52,6 @@ const photographerOptions = [
   "Conferir os dois cenários",
 ];
 
-const WHATSAPP_NUMBER = "5517992595117";
-
 interface BookingChatProps {
   isOpen: boolean;
   onClose: () => void;
