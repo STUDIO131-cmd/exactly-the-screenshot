@@ -21,6 +21,7 @@ Catalog tiers: Igor Gagliardi (exclusive) vs Studio 131 Team (standard).
 - [Booking Flow & Agenda](mem://features/booking-flow) — Scarcity framing and AI to WhatsApp funnel
 - [AI Booking Agent](mem://tech/ai-chat-agent) — Logic and UI behavior for the generative AI chat (now consumes studio_info dynamically)
 - [Admin Dashboard](mem://tech/admin-dashboard) — Management and simulator tools at /admin
+- [Admin Auth & Roles](mem://tech/admin-auth) — Email/password login + user_roles RLS guarding all admin tables
 - [Google Calendar Integration](mem://tech/google-calendar) — Requirements for calendar availability filtering
 - [Supabase Schema Structure](mem://tech/studio-database-schema) — Granular relational model for catalog and pricing
 - [Lead Capture Edge Function](mem://features/launch-priority-section) — Supabase Edge Functions for lead notifications
