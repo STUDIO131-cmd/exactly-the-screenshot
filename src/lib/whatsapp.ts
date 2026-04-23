@@ -87,5 +87,21 @@ export const openWhatsApp = (
   opts?: BuildOpts
 ): void => {
   if (typeof window === "undefined") return;
-  window.open(buildWhatsAppUrl(context, opts), "_blank", "noopener,noreferrer");
+  const url = buildWhatsAppUrl(context, opts);
+
+  // Use a programmatic anchor click so the navigation is treated as a
+  // direct user gesture. This avoids pop-up blockers and works inside
+  // iframes like the Lovable preview, where window.open often opens
+  // a blank tab.
+  try {
+    const a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } catch {
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
 };
