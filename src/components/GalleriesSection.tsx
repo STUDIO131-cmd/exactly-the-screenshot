@@ -275,7 +275,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                 <X size={24} className="text-foreground" />
               </button>
 
-              <div className="p-4 md:p-6 lg:p-10 pb-24">
+              <div className="p-4 md:p-6 lg:p-10">
                 {/* Título e descrição */}
                 <h3 className="text-2xl text-neutral-200 text-center mb-3 md:text-4xl font-sans">
                   {currentGallery.title}
@@ -332,7 +332,6 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
               )}
               </div>
 
-              <PriceBar onAgendar={handleAgendarClick} />
             </motion.div>
           </motion.div>
         }
@@ -375,7 +374,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                 </button>
               </div>
 
-              <div className="p-6 pb-24">
+              <div className="p-6">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {openAlbum.photos.map((photo, i) =>
                 <div key={i} className="aspect-[4/5] rounded-lg overflow-hidden bg-muted">
@@ -390,7 +389,7 @@ const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
                 </div>
               </div>
 
-              <PriceBar onAgendar={handleAgendarClick} />
+              
             </motion.div>
           </motion.div>
         }
