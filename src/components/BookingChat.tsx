@@ -10,6 +10,7 @@ import {
   AVAILABILITY_HINT,
   type AvailabilityOverride,
 } from "@/lib/availability";
+import { openWhatsApp as openWA } from "@/lib/whatsapp";
 
 type ChatStep =
   | "welcome"
@@ -50,8 +51,6 @@ const photographerOptions = [
   "Entender a diferença",
   "Conferir os dois cenários",
 ];
-
-const WHATSAPP_NUMBER = "5517992595117";
 
 interface BookingChatProps {
   isOpen: boolean;
@@ -161,9 +160,7 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
     }, 500);
   };
 
-  const openWhatsApp = (text: string) => {
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, "_blank");
-  };
+
 
   const askAI = async (question: string) => {
     setIsTyping(true);
@@ -188,8 +185,7 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
         addBotMessageImmediate(
           "Resumi sua dúvida e estou chamando nosso atendimento. Clique no botão para iniciar a conversa no WhatsApp agora 👇"
         );
-        const waText = `Olá! Vim pelo site 131 Fotos. ${summary}`;
-        addBotSpecial("", "whatsapp_cta", waText);
+        addBotSpecial("", "whatsapp_cta", JSON.stringify({ context: "ai_escalation", opts: { summary } }));
         setStep("ai_escalated");
         return;
       }
@@ -211,7 +207,7 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
       addBotSpecial(
         "",
         "whatsapp_cta",
-        "Olá! Tive uma dúvida no chat do site 131 Fotos e gostaria de falar com o atendimento."
+        JSON.stringify({ context: "ai_error" })
       );
       setStep("ai_escalated");
     }
@@ -277,12 +273,19 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
       addBotMessage(
         "Pronto! Estou te direcionando para nosso atendimento confirmar o horário e o período. 💬"
       );
-      const waText = `Olá! Sou ${interestName}. Tenho interesse em agendar uma sessão${
-        selectedSession ? ` de ${selectedSession}` : ""
-      } no dia ${selectedDateState}${
-        selectedPhotographer ? ` (preferência: ${selectedPhotographer})` : ""
-      }. Pode confirmar o horário disponível?`;
-      addBotSpecial("", "whatsapp_cta", waText);
+      addBotSpecial(
+        "",
+        "whatsapp_cta",
+        JSON.stringify({
+          context: "booking_interest",
+          opts: {
+            name: interestName,
+            session: selectedSession || undefined,
+            date: selectedDateState || undefined,
+            photographer: selectedPhotographer || undefined,
+          },
+        })
+      );
       setStep("confirm");
     }, 600);
   };
@@ -291,7 +294,7 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
     if (step === "ai_chat" || step === "faq_in_chat") {
       if (option === "Falar no WhatsApp") {
         addUserMessage(option);
-        openWhatsApp("Olá! Gostaria de saber mais sobre os serviços do Studio 131. Vim pelo site 131 Fotos.");
+        openWA("general");
         onClose();
         return;
       }
@@ -508,7 +511,16 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
                     {msg.variant === "whatsapp_cta" && (
                       <button
                         onClick={() => {
-                          if (msg.ctaPayload) openWhatsApp(msg.ctaPayload);
+                          if (!msg.ctaPayload) {
+                            openWA("general");
+                            return;
+                          }
+                          try {
+                            const parsed = JSON.parse(msg.ctaPayload);
+                            openWA(parsed.context, parsed.opts);
+                          } catch {
+                            openWA("custom", { custom: msg.ctaPayload });
+                          }
                         }}
                         className="w-full bg-emerald-600 text-white rounded-lg py-2.5 text-sm font-medium hover:bg-emerald-700 transition-colors flex items-center justify-center gap-2 mt-1"
                       >
