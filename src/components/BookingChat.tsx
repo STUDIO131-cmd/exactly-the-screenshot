@@ -273,12 +273,19 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
       addBotMessage(
         "Pronto! Estou te direcionando para nosso atendimento confirmar o horário e o período. 💬"
       );
-      const waText = `Olá! Sou ${interestName}. Tenho interesse em agendar uma sessão${
-        selectedSession ? ` de ${selectedSession}` : ""
-      } no dia ${selectedDateState}${
-        selectedPhotographer ? ` (preferência: ${selectedPhotographer})` : ""
-      }. Pode confirmar o horário disponível?`;
-      addBotSpecial("", "whatsapp_cta", waText);
+      addBotSpecial(
+        "",
+        "whatsapp_cta",
+        JSON.stringify({
+          context: "booking_interest",
+          opts: {
+            name: interestName,
+            session: selectedSession || undefined,
+            date: selectedDateState || undefined,
+            photographer: selectedPhotographer || undefined,
+          },
+        })
+      );
       setStep("confirm");
     }, 600);
   };
