@@ -26,28 +26,6 @@ export interface BuildOpts {
   custom?: string;
 }
 
-const buildEncodedMessage = (context: WhatsAppContext, opts?: BuildOpts): string =>
-  encodeURIComponent(buildMessage(context, opts));
-
-const buildWhatsAppWebUrl = (context: WhatsAppContext, opts?: BuildOpts): string =>
-  `https://web.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${buildEncodedMessage(context, opts)}`;
-
-const buildWhatsAppDeepLink = (context: WhatsAppContext, opts?: BuildOpts): string =>
-  `whatsapp://send?phone=${WHATSAPP_NUMBER}&text=${buildEncodedMessage(context, opts)}`;
-
-const isMobileDevice = () => /Android|iPhone|iPad|iPod/i.test(window.navigator.userAgent);
-
-const navigateTop = (href: string): boolean => {
-  if (window.self === window.top) return false;
-
-  try {
-    window.top?.location.assign(href);
-    return true;
-  } catch {
-    return false;
-  }
-};
-
 const buildMessage = (context: WhatsAppContext, opts: BuildOpts = {}): string => {
   const { name, date, session, photographer, summary, custom } = opts;
 
@@ -93,6 +71,28 @@ const buildMessage = (context: WhatsAppContext, opts: BuildOpts = {}): string =>
 
     default:
       return "Olá! Vim pelo site 131 Fotos.";
+  }
+};
+
+const buildEncodedMessage = (context: WhatsAppContext, opts?: BuildOpts): string =>
+  encodeURIComponent(buildMessage(context, opts));
+
+const buildWhatsAppWebUrl = (context: WhatsAppContext, opts?: BuildOpts): string =>
+  `https://web.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${buildEncodedMessage(context, opts)}`;
+
+const buildWhatsAppDeepLink = (context: WhatsAppContext, opts?: BuildOpts): string =>
+  `whatsapp://send?phone=${WHATSAPP_NUMBER}&text=${buildEncodedMessage(context, opts)}`;
+
+const isMobileDevice = () => /Android|iPhone|iPad|iPod/i.test(window.navigator.userAgent);
+
+const navigateTop = (href: string): boolean => {
+  if (window.self === window.top) return false;
+
+  try {
+    window.top?.location.assign(href);
+    return true;
+  } catch {
+    return false;
   }
 };
 
