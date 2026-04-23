@@ -2,13 +2,14 @@
  * Lógica de disponibilidade da agenda Studio 131
  *
  * Regra padrão:
- * - Aberto apenas no PRIMEIRO sábado de cada mês, das 08h30 às 18h00
- * - Se o primeiro sábado for feriado, cai para o próximo sábado válido do mês
- * - Fechado em todos os outros dias e em feriados nacionais/municipais (Catanduva-SP)
+ * - Aberto em todos os dias da semana (segunda a sexta), das 08h30 às 18h00
+ * - Sábados: aberto APENAS no primeiro sábado válido do mês (os demais ficam fechados)
+ * - Domingos: sempre fechados
+ * - Feriados nacionais e municipais (Catanduva-SP): sempre fechados
  *
  * Exceções (tabela `available_dates`):
  * - Linha com is_available=false bloqueia uma data padrão
- * - Linha com is_available=true libera uma data extra fora do padrão
+ * - Linha com is_available=true libera uma data extra (ex.: domingo, sábado bloqueado, feriado)
  */
 
 export type AvailabilityOverride = {
