@@ -294,7 +294,7 @@ const BookingChat = ({ isOpen, onClose, selectedDate }: BookingChatProps) => {
     if (step === "ai_chat" || step === "faq_in_chat") {
       if (option === "Falar no WhatsApp") {
         addUserMessage(option);
-        openWhatsApp("Olá! Gostaria de saber mais sobre os serviços do Studio 131. Vim pelo site 131 Fotos.");
+        openWA("general");
         onClose();
         return;
       }
