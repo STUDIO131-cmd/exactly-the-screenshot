@@ -137,15 +137,21 @@ const galleries: Gallery[] = [
 
 interface GalleriesSectionProps {
   onOpenBookingChat?: () => void;
+  onGalleryOpenChange?: (open: boolean) => void;
 }
 
-const GalleriesSection = ({ onOpenBookingChat }: GalleriesSectionProps) => {
+const GalleriesSection = ({ onOpenBookingChat, onGalleryOpenChange }: GalleriesSectionProps) => {
   const [openGalleryId, setOpenGalleryId] = useState<string | null>(null);
 
   const currentGallery = galleries.find((g) => g.id === openGalleryId);
 
+  const setGalleryOpen = (id: string | null) => {
+    setOpenGalleryId(id);
+    onGalleryOpenChange?.(id !== null);
+  };
+
   const handleAgendarClick = () => {
-    setOpenGalleryId(null);
+    setGalleryOpen(null);
     if (onOpenBookingChat) {
       onOpenBookingChat();
     } else {
