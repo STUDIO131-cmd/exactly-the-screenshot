@@ -171,7 +171,7 @@ const GalleriesSection = ({ onOpenBookingChat, onGalleryOpenChange }: GalleriesS
             <div
               key={gallery.id}
               className="group relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.06)] hover:shadow-[0_0_30px_rgba(255,255,255,0.12)] transition-shadow duration-500"
-              onClick={() => setOpenGalleryId(gallery.id)}
+              onClick={() => setGalleryOpen(gallery.id)}
             >
               <img
                 src={gallery.cover}
@@ -203,7 +203,7 @@ const GalleriesSection = ({ onOpenBookingChat, onGalleryOpenChange }: GalleriesS
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setOpenGalleryId(null)}
+            onClick={() => setGalleryOpen(null)}
           >
             <motion.div
               className="relative max-w-5xl w-full max-h-[90vh] overflow-y-auto bg-background rounded-2xl"
@@ -213,7 +213,7 @@ const GalleriesSection = ({ onOpenBookingChat, onGalleryOpenChange }: GalleriesS
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                onClick={() => setOpenGalleryId(null)}
+                onClick={() => setGalleryOpen(null)}
                 className="absolute top-4 right-4 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors z-20"
               >
                 <X size={24} className="text-foreground" />

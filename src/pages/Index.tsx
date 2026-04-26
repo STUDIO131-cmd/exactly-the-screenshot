@@ -14,6 +14,7 @@ import BookingChat from "@/components/BookingChat";
 const Index = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatDate, setChatDate] = useState<string | undefined>();
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
   useEffect(() => {
     const handleOpenChat = (e: Event) => {
@@ -38,14 +39,17 @@ const Index = () => {
     <main>
       <HeroSection />
       <CategoriesTicker />
-      <GalleriesSection onOpenBookingChat={() => setIsChatOpen(true)} />
+      <GalleriesSection
+        onOpenBookingChat={() => setIsChatOpen(true)}
+        onGalleryOpenChange={setIsGalleryOpen}
+      />
       <IntentionText />
       <TestimonialsSection />
       <BookingPromoBar />
       <AboutSection />
       <BookingSection />
       <FooterSection />
-      <WhatsAppFloat onClick={() => setIsChatOpen(true)} />
+      {!isGalleryOpen && <WhatsAppFloat onClick={() => setIsChatOpen(true)} />}
       <BookingChat isOpen={isChatOpen} onClose={handleCloseChat} selectedDate={chatDate} />
     </main>
   );
