@@ -1,71 +1,50 @@
+## Objetivo
 
+Dentro do modal de cada galeria (ex: Retratos, Gestantes, 15 Anos, etc), em vez de mostrar **álbuns individuais por cliente/sessão** (ex: "Sessão Ana Paula", "Sessão Carlos Mendes"), exibir diretamente uma **grid de 6 fotos placeholder** representando o trabalho de cada fotógrafo, seguida de um botão **[Ver mais]**.
 
-## Plano: Enriquecer IA com base de conhecimento do 131 Fotos
+## Mudanças em `src/components/GalleriesSection.tsx`
 
-### Objetivo
-Carregar todas as informações estratégicas que você enviou na tabela `studio_info` (key/value) e fazer a edge function `studio-chat` injetar isso no prompt da IA, para que ela responda de forma consultiva e completa.
+### 1. Simplificar estrutura de dados
 
-### 1. Popular tabela `studio_info` (migration)
+Remover a interface `Album` e o array `albums` dentro de cada `PhotographerSection`. Substituir por um array simples `photos: string[]` com 6 placeholders.
 
-Insert das chaves abaixo (com `upsert` em `key`):
+```ts
+interface PhotographerSection {
+  photographer: string;
+  subtitle: string;
+  photos: string[]; // 6 placeholders
+}
+```
 
-| key | value |
-|---|---|
-| `endereco` | "Dentro do Hotel Ibis Catanduva (SP), com estacionamento amplo e seguro." |
-| `cidades_atendidas` | "Atendimento presencial no estúdio em Catanduva-SP. Sessões fora de Catanduva são projetos personalizados — alinhamos proposta e logística sob medida via WhatsApp." |
-| `pagamento_e_cancelamento` | "Formas de pagamento, política de remarcação e cancelamento são detalhadas pelo nosso atendimento no WhatsApp." |
-| `diferenciais` | "10 anos de carreira do Igor garantindo repertório para capturar espontaneidade. Clientes relatam que é 'tranquilo fotografar conosco' — deixamos todos à vontade. A maioria dos nossos clientes nunca foi fotografada antes e se surpreende com o resultado." |
-| `cabelo_e_maquiagem` | "Não oferecemos serviço de beleza no local, mas indicamos parceiros de confiança em Catanduva." |
-| `prazo_entrega` | "1 semana útil após a seleção das fotos pelo cliente." |
-| `selecao_fotos` | "Fotografamos várias imagens na sessão. O cliente recebe uma galeria privada para escolher suas preferidas, que então recebem edição final." |
-| `presente` | "Nossos produtos são excelentes para presentear. Fazemos abordagem-surpresa ao presenteado com mensagem especial e cartão digital." |
-| `acompanhantes` | "É possível levar acompanhantes para apoio emocional. A quantidade de pessoas participando da sessão depende do objetivo e é negociada via WhatsApp." |
-| `guia_de_preparo` | "Todos os clientes recebem um guia completo de preparo: como escolher as roupas, o que evitar, o que priorizar e recomendações práticas finais." |
-| `duracao_sessao` | "Entre 1h e 2h30, dependendo do escopo do produto contratado." |
-| `idiomas` | "Atendimento em português e inglês." |
+Cada seção (Igor / Equipe) em todas as 6 galerias terá `photos: Array(6).fill("/placeholder.svg")` (ou a cover correspondente da galeria, mantendo o visual atual).
 
-### 2. Atualizar `supabase/functions/studio-chat/index.ts`
+### 2. Remover o segundo modal (álbum aberto)
 
-- Adicionar query: `supabase.from("studio_info").select("*")`
-- Montar bloco `INFORMAÇÕES DO ESTÚDIO` no system prompt com todos os pares `key: value` formatados de forma legível
-- Posicionar essa seção **logo após** o catálogo, antes de políticas
-- Atualizar a regra de escalada: "Se a pergunta for sobre formas de pagamento, parcelamento, remarcação ou cancelamento, responda que esses detalhes são tratados pelo atendimento e use `[ESCALAR_WHATSAPP]` com o resumo."
+- Eliminar o estado `openAlbum` e o `<AnimatePresence>` do "Modal: Fotos do álbum" (linhas ~340-396).
+- Remover imports não utilizados (`ArrowLeft` se não for mais usado).
 
-### 3. Página admin para editar (mínimo viável)
+### 3. Atualizar o modal de galeria
 
-Nova página `/admin/info` (`src/pages/admin/StudioInfoPage.tsx`):
-- Lista todos os registros de `studio_info` em formato editável (key readonly + textarea para `value`)
-- Botão "Salvar" por linha → `update`
-- Botão "Adicionar nova chave" → cria registro novo
-- Adicionar item "Informações" no menu de `AdminLayout.tsx`
+Dentro de cada `section` (Igor / Equipe), substituir a grid de álbuns por:
 
-### 4. RLS
+- **Grid de 6 fotos placeholder** (mesma grid `grid-cols-2 sm:grid-cols-3 gap-4`, aspect `[4/5]`, sem overlay de título, sem clique).
+- Abaixo da grid, um **botão "Ver mais"** centralizado, com estilo discreto coerente com o tema (ex: `variant="outline"` ou link estilizado em `text-foreground/70 hover:text-foreground` com underline).
+  - Por enquanto o botão será um **placeholder sem ação** (ou pode disparar `handleAgendarClick` para puxar o usuário ao funil de agendamento — confirmar abaixo).
 
-Verificar políticas de `studio_info`:
-- `SELECT` público (edge function usa service role, mas frontend admin lê com anon key)
-- `INSERT/UPDATE/DELETE` permitidos para gestão (mesma estratégia das outras tabelas admin)
+### 4. Comportamento do botão "Ver mais"
 
-Se faltar, criar migration com as policies.
+Como ainda não existe uma página/portfólio expandido por fotógrafo, opções:
+- **(a)** Botão sem ação por enquanto (apenas visual, marcado como `disabled` ou sem `onClick`).
+- **(b)** Botão chama `handleAgendarClick()` levando o usuário ao chat de agendamento.
+- **(c)** Botão abre link externo (Instagram do fotógrafo, por exemplo) — exigiria URL.
 
-### 5. Atualização de memória
+**Vou assumir (a)** — botão visualmente presente mas sem destino, pronto para ser plugado quando houver portfólio externo. Se preferir outra opção, me avise antes de aprovar.
 
-Atualizar `mem://tech/ai-chat-agent` registrando que a IA agora consome `studio_info` dinamicamente, e criar referência nova `mem://business/studio-info` listando as chaves cadastradas.
+## Arquivos afetados
 
-### Arquivos
+- `src/components/GalleriesSection.tsx` — única edição necessária.
 
-**Criar:**
-- `src/pages/admin/StudioInfoPage.tsx`
-- Migration SQL (insert/upsert dos 12 registros + policies se necessário)
+## Resultado esperado
 
-**Editar:**
-- `supabase/functions/studio-chat/index.ts` — ler `studio_info` + injetar no prompt
-- `src/App.tsx` — registrar rota `/admin/info`
-- `src/pages/admin/AdminLayout.tsx` — adicionar item de menu
-
-### Vantagens
-
-- IA passa a responder com endereço, prazo, política de acompanhantes, idiomas, etc. com naturalidade
-- Tudo editável pelo admin sem precisar mexer em código
-- Pagamento/cancelamento conscientemente caem no fluxo de WhatsApp (mantém o atendimento humano no fechamento)
-- Base pronta para crescer (basta adicionar nova chave em `studio_info`)
-
+- Ao clicar numa galeria, o modal abre mostrando: título + descrição → seção "Igor Gagliardi" com 6 thumbnails → botão "Ver mais" → divisor → seção "Equipe Studio 131" com 6 thumbnails → botão "Ver mais".
+- Sem segundo nível de navegação (álbuns individuais).
