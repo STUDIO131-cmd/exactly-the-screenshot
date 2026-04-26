@@ -1,50 +1,25 @@
-## Objetivo
+## Problema
+O botão flutuante **"Agende sua sessão"** (`WhatsAppFloat`, fixo no canto inferior direito com `z-50`) continua visível e clicável por cima do modal da galeria, poluindo a experiência ao explorar as fotos.
 
-Dentro do modal de cada galeria (ex: Retratos, Gestantes, 15 Anos, etc), em vez de mostrar **álbuns individuais por cliente/sessão** (ex: "Sessão Ana Paula", "Sessão Carlos Mendes"), exibir diretamente uma **grid de 6 fotos placeholder** representando o trabalho de cada fotógrafo, seguida de um botão **[Ver mais]**.
+## Solução
+Sincronizar a visibilidade do `WhatsAppFloat` com o estado de abertura do modal da galeria, escondendo-o enquanto a galeria estiver aberta.
 
-## Mudanças em `src/components/GalleriesSection.tsx`
+### Mudanças
 
-### 1. Simplificar estrutura de dados
+**1. `src/components/GalleriesSection.tsx`**
+- Adicionar prop opcional `onGalleryOpenChange?: (open: boolean) => void`.
+- Disparar `onGalleryOpenChange(true)` quando uma galeria abrir e `onGalleryOpenChange(false)` quando fechar (tanto pelo botão X quanto pelo overlay e pelo CTA "Agendar agora").
 
-Remover a interface `Album` e o array `albums` dentro de cada `PhotographerSection`. Substituir por um array simples `photos: string[]` com 6 placeholders.
+**2. `src/pages/Index.tsx`**
+- Criar estado `const [isGalleryOpen, setIsGalleryOpen] = useState(false)`.
+- Passar `onGalleryOpenChange={setIsGalleryOpen}` ao `<GalleriesSection />`.
+- Renderizar `<WhatsAppFloat />` condicionalmente: `{!isGalleryOpen && <WhatsAppFloat ... />}`.
 
-```ts
-interface PhotographerSection {
-  photographer: string;
-  subtitle: string;
-  photos: string[]; // 6 placeholders
-}
-```
+### Por que essa abordagem
+- Mantém o `WhatsAppFloat` como componente “burro” (sem conhecer a galeria).
+- Estado de UI continua centralizado no `Index`, que já orquestra o `BookingChat`.
+- Animação simples: o botão simplesmente desmonta/remonta — sem necessidade de Framer Motion adicional.
 
-Cada seção (Igor / Equipe) em todas as 6 galerias terá `photos: Array(6).fill("/placeholder.svg")` (ou a cover correspondente da galeria, mantendo o visual atual).
-
-### 2. Remover o segundo modal (álbum aberto)
-
-- Eliminar o estado `openAlbum` e o `<AnimatePresence>` do "Modal: Fotos do álbum" (linhas ~340-396).
-- Remover imports não utilizados (`ArrowLeft` se não for mais usado).
-
-### 3. Atualizar o modal de galeria
-
-Dentro de cada `section` (Igor / Equipe), substituir a grid de álbuns por:
-
-- **Grid de 6 fotos placeholder** (mesma grid `grid-cols-2 sm:grid-cols-3 gap-4`, aspect `[4/5]`, sem overlay de título, sem clique).
-- Abaixo da grid, um **botão "Ver mais"** centralizado, com estilo discreto coerente com o tema (ex: `variant="outline"` ou link estilizado em `text-foreground/70 hover:text-foreground` com underline).
-  - Por enquanto o botão será um **placeholder sem ação** (ou pode disparar `handleAgendarClick` para puxar o usuário ao funil de agendamento — confirmar abaixo).
-
-### 4. Comportamento do botão "Ver mais"
-
-Como ainda não existe uma página/portfólio expandido por fotógrafo, opções:
-- **(a)** Botão sem ação por enquanto (apenas visual, marcado como `disabled` ou sem `onClick`).
-- **(b)** Botão chama `handleAgendarClick()` levando o usuário ao chat de agendamento.
-- **(c)** Botão abre link externo (Instagram do fotógrafo, por exemplo) — exigiria URL.
-
-**Vou assumir (a)** — botão visualmente presente mas sem destino, pronto para ser plugado quando houver portfólio externo. Se preferir outra opção, me avise antes de aprovar.
-
-## Arquivos afetados
-
-- `src/components/GalleriesSection.tsx` — única edição necessária.
-
-## Resultado esperado
-
-- Ao clicar numa galeria, o modal abre mostrando: título + descrição → seção "Igor Gagliardi" com 6 thumbnails → botão "Ver mais" → divisor → seção "Equipe Studio 131" com 6 thumbnails → botão "Ver mais".
-- Sem segundo nível de navegação (álbuns individuais).
+### Fora do escopo
+- Não alterar `BookingPromoBar` nem `BookingSection` (já ficam visualmente cobertos pelo modal `z-50`, sem problema de interação).
+- Não mudar z-index do modal (manter `z-50`).
