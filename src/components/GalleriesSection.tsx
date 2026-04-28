@@ -12,14 +12,19 @@ interface Gallery {
 
 const makePhotos = (src: string) => Array(6).fill(src);
 
+const retratosPhotos = Array.from(
+  { length: 22 },
+  (_, i) => `/galleries/retratos/retratos-${String(i + 1).padStart(2, "0")}.webp`
+);
+
 const galleries: Gallery[] = [
   {
     id: "retratos",
     title: "Retratos Profissionais",
-    cover: "/placeholders/retratos-cover.png",
+    cover: "/galleries/retratos/retratos-cover.webp",
     description:
       "Retratos que traduzem personalidade e presença. Cada clique é pensado para revelar o melhor de você — seja para uso corporativo, redes sociais ou portfólio pessoal.",
-    photos: makePhotos("/placeholder.svg"),
+    photos: retratosPhotos,
   },
   {
     id: "gestantes",
@@ -70,11 +75,13 @@ interface GalleriesSectionProps {
 
 const GalleriesSection = ({ onOpenBookingChat, onGalleryOpenChange }: GalleriesSectionProps) => {
   const [openGalleryId, setOpenGalleryId] = useState<string | null>(null);
+  const [showAll, setShowAll] = useState(false);
 
   const currentGallery = galleries.find((g) => g.id === openGalleryId);
 
   const setGalleryOpen = (id: string | null) => {
     setOpenGalleryId(id);
+    setShowAll(false);
     onGalleryOpenChange?.(id !== null);
   };
 
@@ -155,9 +162,9 @@ const GalleriesSection = ({ onOpenBookingChat, onGalleryOpenChange }: GalleriesS
                   {currentGallery.description}
                 </p>
 
-                {/* Grid de 6 fotos */}
+                {/* Grid de fotos */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
-                  {currentGallery.photos.map((photo, i) => (
+                  {(showAll ? currentGallery.photos : currentGallery.photos.slice(0, 6)).map((photo, i) => (
                     <div
                       key={i}
                       className="aspect-[4/5] rounded-xl overflow-hidden bg-muted"
@@ -167,20 +174,24 @@ const GalleriesSection = ({ onOpenBookingChat, onGalleryOpenChange }: GalleriesS
                         alt={`${currentGallery.title} - Foto ${i + 1}`}
                         className="w-full h-full object-cover"
                         loading="lazy"
+                        decoding="async"
                       />
                     </div>
                   ))}
                 </div>
 
-                {/* Botão Ver mais */}
-                <div className="mt-6 flex justify-center">
-                  <button
-                    type="button"
-                    className="text-foreground/70 hover:text-foreground text-xs md:text-sm tracking-widest uppercase underline-offset-4 hover:underline transition-colors font-sans"
-                  >
-                    Ver mais
-                  </button>
-                </div>
+                {/* Botão Ver mais / menos */}
+                {currentGallery.photos.length > 6 && (
+                  <div className="mt-6 flex justify-center">
+                    <button
+                      type="button"
+                      onClick={() => setShowAll((v) => !v)}
+                      className="text-foreground/70 hover:text-foreground text-xs md:text-sm tracking-widest uppercase underline-offset-4 hover:underline transition-colors font-sans"
+                    >
+                      {showAll ? "Ver menos" : `Ver mais (${currentGallery.photos.length - 6})`}
+                    </button>
+                  </div>
+                )}
 
                 {/* CTA agendar */}
                 <div className="sticky bottom-0 left-0 right-0 mt-10 -mx-4 md:-mx-6 lg:-mx-10 bg-primary/90 backdrop-blur-sm px-4 md:px-6 py-3 md:py-4 flex flex-col sm:flex-row items-center justify-between gap-2 md:gap-4 rounded-b-2xl">
