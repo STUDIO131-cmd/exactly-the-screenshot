@@ -17,6 +17,11 @@ const retratosPhotos = Array.from(
   (_, i) => `/galleries/retratos/retratos-${String(i + 1).padStart(2, "0")}.webp`
 );
 
+const gestantesPhotos = Array.from(
+  { length: 22 },
+  (_, i) => `/galleries/gestantes/gestantes-${String(i + 1).padStart(2, "0")}.webp`
+);
+
 const galleries: Gallery[] = [
   {
     id: "retratos",
@@ -32,7 +37,7 @@ const galleries: Gallery[] = [
     cover: "/placeholders/gestantes-cover.png",
     description:
       "A espera de uma nova vida merece ser eternizada com delicadeza. Fotografamos a beleza da gestação com luz natural e ambientes que acolhem.",
-    photos: makePhotos("/placeholders/gestantes-cover.jpg"),
+    photos: gestantesPhotos,
   },
   {
     id: "15anos",
