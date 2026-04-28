@@ -237,6 +237,63 @@ const GalleriesSection = ({ onOpenBookingChat, onGalleryOpenChange }: GalleriesS
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Lightbox: visualização ampliada com navegação */}
+      <AnimatePresence>
+        {currentGallery && lightboxIndex !== null && (
+          <motion.div
+            className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-2 md:p-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeLightbox}
+          >
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); closeLightbox(); }}
+              className="absolute top-3 right-3 md:top-6 md:right-6 p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+              aria-label="Fechar"
+            >
+              <X size={22} />
+            </button>
+
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); prevPhoto(); }}
+              className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+              aria-label="Foto anterior"
+            >
+              <ChevronLeft size={28} />
+            </button>
+
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); nextPhoto(); }}
+              className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+              aria-label="Próxima foto"
+            >
+              <ChevronRight size={28} />
+            </button>
+
+            <motion.img
+              key={lightboxIndex}
+              src={currentGallery.photos[lightboxIndex]}
+              alt={`${currentGallery.title} - Foto ${lightboxIndex + 1}`}
+              className="max-w-full max-h-[88vh] object-contain rounded-lg select-none"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              draggable={false}
+            />
+
+            <div className="absolute bottom-4 md:bottom-6 left-0 right-0 text-center text-white/70 text-xs md:text-sm tracking-widest font-sans">
+              {lightboxIndex + 1} / {currentGallery.photos.length}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
