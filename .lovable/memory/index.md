@@ -7,7 +7,7 @@ Updated: now
 All content and SEO strictly localized in Brazilian Portuguese (pt-BR).
 Dark theme, glass-morphism. Global font: TikTok Sans Light. Decorative: Kapakana. Light gray for text.
 Standard padding: py-10 mobile, py-16 desktop. Adjust hero/titles to avoid gaps.
-Catalog tiers: Igor Gagliardi (exclusive) vs Studio 131 Team (standard).
+Galleries no longer split by photographer (Igor vs Team) — single unified grid per category.
 All images converted to .webp at q=40 (60% reduction). Stored in public/galleries/{category}/.
 
 ## Memories
