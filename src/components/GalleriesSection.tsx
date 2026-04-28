@@ -2,18 +2,12 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Calendar } from "lucide-react";
 
-interface PhotographerSection {
-  photographer: string;
-  subtitle: string;
-  photos: string[];
-}
-
 interface Gallery {
   id: string;
   title: string;
   cover: string;
   description: string;
-  sections: PhotographerSection[];
+  photos: string[];
 }
 
 const makePhotos = (src: string) => Array(6).fill(src);
@@ -25,18 +19,7 @@ const galleries: Gallery[] = [
     cover: "/placeholders/retratos-cover.png",
     description:
       "Retratos que traduzem personalidade e presença. Cada clique é pensado para revelar o melhor de você — seja para uso corporativo, redes sociais ou portfólio pessoal.",
-    sections: [
-      {
-        photographer: "Igor Gagliardi",
-        subtitle: "10 anos de repertório e olhar cirúrgico",
-        photos: makePhotos("/placeholder.svg"),
-      },
-      {
-        photographer: "Equipe Studio 131",
-        subtitle: "Sensibilidade e técnica em cada registro",
-        photos: makePhotos("/placeholder.svg"),
-      },
-    ],
+    photos: makePhotos("/placeholder.svg"),
   },
   {
     id: "gestantes",
@@ -44,18 +27,7 @@ const galleries: Gallery[] = [
     cover: "/placeholders/gestantes-cover.png",
     description:
       "A espera de uma nova vida merece ser eternizada com delicadeza. Fotografamos a beleza da gestação com luz natural e ambientes que acolhem.",
-    sections: [
-      {
-        photographer: "Igor Gagliardi",
-        subtitle: "10 anos de repertório e olhar cirúrgico",
-        photos: makePhotos("/placeholders/gestantes-cover.jpg"),
-      },
-      {
-        photographer: "Equipe Studio 131",
-        subtitle: "Sensibilidade e técnica em cada registro",
-        photos: makePhotos("/placeholders/gestantes-cover.jpg"),
-      },
-    ],
+    photos: makePhotos("/placeholders/gestantes-cover.jpg"),
   },
   {
     id: "15anos",
@@ -63,18 +35,7 @@ const galleries: Gallery[] = [
     cover: "/placeholders/15anos-cover.png",
     description:
       "Uma celebração única que marca a transição para a vida adulta. Capturamos a essência e a alegria desse momento com autenticidade.",
-    sections: [
-      {
-        photographer: "Igor Gagliardi",
-        subtitle: "10 anos de repertório e olhar cirúrgico",
-        photos: makePhotos("/placeholders/15anos-cover.jpg"),
-      },
-      {
-        photographer: "Equipe Studio 131",
-        subtitle: "Sensibilidade e técnica em cada registro",
-        photos: makePhotos("/placeholders/15anos-cover.jpg"),
-      },
-    ],
+    photos: makePhotos("/placeholders/15anos-cover.jpg"),
   },
   {
     id: "casais",
@@ -82,18 +43,7 @@ const galleries: Gallery[] = [
     cover: "/placeholders/casais-cover.png",
     description:
       "O amor em sua forma mais genuína. Registramos a cumplicidade e a conexão de casais com um olhar sensível e poético.",
-    sections: [
-      {
-        photographer: "Igor Gagliardi",
-        subtitle: "10 anos de repertório e olhar cirúrgico",
-        photos: makePhotos("/placeholders/casais-cover.jpg"),
-      },
-      {
-        photographer: "Equipe Studio 131",
-        subtitle: "Sensibilidade e técnica em cada registro",
-        photos: makePhotos("/placeholders/casais-cover.jpg"),
-      },
-    ],
+    photos: makePhotos("/placeholders/casais-cover.jpg"),
   },
   {
     id: "pessoal",
@@ -101,18 +51,7 @@ const galleries: Gallery[] = [
     cover: "/placeholders/pessoal-cover.png",
     description:
       "Sessões descontraídas que capturam quem você realmente é. Fotos autênticas para guardar momentos que importam.",
-    sections: [
-      {
-        photographer: "Igor Gagliardi",
-        subtitle: "10 anos de repertório e olhar cirúrgico",
-        photos: makePhotos("/placeholders/pessoal-cover.jpg"),
-      },
-      {
-        photographer: "Equipe Studio 131",
-        subtitle: "Sensibilidade e técnica em cada registro",
-        photos: makePhotos("/placeholders/pessoal-cover.jpg"),
-      },
-    ],
+    photos: makePhotos("/placeholders/pessoal-cover.jpg"),
   },
   {
     id: "eventos",
@@ -120,18 +59,7 @@ const galleries: Gallery[] = [
     cover: "/placeholders/eventos-cover.png",
     description:
       "Cobertura completa de eventos sociais e corporativos. Cada momento é registrado com atenção aos detalhes e à emoção do instante.",
-    sections: [
-      {
-        photographer: "Igor Gagliardi",
-        subtitle: "10 anos de repertório e olhar cirúrgico",
-        photos: makePhotos("/placeholders/eventos-cover.jpg"),
-      },
-      {
-        photographer: "Equipe Studio 131",
-        subtitle: "Sensibilidade e técnica em cada registro",
-        photos: makePhotos("/placeholders/eventos-cover.jpg"),
-      },
-    ],
+    photos: makePhotos("/placeholders/eventos-cover.jpg"),
   },
 ];
 
@@ -195,7 +123,7 @@ const GalleriesSection = ({ onOpenBookingChat, onGalleryOpenChange }: GalleriesS
         </div>
       </div>
 
-      {/* Modal: Galeria com seções por fotógrafo */}
+      {/* Modal: Galeria */}
       <AnimatePresence>
         {openGalleryId && currentGallery && (
           <motion.div
@@ -227,52 +155,32 @@ const GalleriesSection = ({ onOpenBookingChat, onGalleryOpenChange }: GalleriesS
                   {currentGallery.description}
                 </p>
 
-                {currentGallery.sections.map((section, sIdx) => (
-                  <div key={section.photographer}>
-                    {sIdx > 0 && (
-                      <div className="flex items-center gap-4 my-10">
-                        <div className="flex-1 h-px bg-border" />
-                        <span className="text-xs text-muted-foreground tracking-widest">•••</span>
-                        <div className="flex-1 h-px bg-border" />
-                      </div>
-                    )}
-
-                    <div className="mb-6 text-center">
-                      <h4 className="text-foreground/70 text-base md:text-lg font-sans">
-                        Fotografia assinada por{" "}
-                        <span className="text-foreground font-sans font-thin">{section.photographer}</span>
-                      </h4>
-                      <p className="text-muted-foreground text-xs mt-1 font-sans">{section.subtitle}</p>
+                {/* Grid de 6 fotos */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
+                  {currentGallery.photos.map((photo, i) => (
+                    <div
+                      key={i}
+                      className="aspect-[4/5] rounded-xl overflow-hidden bg-muted"
+                    >
+                      <img
+                        src={photo}
+                        alt={`${currentGallery.title} - Foto ${i + 1}`}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
                     </div>
+                  ))}
+                </div>
 
-                    {/* Grid de 6 fotos placeholder */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
-                      {section.photos.map((photo, i) => (
-                        <div
-                          key={i}
-                          className="aspect-[4/5] rounded-xl overflow-hidden bg-muted"
-                        >
-                          <img
-                            src={photo}
-                            alt={`${section.photographer} - Foto ${i + 1}`}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Botão Ver mais */}
-                    <div className="mt-6 flex justify-center">
-                      <button
-                        type="button"
-                        className="text-foreground/70 hover:text-foreground text-xs md:text-sm tracking-widest uppercase underline-offset-4 hover:underline transition-colors font-sans"
-                      >
-                        Ver mais
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                {/* Botão Ver mais */}
+                <div className="mt-6 flex justify-center">
+                  <button
+                    type="button"
+                    className="text-foreground/70 hover:text-foreground text-xs md:text-sm tracking-widest uppercase underline-offset-4 hover:underline transition-colors font-sans"
+                  >
+                    Ver mais
+                  </button>
+                </div>
 
                 {/* CTA agendar */}
                 <div className="sticky bottom-0 left-0 right-0 mt-10 -mx-4 md:-mx-6 lg:-mx-10 bg-primary/90 backdrop-blur-sm px-4 md:px-6 py-3 md:py-4 flex flex-col sm:flex-row items-center justify-between gap-2 md:gap-4 rounded-b-2xl">
