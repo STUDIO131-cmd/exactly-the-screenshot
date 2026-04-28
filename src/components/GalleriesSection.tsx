@@ -76,14 +76,37 @@ interface GalleriesSectionProps {
 const GalleriesSection = ({ onOpenBookingChat, onGalleryOpenChange }: GalleriesSectionProps) => {
   const [openGalleryId, setOpenGalleryId] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const currentGallery = galleries.find((g) => g.id === openGalleryId);
 
   const setGalleryOpen = (id: string | null) => {
     setOpenGalleryId(id);
     setShowAll(false);
+    setLightboxIndex(null);
     onGalleryOpenChange?.(id !== null);
   };
+
+  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
+  const prevPhoto = useCallback(() => {
+    if (!currentGallery) return;
+    setLightboxIndex((i) => (i === null ? i : (i - 1 + currentGallery.photos.length) % currentGallery.photos.length));
+  }, [currentGallery]);
+  const nextPhoto = useCallback(() => {
+    if (!currentGallery) return;
+    setLightboxIndex((i) => (i === null ? i : (i + 1) % currentGallery.photos.length));
+  }, [currentGallery]);
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+      else if (e.key === "ArrowLeft") prevPhoto();
+      else if (e.key === "ArrowRight") nextPhoto();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightboxIndex, closeLightbox, prevPhoto, nextPhoto]);
 
   const handleAgendarClick = () => {
     setGalleryOpen(null);
