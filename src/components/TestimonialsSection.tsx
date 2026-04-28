@@ -152,6 +152,41 @@ const TestimonialsSection = () => {
           </button>
         </div>
       </div>
+
+      {/* Popup vídeo expandido com som */}
+      <AnimatePresence>
+        {activeVideo && (
+          <motion.div
+            className="fixed inset-0 z-[70] bg-black/95 flex items-center justify-center p-2 md:p-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveVideo(null)}
+          >
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); setActiveVideo(null); }}
+              className="absolute top-3 right-3 md:top-6 md:right-6 p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+              aria-label="Fechar"
+            >
+              <X size={22} />
+            </button>
+            <motion.video
+              key={activeVideo}
+              src={activeVideo}
+              autoPlay
+              controls
+              playsInline
+              className="max-w-full max-h-[90vh] rounded-lg shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
