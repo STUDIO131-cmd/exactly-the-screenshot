@@ -103,7 +103,8 @@ const TestimonialsSection = () => {
                   {item.video ? (
                     <>
                       <video
-                        src={item.video}
+                        src={item.videoPreview ?? item.video}
+                        preload="metadata"
                         autoPlay
                         loop
                         muted
