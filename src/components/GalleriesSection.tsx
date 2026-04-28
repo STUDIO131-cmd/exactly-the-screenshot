@@ -63,7 +63,7 @@ const galleries: Gallery[] = [
     cover: "/placeholders/casais-cover.png",
     description:
       "O amor em sua forma mais genuína. Registramos a cumplicidade e a conexão de casais com um olhar sensível e poético.",
-    photos: makePhotos("/placeholders/casais-cover.jpg"),
+    photos: casaisPhotos,
   },
   {
     id: "pessoal",
