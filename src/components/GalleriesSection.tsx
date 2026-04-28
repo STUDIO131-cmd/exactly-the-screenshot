@@ -46,7 +46,7 @@ const galleries: Gallery[] = [
   {
     id: "retratos",
     title: "Retratos Profissionais",
-    cover: "/placeholders/retratos-cover.png",
+    cover: "/placeholders/retratos-cover.webp",
     description:
       "Retratos que traduzem personalidade. Cada clique é conduzido para revelar o melhor de você, seja para uso corporativo, redes sociais ou portfólio pessoal, o que realmente importa é o seu legado.",
     photos: retratosPhotos,
@@ -54,7 +54,7 @@ const galleries: Gallery[] = [
   {
     id: "gestantes",
     title: "Gestantes",
-    cover: "/placeholders/gestantes-cover.png",
+    cover: "/placeholders/gestantes-cover.webp",
     description:
       "A espera de uma nova vida merece ser eternizada com delicadeza. Fotografamos a beleza da gestação com luz natural, com sensibilidade e criatividade.",
     photos: gestantesPhotos,
@@ -62,7 +62,7 @@ const galleries: Gallery[] = [
   {
     id: "15anos",
     title: "15 Anos",
-    cover: "/placeholders/15anos-cover.png",
+    cover: "/placeholders/15anos-cover.webp",
     description:
       "Uma celebração única que marca a transição para a vida adulta. Capturamos a essência e a alegria desse momento com autenticidade.",
     photos: quinzeAnosPhotos,
@@ -70,7 +70,7 @@ const galleries: Gallery[] = [
   {
     id: "casais",
     title: "Casais",
-    cover: "/placeholders/casais-cover.png",
+    cover: "/placeholders/casais-cover.webp",
     description:
       "O amor em sua forma mais genuína. Registramos a cumplicidade e a conexão de casais com um olhar sensível e poético.",
     photos: casaisPhotos,
@@ -78,7 +78,7 @@ const galleries: Gallery[] = [
   {
     id: "pessoal",
     title: "Feminino/Pessoal",
-    cover: "/placeholders/pessoal-cover.png",
+    cover: "/placeholders/pessoal-cover.webp",
     description:
       "Sessões descontraídas que capturam quem você realmente é. Fotos autênticas para guardar momentos que importam.",
     photos: pessoalPhotos,
@@ -86,7 +86,7 @@ const galleries: Gallery[] = [
   {
     id: "eventos",
     title: "Eventos",
-    cover: "/placeholders/eventos-cover.png",
+    cover: "/placeholders/eventos-cover.webp",
     description:
       "Cobertura completa de eventos sociais e corporativos. Cada momento é registrado com atenção aos detalhes e à emoção do instante.",
     photos: eventosPhotos,
