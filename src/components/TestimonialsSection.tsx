@@ -11,7 +11,7 @@ interface TestimonialItem {
   subtitle?: string;
 }
 
-const testimonials: TestimonialItem[] = [
+const initialTestimonials: TestimonialItem[] = [
   {
     id: 1,
     name: "Carol Segura",
