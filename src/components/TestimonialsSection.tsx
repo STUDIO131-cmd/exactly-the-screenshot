@@ -130,7 +130,7 @@ const TestimonialsSection = () => {
 
         <div className="relative">
           <button
-            onClick={() => setCurrentSlide(Math.max(0, currentSlide - 1))}
+            onClick={prev}
             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-neutral-800/50 backdrop-blur-sm text-neutral-300 hover:bg-neutral-700/50 transition-colors"
           >
             <ChevronLeft size={24} />
@@ -138,8 +138,7 @@ const TestimonialsSection = () => {
 
           <div className="overflow-hidden mx-12">
             <div
-              className="flex gap-4 transition-transform duration-500"
-              style={{ transform: `translateX(-${currentSlide * 33.33}%)` }}
+              className="flex gap-4"
             >
               {testimonials.map((item) => (
                 <div
@@ -194,7 +193,7 @@ const TestimonialsSection = () => {
           </div>
 
           <button
-            onClick={() => setCurrentSlide(Math.min(maxSlide, currentSlide + 1))}
+            onClick={next}
             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-neutral-800/50 backdrop-blur-sm text-neutral-300 hover:bg-neutral-700/50 transition-colors"
           >
             <ChevronRight size={24} />
