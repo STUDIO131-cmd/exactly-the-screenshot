@@ -20,7 +20,14 @@ const testimonials: TestimonialItem[] = [
     title: "Inauguração",
     subtitle: "Segura & Co.",
   },
-  { id: 2, name: "Ana P." },
+  {
+    id: 2,
+    name: "Mariana Nechar",
+    video: "/videos/mariana-nechar-full.mp4",
+    videoPreview: "/videos/mariana-nechar-preview.mp4",
+    title: "Como você se vê",
+    subtitle: "Mariana Nechar",
+  },
   { id: 3, name: "Juliana R." },
   { id: 4, name: "Camila L." },
 ];
@@ -110,7 +117,7 @@ const TestimonialsSection = () => {
                         muted
                         playsInline
                         className="absolute inset-0 w-full h-full object-cover"
-                        style={{ opacity: 0.6 }}
+                        style={{ opacity: 0.6, filter: "blur(8px)" }}
                       />
                       <div className="absolute inset-0 bg-black/30" />
                       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
