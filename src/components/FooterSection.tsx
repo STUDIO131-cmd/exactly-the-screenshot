@@ -36,7 +36,7 @@ const FooterSection = () => {
               Conheça a agência
             </a>
             <a
-              href="https://studio131.com.br/plano"
+              href="https://planoprofissional.studio131.com.br"
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 text-center text-xs py-2.5 rounded-lg transition-colors"
