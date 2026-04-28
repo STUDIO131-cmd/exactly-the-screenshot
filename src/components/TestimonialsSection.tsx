@@ -25,8 +25,18 @@ const testimonials: TestimonialItem[] = [
 
 const TestimonialsSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
   const maxSlide = Math.max(0, testimonials.length - 1);
+
+  useEffect(() => {
+    if (!activeVideo) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveVideo(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [activeVideo]);
 
   return (
     <section className="py-10 md:py-16 px-6 font-sans font-light">
