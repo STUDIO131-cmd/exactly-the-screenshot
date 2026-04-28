@@ -71,10 +71,11 @@ const initialTestimonials: TestimonialItem[] = [
 ];
 
 const TestimonialsSection = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [testimonials, setTestimonials] = useState<TestimonialItem[]>(initialTestimonials);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
-  const maxSlide = Math.max(0, testimonials.length - 1);
+  const next = () => setTestimonials((arr) => [...arr.slice(1), arr[0]]);
+  const prev = () => setTestimonials((arr) => [arr[arr.length - 1], ...arr.slice(0, -1)]);
 
   useEffect(() => {
     if (!activeVideo) return;
