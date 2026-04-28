@@ -22,6 +22,11 @@ const gestantesPhotos = Array.from(
   (_, i) => `/galleries/gestantes/gestantes-${String(i + 1).padStart(2, "0")}.webp`
 );
 
+const quinzeAnosPhotos = Array.from(
+  { length: 16 },
+  (_, i) => `/galleries/15anos/15anos-${String(i + 1).padStart(2, "0")}.webp`
+);
+
 const galleries: Gallery[] = [
   {
     id: "retratos",
