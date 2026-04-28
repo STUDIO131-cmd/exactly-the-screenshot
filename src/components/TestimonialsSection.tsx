@@ -6,6 +6,7 @@ interface TestimonialItem {
   id: number;
   name: string;
   video?: string;
+  videoPreview?: string;
   title?: string;
   subtitle?: string;
 }
@@ -14,7 +15,8 @@ const testimonials: TestimonialItem[] = [
   {
     id: 1,
     name: "Carol Segura",
-    video: "/videos/carol-segura-inauguracao.mp4",
+    video: "/videos/carol-segura-full.mp4",
+    videoPreview: "/videos/carol-segura-preview.mp4",
     title: "Inauguração",
     subtitle: "Segura & Co.",
   },
