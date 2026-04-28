@@ -1,8 +1,22 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const testimonials = [
-  { id: 1, name: "Maria S." },
+interface TestimonialItem {
+  id: number;
+  name: string;
+  video?: string;
+  title?: string;
+  subtitle?: string;
+}
+
+const testimonials: TestimonialItem[] = [
+  {
+    id: 1,
+    name: "Carol Segura",
+    video: "/videos/carol-segura-inauguracao.mp4",
+    title: "Inauguração",
+    subtitle: "Segura & Co.",
+  },
   { id: 2, name: "Ana P." },
   { id: 3, name: "Juliana R." },
   { id: 4, name: "Camila L." },
@@ -71,16 +85,41 @@ const TestimonialsSection = () => {
               {testimonials.map((item) => (
                 <div
                   key={item.id}
-                  className="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 aspect-[3/4] rounded-2xl overflow-hidden bg-neutral-800/40 backdrop-blur-sm border border-neutral-700/30 flex items-center justify-center"
+                  className="relative flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 aspect-[3/4] rounded-2xl overflow-hidden bg-neutral-800/40 backdrop-blur-sm border border-neutral-700/30"
                 >
-                  <div className="text-center p-6">
-                    <p className="text-neutral-200 text-xl mb-4">
-                      "{item.name}"
-                    </p>
-                    <p className="text-neutral-400 text-sm">
-                      Vídeo de depoimento em breve
-                    </p>
-                  </div>
+                  {item.video ? (
+                    <>
+                      <video
+                        src={item.video}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover"
+                        style={{ filter: "blur(8px)", opacity: 0.5, transform: "scale(1.1)" }}
+                      />
+                      <div className="absolute inset-0 bg-black/30" />
+                      <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
+                        <p className="text-neutral-100 text-2xl md:text-3xl font-light tracking-wide drop-shadow-[0_0_15px_rgba(0,0,0,0.6)]">
+                          {item.title}
+                        </p>
+                        <p className="text-neutral-300 text-sm md:text-base mt-2 tracking-widest uppercase font-light drop-shadow-[0_0_10px_rgba(0,0,0,0.6)]">
+                          {item.subtitle}
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="h-full flex items-center justify-center">
+                      <div className="text-center p-6">
+                        <p className="text-neutral-200 text-xl mb-4">
+                          "{item.name}"
+                        </p>
+                        <p className="text-neutral-400 text-sm">
+                          Vídeo de depoimento em breve
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
