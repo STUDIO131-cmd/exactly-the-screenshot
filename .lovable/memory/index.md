@@ -8,6 +8,7 @@ All content and SEO strictly localized in Brazilian Portuguese (pt-BR).
 Dark theme, glass-morphism. Global font: TikTok Sans Light. Decorative: Kapakana. Light gray for text.
 Standard padding: py-10 mobile, py-16 desktop. Adjust hero/titles to avoid gaps.
 Catalog tiers: Igor Gagliardi (exclusive) vs Studio 131 Team (standard).
+All images converted to .webp before use. Stored in public/galleries/{category}/.
 
 ## Memories
 - [Visual Identity](mem://style/visual-identity) — Global typography, dark theme, and glass-morphism aesthetics
@@ -25,3 +26,4 @@ Catalog tiers: Igor Gagliardi (exclusive) vs Studio 131 Team (standard).
 - [Google Calendar Integration](mem://tech/google-calendar) — Requirements for calendar availability filtering
 - [Supabase Schema Structure](mem://tech/studio-database-schema) — Granular relational model for catalog and pricing
 - [Lead Capture Edge Function](mem://features/launch-priority-section) — Supabase Edge Functions for lead notifications
+- [Image Optimization Standard](mem://constraints/image-optimization) — WebP conversion presets and storage paths for gallery/site images
