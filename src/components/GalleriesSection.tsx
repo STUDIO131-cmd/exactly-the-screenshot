@@ -37,6 +37,11 @@ const pessoalPhotos = Array.from(
   (_, i) => `/galleries/pessoal/pessoal-${String(i + 1).padStart(2, "0")}.webp`
 );
 
+const eventosPhotos = Array.from(
+  { length: 12 },
+  (_, i) => `/galleries/eventos/eventos-${String(i + 1).padStart(2, "0")}.webp`
+);
+
 const galleries: Gallery[] = [
   {
     id: "retratos",
@@ -84,7 +89,7 @@ const galleries: Gallery[] = [
     cover: "/placeholders/eventos-cover.png",
     description:
       "Cobertura completa de eventos sociais e corporativos. Cada momento é registrado com atenção aos detalhes e à emoção do instante.",
-    photos: makePhotos("/placeholders/eventos-cover.jpg"),
+    photos: eventosPhotos,
   },
 ];
 
