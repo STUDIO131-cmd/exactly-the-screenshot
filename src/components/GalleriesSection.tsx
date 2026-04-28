@@ -21,7 +21,7 @@ const galleries: Gallery[] = [
   {
     id: "retratos",
     title: "Retratos Profissionais",
-    cover: "/galleries/retratos/retratos-cover.webp",
+    cover: "/placeholders/retratos-cover.png",
     description:
       "Retratos que traduzem personalidade e presença. Cada clique é pensado para revelar o melhor de você — seja para uso corporativo, redes sociais ou portfólio pessoal.",
     photos: retratosPhotos,
