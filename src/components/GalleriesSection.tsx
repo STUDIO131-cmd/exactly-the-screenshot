@@ -27,6 +27,11 @@ const quinzeAnosPhotos = Array.from(
   (_, i) => `/galleries/15anos/15anos-${String(i + 1).padStart(2, "0")}.webp`
 );
 
+const casaisPhotos = Array.from(
+  { length: 13 },
+  (_, i) => `/galleries/casais/casais-${String(i + 1).padStart(2, "0")}.webp`
+);
+
 const galleries: Gallery[] = [
   {
     id: "retratos",
@@ -58,7 +63,7 @@ const galleries: Gallery[] = [
     cover: "/placeholders/casais-cover.png",
     description:
       "O amor em sua forma mais genuína. Registramos a cumplicidade e a conexão de casais com um olhar sensível e poético.",
-    photos: makePhotos("/placeholders/casais-cover.jpg"),
+    photos: casaisPhotos,
   },
   {
     id: "pessoal",
