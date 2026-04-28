@@ -32,6 +32,11 @@ const casaisPhotos = Array.from(
   (_, i) => `/galleries/casais/casais-${String(i + 1).padStart(2, "0")}.webp`
 );
 
+const pessoalPhotos = Array.from(
+  { length: 20 },
+  (_, i) => `/galleries/pessoal/pessoal-${String(i + 1).padStart(2, "0")}.webp`
+);
+
 const galleries: Gallery[] = [
   {
     id: "retratos",
@@ -67,11 +72,11 @@ const galleries: Gallery[] = [
   },
   {
     id: "pessoal",
-    title: "Pessoal",
+    title: "Feminino/Pessoal",
     cover: "/placeholders/pessoal-cover.png",
     description:
       "Sessões descontraídas que capturam quem você realmente é. Fotos autênticas para guardar momentos que importam.",
-    photos: makePhotos("/placeholders/pessoal-cover.jpg"),
+    photos: pessoalPhotos,
   },
   {
     id: "eventos",
