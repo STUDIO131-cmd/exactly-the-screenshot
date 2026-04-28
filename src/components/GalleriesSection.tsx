@@ -188,28 +188,30 @@ const GalleriesSection = ({ onOpenBookingChat, onGalleryOpenChange }: GalleriesS
                 {/* Grid de fotos */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
                   {(showAll ? currentGallery.photos : currentGallery.photos.slice(0, 6)).map((photo, i) => (
-                    <div
+                    <button
+                      type="button"
                       key={i}
-                      className="aspect-[4/5] rounded-xl overflow-hidden bg-muted"
+                      onClick={() => setLightboxIndex(i)}
+                      className="aspect-[4/5] rounded-xl overflow-hidden bg-muted group/photo cursor-zoom-in"
                     >
                       <img
                         src={photo}
                         alt={`${currentGallery.title} - Foto ${i + 1}`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover/photo:scale-105"
                         loading="lazy"
                         decoding="async"
                       />
-                    </div>
+                    </button>
                   ))}
                 </div>
 
-                {/* Botão Ver mais / menos */}
+                {/* Botão Ver mais / menos (redondo) */}
                 {currentGallery.photos.length > 6 && (
-                  <div className="mt-6 flex justify-center">
+                  <div className="mt-8 flex justify-center">
                     <button
                       type="button"
                       onClick={() => setShowAll((v) => !v)}
-                      className="text-foreground/70 hover:text-foreground text-xs md:text-sm tracking-widest uppercase underline-offset-4 hover:underline transition-colors font-sans"
+                      className="px-6 py-2.5 md:px-8 md:py-3 rounded-full border border-foreground/20 bg-background/50 text-foreground/80 hover:bg-foreground/10 hover:text-foreground text-xs md:text-sm tracking-widest uppercase transition-colors font-sans"
                     >
                       {showAll ? "Ver menos" : `Ver mais (${currentGallery.photos.length - 6})`}
                     </button>
