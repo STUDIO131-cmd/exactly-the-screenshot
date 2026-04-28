@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, Play, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface TestimonialItem {
   id: number;
@@ -24,8 +25,18 @@ const testimonials: TestimonialItem[] = [
 
 const TestimonialsSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
   const maxSlide = Math.max(0, testimonials.length - 1);
+
+  useEffect(() => {
+    if (!activeVideo) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveVideo(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [activeVideo]);
 
   return (
     <section className="py-10 md:py-16 px-6 font-sans font-light">
@@ -96,7 +107,7 @@ const TestimonialsSection = () => {
                         muted
                         playsInline
                         className="absolute inset-0 w-full h-full object-cover"
-                        style={{ filter: "blur(8px)", opacity: 0.5, transform: "scale(1.1)" }}
+                        style={{ filter: "blur(8px)", opacity: 0.2, transform: "scale(1.1)" }}
                       />
                       <div className="absolute inset-0 bg-black/30" />
                       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
@@ -106,6 +117,14 @@ const TestimonialsSection = () => {
                         <p className="text-neutral-300 text-sm md:text-base mt-2 tracking-widest uppercase font-light drop-shadow-[0_0_10px_rgba(0,0,0,0.6)]">
                           {item.subtitle}
                         </p>
+                        <button
+                          type="button"
+                          onClick={() => setActiveVideo(item.video!)}
+                          aria-label="Reproduzir vídeo"
+                          className="mt-6 group/play flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 transition-all hover:scale-110"
+                        >
+                          <Play size={28} className="text-white ml-1 drop-shadow-[0_0_10px_rgba(0,0,0,0.6)]" fill="white" />
+                        </button>
                       </div>
                     </>
                   ) : (
@@ -133,6 +152,41 @@ const TestimonialsSection = () => {
           </button>
         </div>
       </div>
+
+      {/* Popup vídeo expandido com som */}
+      <AnimatePresence>
+        {activeVideo && (
+          <motion.div
+            className="fixed inset-0 z-[70] bg-black/95 flex items-center justify-center p-2 md:p-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveVideo(null)}
+          >
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); setActiveVideo(null); }}
+              className="absolute top-3 right-3 md:top-6 md:right-6 p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+              aria-label="Fechar"
+            >
+              <X size={22} />
+            </button>
+            <motion.video
+              key={activeVideo}
+              src={activeVideo}
+              autoPlay
+              controls
+              playsInline
+              className="max-w-full max-h-[90vh] rounded-lg shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
