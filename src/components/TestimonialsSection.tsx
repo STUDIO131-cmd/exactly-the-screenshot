@@ -107,7 +107,7 @@ const TestimonialsSection = () => {
                         muted
                         playsInline
                         className="absolute inset-0 w-full h-full object-cover"
-                        style={{ filter: "blur(8px)", opacity: 0.5, transform: "scale(1.1)" }}
+                        style={{ filter: "blur(8px)", opacity: 0.2, transform: "scale(1.1)" }}
                       />
                       <div className="absolute inset-0 bg-black/30" />
                       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
@@ -117,6 +117,14 @@ const TestimonialsSection = () => {
                         <p className="text-neutral-300 text-sm md:text-base mt-2 tracking-widest uppercase font-light drop-shadow-[0_0_10px_rgba(0,0,0,0.6)]">
                           {item.subtitle}
                         </p>
+                        <button
+                          type="button"
+                          onClick={() => setActiveVideo(item.video!)}
+                          aria-label="Reproduzir vídeo"
+                          className="mt-6 group/play flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/30 transition-all hover:scale-110"
+                        >
+                          <Play size={28} className="text-white ml-1 drop-shadow-[0_0_10px_rgba(0,0,0,0.6)]" fill="white" />
+                        </button>
                       </div>
                     </>
                   ) : (
