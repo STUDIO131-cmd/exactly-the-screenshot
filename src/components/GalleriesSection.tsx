@@ -37,7 +37,7 @@ const galleries: Gallery[] = [
     cover: "/placeholders/gestantes-cover.png",
     description:
       "A espera de uma nova vida merece ser eternizada com delicadeza. Fotografamos a beleza da gestação com luz natural e ambientes que acolhem.",
-    photos: makePhotos("/placeholders/gestantes-cover.jpg"),
+    photos: gestantesPhotos,
   },
   {
     id: "15anos",
