@@ -50,7 +50,7 @@ const galleries: Gallery[] = [
     cover: "/placeholders/15anos-cover.png",
     description:
       "Uma celebração única que marca a transição para a vida adulta. Capturamos a essência e a alegria desse momento com autenticidade.",
-    photos: makePhotos("/placeholders/15anos-cover.jpg"),
+    photos: quinzeAnosPhotos,
   },
   {
     id: "casais",
