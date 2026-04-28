@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Calendar } from "lucide-react";
+import { X, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Gallery {
   id: string;
@@ -21,7 +21,7 @@ const galleries: Gallery[] = [
   {
     id: "retratos",
     title: "Retratos Profissionais",
-    cover: "/galleries/retratos/retratos-cover.webp",
+    cover: "/placeholders/retratos-cover.png",
     description:
       "Retratos que traduzem personalidade e presença. Cada clique é pensado para revelar o melhor de você — seja para uso corporativo, redes sociais ou portfólio pessoal.",
     photos: retratosPhotos,
@@ -76,14 +76,37 @@ interface GalleriesSectionProps {
 const GalleriesSection = ({ onOpenBookingChat, onGalleryOpenChange }: GalleriesSectionProps) => {
   const [openGalleryId, setOpenGalleryId] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const currentGallery = galleries.find((g) => g.id === openGalleryId);
 
   const setGalleryOpen = (id: string | null) => {
     setOpenGalleryId(id);
     setShowAll(false);
+    setLightboxIndex(null);
     onGalleryOpenChange?.(id !== null);
   };
+
+  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
+  const prevPhoto = useCallback(() => {
+    if (!currentGallery) return;
+    setLightboxIndex((i) => (i === null ? i : (i - 1 + currentGallery.photos.length) % currentGallery.photos.length));
+  }, [currentGallery]);
+  const nextPhoto = useCallback(() => {
+    if (!currentGallery) return;
+    setLightboxIndex((i) => (i === null ? i : (i + 1) % currentGallery.photos.length));
+  }, [currentGallery]);
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+      else if (e.key === "ArrowLeft") prevPhoto();
+      else if (e.key === "ArrowRight") nextPhoto();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightboxIndex, closeLightbox, prevPhoto, nextPhoto]);
 
   const handleAgendarClick = () => {
     setGalleryOpen(null);
@@ -165,28 +188,30 @@ const GalleriesSection = ({ onOpenBookingChat, onGalleryOpenChange }: GalleriesS
                 {/* Grid de fotos */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
                   {(showAll ? currentGallery.photos : currentGallery.photos.slice(0, 6)).map((photo, i) => (
-                    <div
+                    <button
+                      type="button"
                       key={i}
-                      className="aspect-[4/5] rounded-xl overflow-hidden bg-muted"
+                      onClick={() => setLightboxIndex(i)}
+                      className="aspect-[4/5] rounded-xl overflow-hidden bg-muted group/photo cursor-zoom-in"
                     >
                       <img
                         src={photo}
                         alt={`${currentGallery.title} - Foto ${i + 1}`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover/photo:scale-105"
                         loading="lazy"
                         decoding="async"
                       />
-                    </div>
+                    </button>
                   ))}
                 </div>
 
-                {/* Botão Ver mais / menos */}
+                {/* Botão Ver mais / menos (redondo) */}
                 {currentGallery.photos.length > 6 && (
-                  <div className="mt-6 flex justify-center">
+                  <div className="mt-8 flex justify-center">
                     <button
                       type="button"
                       onClick={() => setShowAll((v) => !v)}
-                      className="text-foreground/70 hover:text-foreground text-xs md:text-sm tracking-widest uppercase underline-offset-4 hover:underline transition-colors font-sans"
+                      className="px-6 py-2.5 md:px-8 md:py-3 rounded-full border border-foreground/20 bg-background/50 text-foreground/80 hover:bg-foreground/10 hover:text-foreground text-xs md:text-sm tracking-widest uppercase transition-colors font-sans"
                     >
                       {showAll ? "Ver menos" : `Ver mais (${currentGallery.photos.length - 6})`}
                     </button>
@@ -209,6 +234,63 @@ const GalleriesSection = ({ onOpenBookingChat, onGalleryOpenChange }: GalleriesS
                 </div>
               </div>
             </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Lightbox: visualização ampliada com navegação */}
+      <AnimatePresence>
+        {currentGallery && lightboxIndex !== null && (
+          <motion.div
+            className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-2 md:p-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeLightbox}
+          >
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); closeLightbox(); }}
+              className="absolute top-3 right-3 md:top-6 md:right-6 p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+              aria-label="Fechar"
+            >
+              <X size={22} />
+            </button>
+
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); prevPhoto(); }}
+              className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+              aria-label="Foto anterior"
+            >
+              <ChevronLeft size={28} />
+            </button>
+
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); nextPhoto(); }}
+              className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 p-2 md:p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+              aria-label="Próxima foto"
+            >
+              <ChevronRight size={28} />
+            </button>
+
+            <motion.img
+              key={lightboxIndex}
+              src={currentGallery.photos[lightboxIndex]}
+              alt={`${currentGallery.title} - Foto ${lightboxIndex + 1}`}
+              className="max-w-full max-h-[88vh] object-contain rounded-lg select-none"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              draggable={false}
+            />
+
+            <div className="absolute bottom-4 md:bottom-6 left-0 right-0 text-center text-white/70 text-xs md:text-sm tracking-widest font-sans">
+              {lightboxIndex + 1} / {currentGallery.photos.length}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
