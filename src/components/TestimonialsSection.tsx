@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, Play, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface TestimonialItem {
   id: number;
