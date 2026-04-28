@@ -12,14 +12,19 @@ interface Gallery {
 
 const makePhotos = (src: string) => Array(6).fill(src);
 
+const retratosPhotos = Array.from(
+  { length: 22 },
+  (_, i) => `/galleries/retratos/retratos-${String(i + 1).padStart(2, "0")}.webp`
+);
+
 const galleries: Gallery[] = [
   {
     id: "retratos",
     title: "Retratos Profissionais",
-    cover: "/placeholders/retratos-cover.png",
+    cover: "/galleries/retratos/retratos-cover.webp",
     description:
       "Retratos que traduzem personalidade e presença. Cada clique é pensado para revelar o melhor de você — seja para uso corporativo, redes sociais ou portfólio pessoal.",
-    photos: makePhotos("/placeholder.svg"),
+    photos: retratosPhotos,
   },
   {
     id: "gestantes",
