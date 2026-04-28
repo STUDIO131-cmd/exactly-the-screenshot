@@ -155,7 +155,7 @@ const TestimonialsSection = () => {
                         muted
                         playsInline
                         className="absolute inset-0 w-full h-full object-cover"
-                        style={{ opacity: 0.6 }}
+                        style={{ opacity: 0.6, filter: "blur(2px)" }}
                       />
                       <div className="absolute inset-0 bg-black/30" />
                       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
