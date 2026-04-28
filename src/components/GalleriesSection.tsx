@@ -23,7 +23,7 @@ const galleries: Gallery[] = [
     title: "Retratos Profissionais",
     cover: "/placeholders/retratos-cover.png",
     description:
-      "Retratos que traduzem personalidade e presença. Cada clique é pensado para revelar o melhor de você — seja para uso corporativo, redes sociais ou portfólio pessoal.",
+      "Retratos que traduzem personalidade. Cada clique é conduzido para revelar o melhor de você, seja para uso corporativo, redes sociais ou portfólio pessoal, o que realmente importa é o seu legado.",
     photos: retratosPhotos,
   },
   {
