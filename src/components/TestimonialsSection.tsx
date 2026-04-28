@@ -36,7 +36,38 @@ const testimonials: TestimonialItem[] = [
     title: "Baby Segura Simões",
     subtitle: "Setembro",
   },
-  { id: 4, name: "Camila L." },
+  {
+    id: 4,
+    name: "Pri Prestes",
+    video: "/videos/pri-prestes-full.mp4",
+    videoPreview: "/videos/pri-prestes-preview.mp4",
+    title: "Pri Prestes",
+    subtitle: "Ensaio",
+  },
+  {
+    id: 5,
+    name: "Marina Dispore",
+    video: "/videos/marina-dispore-full.mp4",
+    videoPreview: "/videos/marina-dispore-preview.mp4",
+    title: "Marina Dispore",
+    subtitle: "Ensaio",
+  },
+  {
+    id: 6,
+    name: "Muriel & Laís",
+    video: "/videos/muriel-lais-full.mp4",
+    videoPreview: "/videos/muriel-lais-preview.mp4",
+    title: "Chá Revelação",
+    subtitle: "Laís & Muriel",
+  },
+  {
+    id: 7,
+    name: "Memórias",
+    video: "/videos/anexo4-full.mp4",
+    videoPreview: "/videos/anexo4-preview.mp4",
+    title: "Momentos",
+    subtitle: "Studio 131",
+  },
 ];
 
 const TestimonialsSection = () => {
