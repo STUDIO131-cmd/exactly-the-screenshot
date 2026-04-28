@@ -1,8 +1,22 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const testimonials = [
-  { id: 1, name: "Maria S." },
+interface TestimonialItem {
+  id: number;
+  name: string;
+  video?: string;
+  title?: string;
+  subtitle?: string;
+}
+
+const testimonials: TestimonialItem[] = [
+  {
+    id: 1,
+    name: "Carol Segura",
+    video: "/videos/carol-segura-inauguracao.mp4",
+    title: "Inauguração",
+    subtitle: "Segura & Co.",
+  },
   { id: 2, name: "Ana P." },
   { id: 3, name: "Juliana R." },
   { id: 4, name: "Camila L." },
