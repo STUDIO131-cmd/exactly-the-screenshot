@@ -28,7 +28,14 @@ const testimonials: TestimonialItem[] = [
     title: "Como você se vê",
     subtitle: "Mariana Nechar",
   },
-  { id: 3, name: "Juliana R." },
+  {
+    id: 3,
+    name: "Baby Segura Simões",
+    video: "/videos/baby-segura-full.mp4",
+    videoPreview: "/videos/baby-segura-preview.mp4",
+    title: "Baby Segura Simões",
+    subtitle: "Setembro",
+  },
   { id: 4, name: "Camila L." },
 ];
 
