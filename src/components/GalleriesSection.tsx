@@ -27,6 +27,11 @@ const quinzeAnosPhotos = Array.from(
   (_, i) => `/galleries/15anos/15anos-${String(i + 1).padStart(2, "0")}.webp`
 );
 
+const casaisPhotos = Array.from(
+  { length: 13 },
+  (_, i) => `/galleries/casais/casais-${String(i + 1).padStart(2, "0")}.webp`
+);
+
 const galleries: Gallery[] = [
   {
     id: "retratos",
