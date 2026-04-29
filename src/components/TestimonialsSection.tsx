@@ -149,13 +149,26 @@ const TestimonialsSection = () => {
                     <>
                       <video
                         src={item.videoPreview ?? item.video}
-                        preload="metadata"
+                        preload="auto"
                         autoPlay
                         loop
                         muted
+                        defaultMuted
                         playsInline
-                        className="absolute inset-0 w-full h-full object-cover"
+                        // @ts-expect-error - iOS Safari attribute
+                        webkit-playsinline="true"
+                        disablePictureInPicture
+                        controls={false}
+                        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                         style={{ opacity: 0.6, filter: "blur(2px)" }}
+                        ref={(el) => {
+                          if (el) {
+                            el.muted = true;
+                            const tryPlay = () => el.play().catch(() => {});
+                            tryPlay();
+                            el.addEventListener("loadedmetadata", tryPlay, { once: true });
+                          }
+                        }}
                       />
                       <div className="absolute inset-0 bg-black/30" />
                       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
