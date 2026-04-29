@@ -161,7 +161,6 @@ const TestimonialsSection = () => {
                         autoPlay
                         loop
                         muted
-                        defaultMuted
                         playsInline
                         {...mobileInlineVideoAttributes}
                         disablePictureInPicture
