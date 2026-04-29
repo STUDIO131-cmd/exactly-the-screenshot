@@ -153,10 +153,8 @@ const TestimonialsSection = () => {
                         autoPlay
                         loop
                         muted
-                        defaultMuted
                         playsInline
-                        // @ts-expect-error - iOS Safari attribute
-                        webkit-playsinline="true"
+                        {...({ "webkit-playsinline": "true", "x5-playsinline": "true" } as any)}
                         disablePictureInPicture
                         controls={false}
                         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
