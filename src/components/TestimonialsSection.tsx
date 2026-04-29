@@ -58,7 +58,7 @@ const initialTestimonials: TestimonialItem[] = [
     video: "/videos/muriel-lais-full.mp4",
     videoPreview: "/videos/muriel-lais-preview.mp4",
     title: "Chá Revelação",
-    subtitle: "Laís & Muriel",
+    subtitle: "DESCOBRINDO\nA CHEGADA DA LAÍS",
   },
   {
     id: 7,
