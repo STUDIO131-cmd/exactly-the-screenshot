@@ -159,7 +159,7 @@ const TestimonialsSection = () => {
                       />
                       <div className="absolute inset-0 bg-black/30" />
                       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
-                        <p className="text-neutral-100 text-2xl md:text-3xl font-light tracking-wide drop-shadow-[0_0_15px_rgba(0,0,0,0.6)]">
+                        <p className="text-neutral-100 text-2xl font-light tracking-wide drop-shadow-[0_0_15px_rgba(0,0,0,0.6)] md:text-2xl">
                           {item.title}
                         </p>
                         <p className="text-neutral-300 text-sm md:text-base mt-2 tracking-widest uppercase font-light drop-shadow-[0_0_10px_rgba(0,0,0,0.6)]">
