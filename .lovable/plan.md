@@ -1,25 +1,15 @@
-## Problema
-O botão flutuante **"Agende sua sessão"** (`WhatsAppFloat`, fixo no canto inferior direito com `z-50`) continua visível e clicável por cima do modal da galeria, poluindo a experiência ao explorar as fotos.
+## Objetivo
+No mobile, exibir as galerias empilhadas (1 por linha) ao invés de 2 por linha.
 
-## Solução
-Sincronizar a visibilidade do `WhatsAppFloat` com o estado de abertura do modal da galeria, escondendo-o enquanto a galeria estiver aberta.
+## Alteração
+Em `src/components/GalleriesSection.tsx`, linha 152, ajustar o grid principal:
 
-### Mudanças
+- Antes: `grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6`
+- Depois: `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6`
 
-**1. `src/components/GalleriesSection.tsx`**
-- Adicionar prop opcional `onGalleryOpenChange?: (open: boolean) => void`.
-- Disparar `onGalleryOpenChange(true)` quando uma galeria abrir e `onGalleryOpenChange(false)` quando fechar (tanto pelo botão X quanto pelo overlay e pelo CTA "Agendar agora").
+Resultado:
+- Mobile (<640px): 1 coluna (empilhado)
+- Tablet (≥640px): 2 colunas
+- Desktop (≥1024px): 3 colunas
 
-**2. `src/pages/Index.tsx`**
-- Criar estado `const [isGalleryOpen, setIsGalleryOpen] = useState(false)`.
-- Passar `onGalleryOpenChange={setIsGalleryOpen}` ao `<GalleriesSection />`.
-- Renderizar `<WhatsAppFloat />` condicionalmente: `{!isGalleryOpen && <WhatsAppFloat ... />}`.
-
-### Por que essa abordagem
-- Mantém o `WhatsAppFloat` como componente “burro” (sem conhecer a galeria).
-- Estado de UI continua centralizado no `Index`, que já orquestra o `BookingChat`.
-- Animação simples: o botão simplesmente desmonta/remonta — sem necessidade de Framer Motion adicional.
-
-### Fora do escopo
-- Não alterar `BookingPromoBar` nem `BookingSection` (já ficam visualmente cobertos pelo modal `z-50`, sem problema de interação).
-- Não mudar z-index do modal (manter `z-50`).
+O grid interno da linha 214 (dentro de modal/expansão) não é alterado.
