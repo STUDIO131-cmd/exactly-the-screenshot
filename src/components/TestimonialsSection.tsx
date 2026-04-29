@@ -25,7 +25,7 @@ const initialTestimonials: TestimonialItem[] = [
     name: "Mariana Nechar",
     video: "/videos/mariana-nechar-full.mp4",
     videoPreview: "/videos/mariana-nechar-preview.mp4",
-    title: "Como você se vê",
+    title: "Como você se vê?",
     subtitle: "Mariana Nechar",
   },
   {
@@ -33,8 +33,8 @@ const initialTestimonials: TestimonialItem[] = [
     name: "Baby Segura Simões",
     video: "/videos/baby-segura-full.mp4",
     videoPreview: "/videos/baby-segura-preview.mp4",
-    title: "Baby Segura Simões",
-    subtitle: "Setembro",
+    title: "Gestação",
+    subtitle: "A ESPERA\nDE FIORELLA",
   },
   {
     id: 4,
@@ -159,10 +159,10 @@ const TestimonialsSection = () => {
                       />
                       <div className="absolute inset-0 bg-black/30" />
                       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
-                        <p className="text-neutral-100 text-xl font-light tracking-wide drop-shadow-[0_0_15px_rgba(0,0,0,0.6)] md:text-xl">
+                        <p className="text-neutral-100 text-xl font-light tracking-wide drop-shadow-[0_0_15px_rgba(0,0,0,0.6)] md:text-lg">
                           {item.title}
                         </p>
-                        <p className="text-neutral-300 text-sm md:text-base mt-2 tracking-widest uppercase font-light drop-shadow-[0_0_10px_rgba(0,0,0,0.6)]">
+                        <p className="text-neutral-300 text-sm md:text-base mt-2 tracking-widest uppercase font-light drop-shadow-[0_0_10px_rgba(0,0,0,0.6)] whitespace-pre-line">
                           {item.subtitle}
                         </p>
                         <button
