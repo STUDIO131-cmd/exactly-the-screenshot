@@ -153,18 +153,34 @@ const TestimonialsSection = () => {
                         autoPlay
                         loop
                         muted
+                        defaultMuted
                         playsInline
                         {...({ "webkit-playsinline": "true", "x5-playsinline": "true" } as any)}
                         disablePictureInPicture
                         controls={false}
                         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                         style={{ opacity: 0.6, filter: "blur(2px)" }}
+                        onEnded={(event) => {
+                          const video = event.currentTarget;
+                          video.currentTime = 0;
+                          video.play().catch(() => {});
+                        }}
+                        onPause={(event) => {
+                          const video = event.currentTarget;
+                          if (!video.ended) video.play().catch(() => {});
+                        }}
                         ref={(el) => {
                           if (el) {
                             el.muted = true;
-                            const tryPlay = () => el.play().catch(() => {});
+                            el.defaultMuted = true;
+                            el.loop = true;
+                            const tryPlay = () => {
+                              el.muted = true;
+                              el.play().catch(() => {});
+                            };
                             tryPlay();
                             el.addEventListener("loadedmetadata", tryPlay, { once: true });
+                            el.addEventListener("canplay", tryPlay, { once: true });
                           }
                         }}
                       />
@@ -234,8 +250,14 @@ const TestimonialsSection = () => {
               key={activeVideo}
               src={activeVideo}
               autoPlay
+              loop
               controls
               playsInline
+              onEnded={(event) => {
+                const video = event.currentTarget;
+                video.currentTime = 0;
+                video.play().catch(() => {});
+              }}
               className="max-w-full max-h-[90vh] rounded-lg shadow-2xl"
               onClick={(e) => e.stopPropagation()}
               initial={{ scale: 0.95, opacity: 0 }}
