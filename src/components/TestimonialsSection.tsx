@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type VideoHTMLAttributes } from "react";
 import { ChevronLeft, ChevronRight, Play, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -10,6 +10,14 @@ interface TestimonialItem {
   title?: string;
   subtitle?: string;
 }
+
+const mobileInlineVideoAttributes: VideoHTMLAttributes<HTMLVideoElement> & {
+  "webkit-playsinline": string;
+  "x5-playsinline": string;
+} = {
+  "webkit-playsinline": "true",
+  "x5-playsinline": "true",
+};
 
 const initialTestimonials: TestimonialItem[] = [
   {
@@ -155,7 +163,7 @@ const TestimonialsSection = () => {
                         muted
                         defaultMuted
                         playsInline
-                        {...({ "webkit-playsinline": "true", "x5-playsinline": "true" } as any)}
+                        {...mobileInlineVideoAttributes}
                         disablePictureInPicture
                         controls={false}
                         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
