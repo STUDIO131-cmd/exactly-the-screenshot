@@ -53,7 +53,7 @@ const FooterSection = () => {
           {/* Linha 2 */}
           <div className="flex gap-3">
             <a
-              href="https://studio131.com.br/thejourney"
+              href="https://campanhas.studio131.com.br"
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 text-center text-xs py-2.5 rounded-lg transition-colors flex flex-col items-center justify-center"
@@ -63,8 +63,8 @@ const FooterSection = () => {
                 color: '#ffffff',
               }}
             >
-              <span>The Journey</span>
-              <span className="text-[10px] opacity-60 mt-0.5">FRENTE EDUCACIONAL</span>
+              <span>Campanhas</span>
+              <span className="text-[10px] opacity-60 mt-0.5">DA AGÊNCIA</span>
             </a>
             <button
               onClick={scrollToTop}
