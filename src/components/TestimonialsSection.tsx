@@ -65,8 +65,8 @@ const initialTestimonials: TestimonialItem[] = [
     name: "Memórias",
     video: "/videos/anexo4-full.mp4",
     videoPreview: "/videos/anexo4-preview.mp4",
-    title: "Momentos",
-    subtitle: "Studio 131",
+    title: "Livia Maria",
+    subtitle: "DEPOIMENTO",
   },
 ];
 
