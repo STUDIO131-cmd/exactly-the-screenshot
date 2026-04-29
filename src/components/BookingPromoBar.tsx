@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { CalendarDays, HelpCircle } from "lucide-react";
 import FaqSheet from "@/components/FaqSheet";
 
 const BookingPromoBar = () => {
@@ -56,7 +57,9 @@ const BookingPromoBar = () => {
                 onClick={openBookingChat}
                 className="flex items-center gap-3 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 px-5 py-2.5 transition-colors"
               >
-                <div className="w-8 h-8 rounded-full bg-white/20 shrink-0" />
+                <div className="w-8 h-8 rounded-full bg-white/20 shrink-0 flex items-center justify-center">
+                  <CalendarDays size={16} className="text-white/80" />
+                </div>
                 <span className="text-sm text-white/80 tracking-wide whitespace-nowrap">
                   Conferir agenda da equipe
                 </span>
@@ -69,7 +72,9 @@ const BookingPromoBar = () => {
                 onClick={() => setIsFaqOpen(true)}
                 className="flex items-center gap-3 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 px-5 py-2.5 transition-colors"
               >
-                <div className="w-8 h-8 rounded-full bg-white/20 shrink-0" />
+                <div className="w-8 h-8 rounded-full bg-white/20 shrink-0 flex items-center justify-center">
+                  <HelpCircle size={16} className="text-white/80" />
+                </div>
                 <span className="text-sm text-white/80 tracking-wide whitespace-nowrap">
                   Entender como funciona
                 </span>
