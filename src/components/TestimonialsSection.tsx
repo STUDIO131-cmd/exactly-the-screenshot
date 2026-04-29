@@ -41,8 +41,8 @@ const initialTestimonials: TestimonialItem[] = [
     name: "Pri Prestes",
     video: "/videos/pri-prestes-full.mp4",
     videoPreview: "/videos/pri-prestes-preview.mp4",
-    title: "Pri Prestes",
-    subtitle: "Ensaio",
+    title: "O que a fotografia\nrepresenta?",
+    subtitle: "ENSAIO PESSOAL",
   },
   {
     id: 5,
@@ -50,7 +50,7 @@ const initialTestimonials: TestimonialItem[] = [
     video: "/videos/marina-dispore-full.mp4",
     videoPreview: "/videos/marina-dispore-preview.mp4",
     title: "Marina Dispore",
-    subtitle: "Ensaio",
+    subtitle: "15 ANOS",
   },
   {
     id: 6,
