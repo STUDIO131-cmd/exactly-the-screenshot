@@ -31,7 +31,9 @@ const AboutSection = () => {
         <div className="text-sm md:text-base leading-relaxed text-neutral-200 space-y-5 text-justify [text-align-last:center]">
           <p>Momentos reais e importantes da vida.</p>
           <p>
-            Trabalhamos com um olhar documental e espontâneo, fruto de repertório
+            Trabalhamos com um olhar documental e
+            {"\n"}
+            espontâneo, fruto de repertório
             e conexões.
           </p>
           <p>
@@ -74,7 +76,7 @@ const AboutSection = () => {
         <p className="text-neutral-300 italic text-sm mb-8">
           Essa é a nossa visão.
           <br />
-          Agora, que tal compartilhar a sua?
+          Agora, que tal compartilhar a sua história?
         </p>
 
         <motion.button

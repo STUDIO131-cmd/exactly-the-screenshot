@@ -132,7 +132,7 @@ const TestimonialsSection = () => {
             Baú de Memórias
           </h2>
           <p className="text-xs md:text-sm text-neutral-400 text-center tracking-wide font-light mt-1">
-            Confira histórias, depoimentos e vídeos bônus no baú da fotografia
+            Histórias e depoimentos que marcaram a nossa trajetória 
           </p>
         </div>
 
