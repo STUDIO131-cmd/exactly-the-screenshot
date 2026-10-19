@@ -134,4 +134,4 @@ export function isDateAvailable(
 
 /** Texto auxiliar padrão para mostrar no calendário. */
 export const AVAILABILITY_HINT =
-  "Atendemos de segunda a sexta e em um sábado por mês, das 08h30 às 18h. Escolha a data desejada e nosso atendimento confirma o horário pelo WhatsApp.";
+  "\n";
